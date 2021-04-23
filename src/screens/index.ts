@@ -1,0 +1,9 @@
+export { default as home } from './home/home';
+export { default as search } from './search/search';
+export { default as consult } from './consult/consult';
+export { default as profile } from './profile/profile';
+export { default as login } from './login/login';
+export { default as register } from './register/register';
+export { default as onboarding } from './onboarding/onboarding';
+export { default as forgotPassword } from './forgotPassword/forgotPassword';
+export { default as welcome } from './welcome/welcome';
