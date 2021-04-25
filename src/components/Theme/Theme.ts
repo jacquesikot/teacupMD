@@ -16,6 +16,7 @@ export default {
     subText: 'rgba(16, 10, 57, 0.5)',
     red: '#FF628D',
     lightBlue: '#b9d5ff',
+    lightGreen: '#d5f3e8',
   },
   constants: {
     masterWidth: width,

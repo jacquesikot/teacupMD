@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, SafeAreaView, Text } from 'react-native';
+import { View, SafeAreaView, Text, ScrollView } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { StackScreenProps } from '@react-navigation/stack';
 import { Formik } from 'formik';
@@ -8,17 +8,21 @@ import styles from './styles';
 import { theme } from '../../components';
 import TextInput from '../../components/TextInput/TextInput';
 import Button from '../../components/Button/Button';
+import ActivityIndicator from '../../components/ActivityIndicator/ActivityIndicator';
 import { AuthParamList } from '../../types/navigationTypes';
 import useLogin from './useLogin';
 
 const Login = ({ navigation }: StackScreenProps<AuthParamList, 'Login'>) => {
   const { loginSchema, onSubmit, loading } = useLogin();
 
-  if (loading) {
-    return <Text>Loading...</Text>;
-  } else {
-    return (
-      <SafeAreaView style={styles.container}>
+  return (
+    <ScrollView
+      style={styles.container}
+      contentContainerStyle={{ alignItems: 'center' }}
+      bounces={false}
+    >
+      <SafeAreaView>
+        <ActivityIndicator visible={loading} />
         <View style={styles.welcomeContainer}>
           <Text style={styles.heading}>Welcome,</Text>
           <Text style={styles.subText}>sign in to continue</Text>
@@ -37,6 +41,10 @@ const Login = ({ navigation }: StackScreenProps<AuthParamList, 'Login'>) => {
                   onChangeText={handleChange('email')}
                   onBlur={handleBlur('email')}
                   keyboardType="email-address"
+                  textContentType="emailAddress"
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  returnKeyType="next"
                   touched={touched.email}
                   error={errors.email}
                 />
@@ -48,6 +56,9 @@ const Login = ({ navigation }: StackScreenProps<AuthParamList, 'Login'>) => {
                   touched={touched.password}
                   error={errors.password}
                   secureTextEntry={true}
+                  textContentType="password"
+                  autoCapitalize="none"
+                  autoCorrect={false}
                 />
               </View>
               <TouchableOpacity
@@ -57,13 +68,14 @@ const Login = ({ navigation }: StackScreenProps<AuthParamList, 'Login'>) => {
               >
                 <Text style={styles.forgotPassword}>Forgot password?</Text>
               </TouchableOpacity>
-              <View style={{ flex: 1 }} />
-              <Button
-                label="Login"
-                onPress={handleSubmit}
-                type="primary"
-                width={theme.constants.screenWidth}
-              />
+              <View style={styles.buttonContainer}>
+                <Button
+                  label="Login"
+                  onPress={handleSubmit}
+                  type="primary"
+                  width={theme.constants.screenWidth}
+                />
+              </View>
             </>
           )}
         </Formik>
@@ -74,8 +86,8 @@ const Login = ({ navigation }: StackScreenProps<AuthParamList, 'Login'>) => {
           </TouchableOpacity>
         </View>
       </SafeAreaView>
-    );
-  }
+    </ScrollView>
+  );
 };
 
 export default Login;

@@ -9,7 +9,6 @@ import { theme } from '../../components';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
     backgroundColor: theme.colors.white,
   },
   welcomeContainer: {
@@ -46,7 +45,8 @@ const styles = StyleSheet.create({
   registerContainer: {
     flexDirection: 'row',
     paddingBottom: hp('3%'),
-    paddingTop: hp('5%'),
+    paddingTop: hp('3%'),
+    justifyContent: 'center',
   },
   registerTest1: {
     fontFamily: 'SofiaPro-Medium',
@@ -57,6 +57,9 @@ const styles = StyleSheet.create({
     fontFamily: 'SofiaPro-Medium',
     fontSize: wp('4%'),
     color: theme.colors.primary,
+  },
+  buttonContainer: {
+    marginTop: hp('28.5%'),
   },
 });
 

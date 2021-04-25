@@ -33,6 +33,7 @@ const RootNav = () => {
         setIsLoggedIn(false);
       }
     });
+    return;
   };
 
   if (!isReady)

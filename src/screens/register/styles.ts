@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
   headingContainer: {
     flexDirection: 'row',
     width: theme.constants.screenWidth,
-    marginVertical: hp('4%'),
+    marginVertical: hp('4.8%'),
   },
   heading: {
     fontFamily: 'SofiaPro-Black',

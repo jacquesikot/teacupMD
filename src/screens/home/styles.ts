@@ -32,6 +32,14 @@ const styles = StyleSheet.create({
     fontSize: wp('4%'),
     color: theme.colors.darkGrey,
   },
+  departmentSlider: {
+    width: '100%',
+    paddingLeft: theme.constants.screenPadding / 2,
+  },
+  productSlider: {
+    width: '100%',
+    paddingLeft: theme.constants.screenPadding / 2,
+  },
 });
 
 export default styles;

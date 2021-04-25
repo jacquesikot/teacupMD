@@ -8,23 +8,33 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     alignItems: 'center',
     padding: 15,
-    marginRight: 15,
+    marginRight: 23,
     marginBottom: 15,
-    borderWidth: 1,
   },
   label: {
     fontFamily: 'SofiaPro-Regular',
+    color: theme.colors.dark,
     fontSize: wp('3.8%'),
-    marginTop: 15,
+    marginTop: 27,
+    width: '100%',
   },
-  iconContainer: {
-    width: 20,
-    height: 20,
-    borderRadius: 10,
-    borderWidth: 1,
+  priceContainer: {
+    marginTop: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  priceText: {
+    fontFamily: 'SofiaPro-Bold',
+    color: theme.colors.dark,
+    fontSize: wp('3.8%'),
+  },
+  cart: {
+    width: 28,
+    height: 28,
+    borderRadius: 14,
+    backgroundColor: theme.colors.lightBlue,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 15,
   },
 });
 

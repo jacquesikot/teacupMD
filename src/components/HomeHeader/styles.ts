@@ -8,6 +8,7 @@ const styles = StyleSheet.create({
     marginTop: theme.constants.screenPadding,
     width: theme.constants.screenWidth,
     flexDirection: 'row',
+    paddingBottom: 20,
   },
   iconContainer: {
     flexDirection: 'row',

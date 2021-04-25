@@ -22,13 +22,13 @@ const HomeHeader = ({ notification, cart }: Props) => {
       </View>
       <View style={{ flex: 1 }} />
       <View style={styles.iconContainer}>
-        <TouchableOpacity onPress={notification}>
+        <TouchableOpacity onPress={cart}>
           <CartIcon2 />
           <View style={styles.alert1}>
             <Text>3</Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity onPress={cart}>
+        <TouchableOpacity onPress={notification}>
           <NotificationIcon />
           <View style={styles.alert2}>
             <Text>3</Text>

@@ -5,6 +5,7 @@ import styles from './styles';
 import { theme } from '../../components';
 import { AppNavParamList } from '../../types/navigationTypes';
 import { home, search, consult, profile } from '../../screens';
+import HomeNav from '../HomeNav/HomeNav';
 import {
   HomeIcon,
   SearchIcon,
@@ -27,7 +28,7 @@ const AppNav = () => {
     >
       <AppStack.Screen
         name="Home"
-        component={home}
+        component={HomeNav}
         options={{
           tabBarIcon: ({ color }) => {
             return <HomeIcon color={color} />;

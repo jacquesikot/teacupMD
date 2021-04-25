@@ -13,7 +13,11 @@ type AppNavParamList = {
   Profile: undefined;
 };
 
-type HomeNavParamList = {};
+type HomeNavParamList = {
+  Home: undefined;
+  Notifications: undefined;
+  Pharmacy: undefined;
+};
 
 type RootNavParamList = {
   AuthNav: undefined;

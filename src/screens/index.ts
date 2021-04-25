@@ -7,3 +7,5 @@ export { default as register } from './register/register';
 export { default as onboarding } from './onboarding/onboarding';
 export { default as forgotPassword } from './forgotPassword/forgotPassword';
 export { default as welcome } from './welcome/welcome';
+export { default as notifications } from './notifications/notifications';
+export { default as pharmacy } from './pharmacy/Pharmacy';
