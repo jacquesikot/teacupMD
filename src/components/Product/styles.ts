@@ -1,5 +1,8 @@
 import { StyleSheet } from 'react-native';
-import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 
 import { theme } from '..';
 
@@ -7,34 +10,48 @@ const styles = StyleSheet.create({
   container: {
     borderRadius: 15,
     alignItems: 'center',
-    padding: 15,
-    marginRight: 23,
-    marginBottom: 15,
+    padding: wp('3.7%'),
+    marginRight: wp('5%'),
+    marginBottom: hp('2.5%'),
   },
   label: {
     fontFamily: 'SofiaPro-Regular',
     color: theme.colors.dark,
     fontSize: wp('3.8%'),
-    marginTop: 27,
+    marginTop: hp('1.5%'),
     width: '100%',
+    height: hp('4%'),
   },
   priceContainer: {
-    marginTop: 10,
     flexDirection: 'row',
     alignItems: 'center',
+    marginTop: hp('1.5%'),
   },
   priceText: {
     fontFamily: 'SofiaPro-Bold',
     color: theme.colors.dark,
-    fontSize: wp('3.8%'),
+    fontSize: wp('4%'),
   },
   cart: {
-    width: 28,
-    height: 28,
-    borderRadius: 14,
+    width: wp('8%'),
+    height: wp('8%'),
+    borderRadius: wp('4%'),
     backgroundColor: theme.colors.lightBlue,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  sale: {
+    borderRadius: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: wp('1%'),
+    marginTop: hp('0.5%'),
+    alignSelf: 'flex-start',
+  },
+  saleText: {
+    fontFamily: 'SofiaPro-Medium',
+    fontSize: hp('2%'),
+    color: theme.colors.light,
   },
 });
 

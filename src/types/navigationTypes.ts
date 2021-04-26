@@ -1,3 +1,5 @@
+import { Product } from './product';
+
 type AuthParamList = {
   OnBoarding: undefined;
   Login: undefined;
@@ -17,6 +19,8 @@ type HomeNavParamList = {
   Home: undefined;
   Notifications: undefined;
   Pharmacy: undefined;
+  Cart: undefined;
+  ProductDetail: { product: Product };
 };
 
 type RootNavParamList = {

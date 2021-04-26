@@ -5,7 +5,6 @@ import {
   SafeAreaView,
   TouchableOpacity,
   FlatList,
-  TouchableWithoutFeedback,
   ScrollView,
 } from 'react-native';
 import { Feather as Icon } from '@expo/vector-icons';
@@ -20,13 +19,14 @@ import categorydata from './categoryData';
 import productData from './productData';
 import Product from '../../components/Product/Product';
 import { HomeNavParamList } from '../../types/navigationTypes';
+import { CommonActions } from '@react-navigation/routers';
 
 const Home = ({ navigation }: StackScreenProps<HomeNavParamList, 'Home'>) => {
   return (
     <SafeAreaView style={styles.container}>
       <HomeHeader
         notification={() => navigation.navigate('Notifications')}
-        cart={() => alert('cart')}
+        cart={() => navigation.navigate('Cart')}
       />
       <ScrollView
         contentContainerStyle={{ alignItems: 'center' }}
@@ -38,7 +38,13 @@ const Home = ({ navigation }: StackScreenProps<HomeNavParamList, 'Home'>) => {
           <Text style={styles.department}>Departments</Text>
           <TouchableOpacity
             style={styles.moreContainer}
-            onPress={() => alert('more departmnet')}
+            onPress={() =>
+              navigation.dispatch(
+                CommonActions.navigate({
+                  name: 'Consult',
+                })
+              )
+            }
           >
             <Text style={styles.more}>More</Text>
             <Icon name="chevron-right" color={theme.colors.darkGrey} />
@@ -51,13 +57,16 @@ const Home = ({ navigation }: StackScreenProps<HomeNavParamList, 'Home'>) => {
             showsHorizontalScrollIndicator={false}
             keyExtractor={(item: any) => item.id.toString()}
             renderItem={({ item }) => (
-              <TouchableWithoutFeedback onPress={() => alert('department')}>
+              <TouchableOpacity
+                activeOpacity={0.7}
+                onPress={() => alert('department')}
+              >
                 <CategoryItem
                   bgColor="light"
                   label={item.name}
                   image={item.image}
                 />
-              </TouchableWithoutFeedback>
+              </TouchableOpacity>
             )}
           />
         </View>
@@ -83,21 +92,17 @@ const Home = ({ navigation }: StackScreenProps<HomeNavParamList, 'Home'>) => {
                 label={item.title}
                 image={item.images[0]}
                 price={item.price}
+                sale={item.sale_price}
                 cart={() => alert('added to cart')}
-                details={() => alert('product pressed')}
+                details={() =>
+                  navigation.navigate('ProductDetail', { product: item })
+                }
               />
             )}
           />
         </View>
         <View style={styles.departmentContainer}>
           <Text style={styles.department}>Recenty Viewed</Text>
-          <TouchableOpacity
-            style={styles.moreContainer}
-            onPress={() => alert('more pharmacy')}
-          >
-            <Text style={styles.more}>More</Text>
-            <Icon name="chevron-right" color={theme.colors.darkGrey} />
-          </TouchableOpacity>
         </View>
         <View style={[styles.productSlider, { marginBottom: 30 }]}>
           <FlatList
@@ -111,8 +116,11 @@ const Home = ({ navigation }: StackScreenProps<HomeNavParamList, 'Home'>) => {
                 label={item.title}
                 image={item.images[0]}
                 price={item.price}
+                sale={item.sale_price}
                 cart={() => alert('added to cart')}
-                details={() => alert('product pressed')}
+                details={() =>
+                  navigation.navigate('ProductDetail', { product: item })
+                }
               />
             )}
           />

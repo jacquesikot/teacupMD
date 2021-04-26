@@ -45,7 +45,7 @@ const CategoryItem = ({
         },
       ]}
     >
-      <Image source={image} />
+      <Image source={image} style={{ width: 60, height: 60 }} />
       <View style={{ flex: 1 }} />
       <Text style={[styles.label, { color: labelColor }]}>{label}</Text>
       {icon && (

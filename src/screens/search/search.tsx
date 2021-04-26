@@ -49,7 +49,9 @@ const Search = () => {
         {searchHistory.map((h, index) => (
           <TouchableOpacity activeOpacity={0.7} onPress={() => setSearch(h)}>
             <View key={index} style={styles.historyItem}>
-              <Text style={styles.historyItemText}>{h}</Text>
+              <Text key={index} style={styles.historyItemText}>
+                {h}
+              </Text>
             </View>
           </TouchableOpacity>
         ))}

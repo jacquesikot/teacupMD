@@ -9,3 +9,5 @@ export { default as forgotPassword } from './forgotPassword/forgotPassword';
 export { default as welcome } from './welcome/welcome';
 export { default as notifications } from './notifications/notifications';
 export { default as pharmacy } from './pharmacy/Pharmacy';
+export { default as cart } from './cart/cart';
+export { default as productDetail } from './productDetail/productDetail';
