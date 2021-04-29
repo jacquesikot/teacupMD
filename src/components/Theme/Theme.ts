@@ -18,6 +18,7 @@ export default {
     lightBlue: '#b9d5ff',
     lightGreen: '#d5f3e8',
     orange: '#ff5630',
+    lightOrange: '#fff6e5',
   },
   constants: {
     masterWidth: width,

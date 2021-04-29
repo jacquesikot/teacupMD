@@ -26,6 +26,7 @@ const Pharmacy = ({
   return (
     <SafeAreaView style={styles.container}>
       <StackHeader
+        color="light"
         label="Pharmacy"
         back={() => navigation.goBack()}
         cart={() => alert('cart')}
@@ -81,6 +82,7 @@ const Pharmacy = ({
                 details={() => alert('product pressed')}
                 width={PRODUCT_WIDTH}
                 height={PRODUCT_HEIGHT}
+                sale={item.sale_price}
               />
             )}
           />

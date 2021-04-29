@@ -1,5 +1,11 @@
 import * as React from 'react';
-import Svg, { SvgProps, Path } from 'react-native-svg';
+import Svg, {
+  SvgProps,
+  Path,
+  Defs,
+  LinearGradient,
+  Stop,
+} from 'react-native-svg';
 
 export function CartIcon(props: SvgProps) {
   return (
@@ -14,6 +20,36 @@ export function CartIcon(props: SvgProps) {
         strokeMiterlimit={10}
         strokeLinecap="round"
       />
+    </Svg>
+  );
+}
+
+export function AlarmIcon(props: SvgProps) {
+  return (
+    <Svg {...props} width={24} height={28} viewBox="0 0 24 28" fill="none">
+      <Path
+        d="M11.555 0a9.05 9.05 0 00-9.177 8.915v7.935a.728.728 0 01-.144.43l-1.95 2.66a1.46 1.46 0 00.358 2.073c.261.18.571.275.888.274h20.052a1.506 1.506 0 001.53-1.485c0-.31-.1-.612-.283-.862l-1.95-2.66a.728.728 0 01-.146-.43V8.915A9.05 9.05 0 0011.556 0h-.001z"
+        fill="url(#prefix__paint0_linear)"
+      />
+      <Path
+        d="M13.826 24.798h-3.775a.602.602 0 100 1.204h3.775a.602.602 0 000-1.204z"
+        fill="#FCCE71"
+        stroke="#FCCE71"
+        strokeWidth={2}
+      />
+      <Defs>
+        <LinearGradient
+          id="prefix__paint0_linear"
+          x1={0.001}
+          y1={11.143}
+          x2={23.112}
+          y2={11.143}
+          gradientUnits="userSpaceOnUse"
+        >
+          <Stop stopColor="#FCCE71" />
+          <Stop offset={1} stopColor="#FFAB00" />
+        </LinearGradient>
+      </Defs>
     </Svg>
   );
 }

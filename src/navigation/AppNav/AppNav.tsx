@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { TouchableOpacity } from 'react-native';
+import * as Haptics from 'expo-haptics';
 
 import styles from './styles';
 import { theme } from '../../components';
@@ -12,6 +14,7 @@ import {
   ConsultIcon,
   ProfileIcon,
 } from '../../svg/homeNavIcons';
+import { StackScreenProps } from '@react-navigation/stack';
 
 const AppStack = createBottomTabNavigator<AppNavParamList>();
 
@@ -34,6 +37,11 @@ const AppNav = () => {
             return <HomeIcon color={color} />;
           },
         }}
+        listeners={() => ({
+          tabPress: (e) => {
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+          },
+        })}
       />
       <AppStack.Screen
         name="Search"
@@ -43,6 +51,11 @@ const AppNav = () => {
             return <SearchIcon color={color} />;
           },
         }}
+        listeners={() => ({
+          tabPress: (e) => {
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+          },
+        })}
       />
       <AppStack.Screen
         name="Consult"
@@ -52,6 +65,11 @@ const AppNav = () => {
             return <ConsultIcon color={color} />;
           },
         }}
+        listeners={() => ({
+          tabPress: (e) => {
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+          },
+        })}
       />
       <AppStack.Screen
         name="Profile"
@@ -61,6 +79,11 @@ const AppNav = () => {
             return <ProfileIcon color={color} />;
           },
         }}
+        listeners={() => ({
+          tabPress: (e) => {
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+          },
+        })}
       />
     </AppStack.Navigator>
   );

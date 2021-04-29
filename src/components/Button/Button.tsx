@@ -10,7 +10,7 @@ interface Props {
   height?: number;
   label: string;
   onPress: () => void;
-  type: 'primary' | 'secondary' | 'accent';
+  type: 'primary' | 'secondary' | 'light';
 }
 
 const Button = ({ width, height, label, onPress, type }: Props) => {
@@ -19,14 +19,14 @@ const Button = ({ width, height, label, onPress, type }: Props) => {
       ? theme.colors.primary
       : type === 'secondary'
       ? theme.colors.secondary
-      : theme.colors.white;
+      : theme.colors.light;
 
   const color =
     type === 'primary'
       ? theme.colors.white
       : type === 'secondary'
       ? theme.colors.white
-      : theme.colors.dark;
+      : theme.colors.darkGrey;
   return (
     <TouchableOpacity
       activeOpacity={0.9}
