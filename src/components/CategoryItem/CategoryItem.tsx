@@ -11,7 +11,7 @@ interface Props {
   height?: number;
   bgColor: 'light' | 'white';
   label: string;
-  image: number;
+  image: string;
   icon?: boolean;
   active?: boolean;
 }
@@ -45,7 +45,7 @@ const CategoryItem = ({
         },
       ]}
     >
-      <Image source={image} style={{ width: 60, height: 60 }} />
+      <Image source={{ uri: image }} style={{ width: 50, height: 50 }} />
       <View style={{ flex: 1 }} />
       <Text style={[styles.label, { color: labelColor }]}>{label}</Text>
       {icon && (

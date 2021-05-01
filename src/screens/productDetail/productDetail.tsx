@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -9,6 +9,8 @@ import {
 } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { Feather as Icon } from '@expo/vector-icons';
+import Toast from 'react-native-toast-message';
+import * as Haptics from 'expo-haptics';
 
 import StackHeader from '../../components/StackHeader/StackHeader';
 import { HomeNavParamList } from '../../types/navigationTypes';
@@ -17,13 +19,55 @@ import styles from './styles';
 import { theme } from '../../components';
 import Product from '../../components/Product/Product';
 import Button from '../../components/Button/Button';
-import productData from '../../screens/home/productData';
+import { useAppContext } from '../../context/context';
+import { ProductOrder } from '../../types/contexttypes';
+import productsApi from '../../firebase/products';
 
 const ProductDetail = ({
   navigation,
   route,
 }: StackScreenProps<HomeNavParamList, 'ProductDetail'>) => {
+  const [count, setCount] = useState<number>(1);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [products, setProducts] = useState<any[]>([]);
+
+  const { manageCart } = useAppContext();
+
+  const reduce = () => {
+    if (count === 1) return;
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    setCount(count - 1);
+  };
+
+  const add = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    setCount(count + 1);
+  };
+
   const { product } = route.params;
+
+  const handlecart = () => {
+    manageCart('ADD_TO_CART', product, count);
+    Toast.show({
+      text1: 'Cart',
+      text2: 'Product added to cart',
+      position: 'top',
+      visibilityTime: 3000,
+      autoHide: true,
+      type: 'success',
+    });
+  };
+
+  const loadProducts = async () => {
+    setLoading(true);
+    const products = await productsApi.getProducts();
+    setProducts(products);
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    loadProducts();
+  });
 
   return (
     <SafeAreaView style={styles.container}>
@@ -37,6 +81,7 @@ const ProductDetail = ({
             label="Drug Details"
             back={() => navigation.goBack()}
             color="light"
+            favorite={() => alert('favs')}
           />
           <ProductImgSlider images={product.images} />
         </View>
@@ -46,17 +91,30 @@ const ProductDetail = ({
           <View style={styles.priceContainer}>
             <View style={styles.priceItems}>
               <Text style={styles.priceText}>{'ZK ' + product.price}</Text>
-              <Text style={styles.salePrice}>{'ZK ' + product.sale_price}</Text>
+              {product.sale_price !== '' && (
+                <>
+                  <Text style={styles.salePrice}>
+                    {'ZK ' + product.sale_price}
+                  </Text>
+                  <Text style={styles.discount}>
+                    {(
+                      ((Number(product.price) - Number(product.sale_price)) /
+                        Number(product.price)) *
+                      100
+                    ).toFixed(0) + '% Off'}
+                  </Text>
+                </>
+              )}
             </View>
             <View style={{ flex: 1 }} />
             <View style={styles.counterContainer}>
-              <TouchableOpacity activeOpacity={0.6}>
+              <TouchableOpacity activeOpacity={0.6} onPress={() => reduce()}>
                 <View style={styles.counterBox}>
                   <Icon name="minus" size={20} color={theme.colors.primary} />
                 </View>
               </TouchableOpacity>
-              <Text style={styles.count}> 1 </Text>
-              <TouchableOpacity activeOpacity={0.6}>
+              <Text style={styles.count}> {count} </Text>
+              <TouchableOpacity activeOpacity={0.6} onPress={() => add()}>
                 <View style={styles.counterBox}>
                   <Icon name="plus" size={20} color={theme.colors.primary} />
                 </View>
@@ -89,13 +147,15 @@ const ProductDetail = ({
             {product.details}
           </Text>
           <View style={styles.line} />
-          <Text style={styles.nutritionText}>Nutritional Information</Text>
-          <Text style={styles.nutritionContent}>None</Text>
+          <Text style={styles.nutritionText}>How to use</Text>
+          <Text numberOfLines={4} style={styles.nutritionContent}>
+            {product.nutrition_details}
+          </Text>
           <View style={styles.line} />
           <Text style={styles.relatedProduct}>Related Products</Text>
           <View style={{ marginBottom: 30 }}>
             <FlatList
-              data={productData}
+              data={products}
               horizontal
               showsHorizontalScrollIndicator={false}
               keyExtractor={(item) => item.id.toString()}
@@ -108,7 +168,7 @@ const ProductDetail = ({
                   sale={item.sale_price}
                   cart={() => alert('added to cart')}
                   details={() =>
-                    navigation.navigate('ProductDetail', { product: item })
+                    navigation.push('ProductDetail', { product: item })
                   }
                 />
               )}
@@ -117,7 +177,7 @@ const ProductDetail = ({
           <Button
             type="primary"
             label="Add to Cart"
-            onPress={() => alert('added to cart')}
+            onPress={() => handlecart()}
             width={theme.constants.screenWidth}
           />
         </View>

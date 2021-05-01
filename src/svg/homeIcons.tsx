@@ -6,6 +6,7 @@ import Svg, {
   LinearGradient,
   Stop,
 } from 'react-native-svg';
+import { theme } from '../components';
 
 export function CartIcon(props: SvgProps) {
   return (
@@ -50,6 +51,29 @@ export function AlarmIcon(props: SvgProps) {
           <Stop offset={1} stopColor="#FFAB00" />
         </LinearGradient>
       </Defs>
+    </Svg>
+  );
+}
+
+export function SaveIcon({ saved, width, height }: any) {
+  const bgColor = saved ? theme.colors.red : theme.colors.light;
+  const borderColor = saved ? theme.colors.red : '#5E6C84';
+
+  return (
+    <Svg
+      width={width ? width : 15}
+      height={height ? height : 18}
+      viewBox="0 0 15 18"
+      fill="none"
+    >
+      <Path
+        d="M13.414 16.348l-5.536-2.9-.464-.243-.464.243-5.536 2.9V2c0-.551.449-1 1-1h10c.552 0 1 .449 1 1v14.348z"
+        fill={bgColor}
+      />
+      <Path
+        d="M12.414 14.695V2h-10v12.695l4.072-2.133.928-.486.928.486 4.072 2.133zm2 3.305l-7-3.666-7 3.666V2a2 2 0 012-2h10a2 2 0 012 2v16z"
+        fill={borderColor}
+      />
     </Svg>
   );
 }

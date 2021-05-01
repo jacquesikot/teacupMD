@@ -6,6 +6,7 @@ import Svg, {
   LinearGradient,
   Stop,
 } from 'react-native-svg';
+import { theme } from '../components';
 
 export function NotificationIcon(props: SvgProps) {
   return (
@@ -92,6 +93,13 @@ export function AboutUsIcon(props: SvgProps) {
         stroke="#5E6C84"
         strokeWidth={2}
         strokeMiterlimit={10}
+      />
+      <Path
+        d="M11.015 9.541v6.792"
+        stroke="#0065FF"
+        strokeWidth={2}
+        strokeMiterlimit={10}
+        strokeLinecap="round"
       />
     </Svg>
   );
@@ -292,6 +300,29 @@ export function CartIcon2(props: SvgProps) {
         strokeWidth={2}
         strokeMiterlimit={10}
         strokeLinecap="round"
+      />
+    </Svg>
+  );
+}
+
+export function LogoutIcon(props: SvgProps) {
+  return (
+    <Svg {...props} width={24} height={25} viewBox="0 0 24 25" fill="none">
+      <Path
+        d="M4.957 23.125a3.086 3.086 0 01-3.081-3.081V4.957a3.086 3.086 0 013.081-3.082h6.362a.688.688 0 000-1.375H4.957A4.462 4.462 0 00.5 4.957v15.086A4.462 4.462 0 004.957 24.5h6.26a.688.688 0 100-1.375h-6.26z"
+        fill="#5E6C84"
+        stroke="#5E6C84"
+        strokeWidth={0.8}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <Path
+        d="M18.175 7.643a.69.69 0 00-.973.973l3.2 3.2H6.45a.69.69 0 00-.66.957.689.689 0 00.66.418H20.4l-3.2 3.2a.69.69 0 00.746 1.126.671.671 0 00.222-.149l4.37-4.37a.685.685 0 00.005-.978l-4.368-4.377z"
+        fill={theme.colors.red}
+        stroke={theme.colors.red}
+        strokeWidth={0.8}
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </Svg>
   );

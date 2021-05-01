@@ -6,13 +6,14 @@ import styles from './styles';
 
 interface Props {
   visible: boolean;
+  opacity?: number;
 }
 
-const ActivityIndicator = ({ visible }: Props) => {
+const ActivityIndicator = ({ visible, opacity }: Props) => {
   if (!visible) return null;
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { opacity: opacity ? opacity : 0.8 }]}>
       <LottieView
         autoPlay
         loop

@@ -6,12 +6,13 @@ import {
 
 import { theme } from '..';
 
+export const MARGIN_RIGHT = wp('5%');
+
 const styles = StyleSheet.create({
   container: {
     borderRadius: 15,
     alignItems: 'center',
     padding: wp('3.7%'),
-    marginRight: wp('5%'),
     marginBottom: hp('2.5%'),
   },
   label: {
@@ -31,6 +32,11 @@ const styles = StyleSheet.create({
     fontFamily: 'SofiaPro-Bold',
     color: theme.colors.dark,
     fontSize: wp('4%'),
+  },
+  discountText: {
+    fontFamily: 'SofiaPro-Bold',
+    color: theme.colors.white,
+    fontSize: wp('3%'),
   },
   cart: {
     width: wp('8%'),

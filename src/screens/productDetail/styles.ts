@@ -164,6 +164,12 @@ const styles = StyleSheet.create({
     fontSize: wp('4%'),
     color: theme.colors.darkGrey,
   },
+  discount: {
+    fontFamily: 'SofiaPro-Medium',
+    color: theme.colors.red,
+    fontSize: wp('3.7%'),
+    marginLeft: wp('1%'),
+  },
 });
 
 export default styles;

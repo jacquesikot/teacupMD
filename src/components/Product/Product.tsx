@@ -1,20 +1,24 @@
 import React from 'react';
-import { View, Text, Image, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, Image } from 'react-native';
+// import { Image } from 'react-native-expo-image-cache';
 
 import { theme } from '..';
 import { CartIcon } from '../../svg/homeIcons';
-import styles from './styles';
+import { Trash } from '../../svg/searchIcons';
+import styles, { MARGIN_RIGHT } from './styles';
 
 interface Props {
   width?: number;
   height?: number;
   bgColor: 'light' | 'white';
   label: string;
-  image: number;
+  image: string;
   price: string;
   cart: any;
   details: any;
   sale: string;
+  saved?: boolean;
+  marginRight?: number;
 }
 
 const Product = ({
@@ -27,10 +31,17 @@ const Product = ({
   cart,
   details,
   sale,
+  saved,
+  marginRight,
 }: Props) => {
   const widthValue = width ? width : 145;
   const heightValue = height ? height : 185;
   const salePrice = Number(sale);
+  const marginRightValue = marginRight ? marginRight : MARGIN_RIGHT;
+
+  // const preview = {
+  //   uri: `https://via.placeholder.com/${imageSize}/ebf0ff`,
+  // };
   return (
     <View
       style={[
@@ -39,11 +50,12 @@ const Product = ({
           width: widthValue,
           height: heightValue,
           backgroundColor: theme.colors[bgColor],
+          marginRight: marginRightValue,
         },
       ]}
     >
       <TouchableOpacity activeOpacity={0.8} onPress={details}>
-        <Image source={image} style={{ width: 100, height: 65 }} />
+        <Image source={{ uri: image }} style={{ width: 100, height: 65 }} />
       </TouchableOpacity>
       <Text style={styles.label} numberOfLines={2}>
         {label}
@@ -67,20 +79,27 @@ const Product = ({
             ]}
           >
             <Text style={styles.saleText}>
-              {salePrice > 0 ? 'Sale' : 'Available'}
+              {salePrice > 0 ? (
+                <Text style={styles.discountText}>
+                  {(
+                    ((Number(price) - Number(sale)) / Number(price)) *
+                    100
+                  ).toFixed(0) + '% Off'}
+                </Text>
+              ) : (
+                'Available'
+              )}
             </Text>
           </View>
 
           <View style={styles.priceContainer}>
-            <Text style={styles.priceText}>ZK {price}</Text>
+            <Text style={styles.priceText}>ZK {sale ? sale : price}</Text>
             <View style={{ flex: 1 }} />
           </View>
         </View>
         <View style={{ flex: 1 }} />
         <TouchableOpacity onPress={cart}>
-          <View style={styles.cart}>
-            <CartIcon />
-          </View>
+          <View style={styles.cart}>{saved ? <Trash /> : <CartIcon />}</View>
         </TouchableOpacity>
       </View>
     </View>

@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    backgroundColor: theme.colors.light,
+    backgroundColor: theme.colors.white,
   },
   topContainer: {
     backgroundColor: theme.colors.white,
@@ -40,9 +40,11 @@ const styles = StyleSheet.create({
   },
   profileTextContainer: {
     flexDirection: 'column',
+    height: hp('6.8%'),
+    justifyContent: 'space-between',
   },
   profileText: {
-    fontFamily: 'SofiaPro-Medium',
+    fontFamily: 'SofiaPro-Bold',
     fontSize: wp('6%'),
     color: theme.colors.dark,
     marginBottom: 5,
@@ -54,7 +56,7 @@ const styles = StyleSheet.create({
   accountText: {
     fontFamily: 'SofiaPro-Medium',
     fontSize: wp('4%'),
-    color: theme.colors.grey,
+    color: theme.colors.darkGrey,
   },
   accountBottom: {
     flexDirection: 'row',
@@ -69,23 +71,15 @@ const styles = StyleSheet.create({
     marginRight: 50,
   },
   accountBottomText1: {
-    fontFamily: 'SofiaPro-Medium',
-    fontSize: wp('4%'),
+    fontFamily: 'SofiaPro-Bold',
+    fontSize: wp('5%'),
     color: theme.colors.dark,
-    marginBottom: 3,
+    marginBottom: hp('1%'),
   },
   accountBottomText2: {
     fontFamily: 'SofiaPro-Medium',
-    fontSize: wp('3.5%'),
+    fontSize: wp('4%'),
     color: theme.colors.grey,
-  },
-  services: {
-    width: theme.constants.screenWidth,
-    height: hp('18%'),
-    backgroundColor: theme.colors.white,
-    borderRadius: 20,
-    marginTop: 35,
-    padding: 20,
   },
   others: {
     width: theme.constants.screenWidth,
@@ -103,30 +97,19 @@ const styles = StyleSheet.create({
   },
   othersContainer: {
     flexDirection: 'column',
+    alignItems: 'center',
   },
   othersItem: {
     flexDirection: 'row',
-    marginBottom: 30,
+    marginBottom: hp('5%'),
+    alignItems: 'center',
+    width: theme.constants.screenWidth - 30,
   },
   othersText: {
     fontFamily: 'SofiaPro-Medium',
     fontSize: wp('4%'),
     color: theme.colors.darkGrey,
-    marginLeft: 10,
-  },
-  serviceContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  serviceItem: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  serviceItemText: {
-    fontFamily: 'SofiaPro-Medium',
-    fontSize: wp('3.5%'),
-    color: theme.colors.darkGrey,
-    marginTop: 5,
+    marginLeft: wp('5%'),
   },
 });
 

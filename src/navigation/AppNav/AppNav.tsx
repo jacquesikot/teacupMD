@@ -6,8 +6,9 @@ import * as Haptics from 'expo-haptics';
 import styles from './styles';
 import { theme } from '../../components';
 import { AppNavParamList } from '../../types/navigationTypes';
-import { home, search, consult, profile } from '../../screens';
+import { search, consult } from '../../screens';
 import HomeNav from '../HomeNav/HomeNav';
+import ProfileNav from '../ProfileNav/ProfileNav';
 import {
   HomeIcon,
   SearchIcon,
@@ -73,11 +74,12 @@ const AppNav = () => {
       />
       <AppStack.Screen
         name="Profile"
-        component={profile}
+        component={ProfileNav}
         options={{
           tabBarIcon: ({ color }) => {
             return <ProfileIcon color={color} />;
           },
+          unmountOnBlur: true,
         }}
         listeners={() => ({
           tabPress: (e) => {

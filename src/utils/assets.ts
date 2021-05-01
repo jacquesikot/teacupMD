@@ -19,6 +19,7 @@ const assets = [
   require('../../assets/images/product2.png'),
   require('../../assets/images/urology.png'),
   require('../../assets/images/product.png'),
+  require('../../assets/images/emptyCart.png'),
 ];
 
 export default assets;

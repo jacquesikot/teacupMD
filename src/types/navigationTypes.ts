@@ -1,4 +1,5 @@
 import { Product } from './product';
+import deliveryAddress, { DeliveryAddress } from './deliveryAddress';
 
 type AuthParamList = {
   OnBoarding: undefined;
@@ -28,4 +29,20 @@ type RootNavParamList = {
   AppNav: undefined;
 };
 
-export { AuthParamList, AppNavParamList, HomeNavParamList, RootNavParamList };
+type ProfileNavParamList = {
+  Profile: undefined;
+  Saved: undefined;
+  Addresses: undefined;
+  CustomerService: undefined;
+  Notifications: undefined;
+  EditAddress: { address: DeliveryAddress };
+  ProductDetail: { product: Product };
+};
+
+export {
+  AuthParamList,
+  AppNavParamList,
+  HomeNavParamList,
+  RootNavParamList,
+  ProfileNavParamList,
+};

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Svg, { SvgProps, Path } from 'react-native-svg';
+import { theme } from '../components';
 
 export function SearchIcon(props: SvgProps) {
   return (
@@ -38,7 +39,7 @@ export function Trash(props: SvgProps) {
     >
       <Path
         d="M10.622 1.867h-8.4a1.4 1.4 0 00-1.4 1.4v.469h11.2v-.467a1.4 1.4 0 00-1.4-1.4v-.002zM8.176.936l.206 1.473H4.46L4.666.936h3.51zm.112-.934H4.554a.831.831 0 00-.8.694l-.273 1.953a.594.594 0 00.6.693h4.668a.593.593 0 00.6-.694L9.076.695a.83.83 0 00-.8-.693h.012zm2.555 4.668H1.974a.839.839 0 00-.849.93l.765 8.41a1.045 1.045 0 001.018.93h7a1.045 1.045 0 001.018-.93l.765-8.41a.84.84 0 00-.849-.93h.001zm-6.301 8.4h-1.4l-.467-6.535h1.867v6.535zm2.8 0H5.475V6.536h1.867v6.534zm2.334 0h-1.4V6.536h1.867l-.467 6.534z"
-        fill="#8993A4"
+        fill={props.color ? props.color : '#8993A4'}
       />
     </Svg>
   );

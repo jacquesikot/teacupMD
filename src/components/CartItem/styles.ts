@@ -36,8 +36,9 @@ const styles = StyleSheet.create({
   },
   trashContainer: {
     marginLeft: wp('9%'),
-    height: '100%',
-    marginTop: hp('2%'),
+    height: '30%',
+    alignSelf: 'flex-start',
+    marginTop: hp('1%'),
   },
   counterContainer: {
     flexDirection: 'row',

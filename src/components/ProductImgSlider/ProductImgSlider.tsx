@@ -32,7 +32,7 @@ const ProductImgSlider = ({ images }: Props) => {
         }}
       >
         {images.map((i: any, index: number) => (
-          <Image key={index} source={i} style={styles.image} />
+          <Image key={index} source={{ uri: i }} style={styles.image} />
         ))}
       </Animated.ScrollView>
       <View style={styles.pagination}>

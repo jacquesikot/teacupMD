@@ -1,34 +1,105 @@
-import React, { useEffect } from 'react';
-import { View, Text, SafeAreaView } from 'react-native';
+import React, { useRef, useEffect, useState, useCallback } from 'react';
+import { View, Text, SafeAreaView, Animated } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Feather as Icon } from '@expo/vector-icons';
+import { useIsFocused } from '@react-navigation/native';
 
 import {
   FavoriteIcon,
   NotificationIcon,
-  DoctorIcon,
   PatientIcon,
   CustomerServiceIcon,
-  CartIcon,
-  ConsultIcon,
-  LectureIcon,
-  AppointmentIcon,
+  LogoutIcon,
+  AboutUsIcon,
 } from '../../svg/profileIcons';
 
 import styles from './styles';
 import { theme } from '../../components';
 import authFunc from '../../firebase/auth';
 import { useAppContext } from '../../context/context';
+import { StackScreenProps } from '@react-navigation/stack';
+import { ProfileNavParamList } from '../../types/navigationTypes';
 
-const Profile = () => {
+const Profile = ({
+  navigation,
+}: StackScreenProps<ProfileNavParamList, 'Profile'>) => {
   const { user } = useAppContext();
+
+  const x = useRef(new Animated.Value(0)).current;
+  const x1 = useRef(new Animated.Value(0)).current;
+  const x2 = useRef(new Animated.Value(0)).current;
+  const x3 = useRef(new Animated.Value(0)).current;
+  const x4 = useRef(new Animated.Value(0)).current;
+
+  const animate = () => {
+    return Animated.parallel([
+      Animated.timing(x, {
+        useNativeDriver: true,
+        toValue: 1,
+        duration: 700,
+      }),
+      Animated.timing(x1, {
+        useNativeDriver: true,
+        toValue: 1,
+        duration: 800,
+      }),
+      Animated.timing(x2, {
+        useNativeDriver: true,
+        toValue: 1,
+        duration: 900,
+      }),
+      Animated.timing(x3, {
+        useNativeDriver: true,
+        toValue: 1,
+        duration: 1000,
+      }),
+      Animated.timing(x4, {
+        useNativeDriver: true,
+        toValue: 1,
+        duration: 1100,
+      }),
+    ]).start();
+  };
+
+  const isFocused = useIsFocused();
+
+  if (isFocused) animate();
+
+  const translateX = x.interpolate({
+    inputRange: [0, 1],
+    outputRange: [-theme.constants.screenWidth, 0],
+  });
+
+  const translateX1 = x1.interpolate({
+    inputRange: [0, 1],
+    outputRange: [-theme.constants.screenWidth, 0],
+  });
+
+  const translateX2 = x2.interpolate({
+    inputRange: [0, 1],
+    outputRange: [-theme.constants.screenWidth, 0],
+  });
+
+  const translateX3 = x3.interpolate({
+    inputRange: [0, 1],
+    outputRange: [-theme.constants.screenWidth, 0],
+  });
+
+  const translateX4 = x4.interpolate({
+    inputRange: [0, 1],
+    outputRange: [-theme.constants.screenWidth, 0],
+  });
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.topContainer}>
         <View style={styles.notificationContainer}>
-          <TouchableOpacity onPress={() => true}>
-            <NotificationIcon />
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Notifications')}
+          >
+            <Animated.View style={{ opacity: x }}>
+              <NotificationIcon />
+            </Animated.View>
           </TouchableOpacity>
         </View>
         <View style={styles.profileContainer}>
@@ -36,12 +107,12 @@ const Profile = () => {
           <View style={styles.profileTextContainer}>
             <Text style={styles.profileText}> {user.displayName} </Text>
             <View style={styles.account}>
-              <Text style={styles.accountText}>Account</Text>
+              <Animated.Text style={styles.accountText}>Account</Animated.Text>
               <Icon name="chevron-right" size={15} color={theme.colors.grey} />
             </View>
           </View>
         </View>
-        <View style={styles.accountBottom}>
+        <Animated.View style={[styles.accountBottom, { opacity: x }]}>
           <View style={styles.accountBottomItem}>
             <Text style={styles.accountBottomText1}>3</Text>
             <Text style={styles.accountBottomText2}>Orders</Text>
@@ -52,74 +123,54 @@ const Profile = () => {
           </View>
           <View style={styles.accountBottomItem}>
             <Text style={styles.accountBottomText1}>10</Text>
-            <Text style={styles.accountBottomText2}>Cart</Text>
+            <Text style={styles.accountBottomText2}>Saved</Text>
           </View>
-        </View>
-        <View style={styles.services}>
-          <Text style={styles.heading}>Service</Text>
-          <View style={styles.serviceContainer}>
-            <TouchableOpacity style={styles.serviceItem}>
-              <CartIcon />
-              <Text style={styles.serviceItemText}>Cart</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.serviceItem}>
-              <ConsultIcon />
-              <Text style={styles.serviceItemText}>Consultation</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.serviceItem}>
-              <AppointmentIcon />
-              <Text style={styles.serviceItemText}>Appointment</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.serviceItem}>
-              <LectureIcon />
-              <Text style={styles.serviceItemText}>Lectures</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
+        </Animated.View>
         <View style={styles.others}>
-          <Text style={styles.heading}>Others</Text>
           <View style={styles.othersContainer}>
-            <TouchableOpacity onPress={() => true} style={styles.othersItem}>
-              <>
+            <TouchableOpacity onPress={() => navigation.navigate('Saved')}>
+              <Animated.View
+                style={[
+                  styles.othersItem,
+                  { transform: [{ translateX: translateX }], opacity: x },
+                ]}
+              >
                 <FavoriteIcon />
-                <Text style={styles.othersText}>My Favorite</Text>
+                <Text style={styles.othersText}>Saved</Text>
                 <View style={{ flex: 1 }} />
                 <Icon
                   name="chevron-right"
                   size={20}
                   color={theme.colors.grey}
                 />
-              </>
+              </Animated.View>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => true} style={styles.othersItem}>
-              <>
-                <DoctorIcon />
-                <Text style={styles.othersText}>Private Doctors</Text>
-                <View style={{ flex: 1 }} />
-                <Icon
-                  name="chevron-right"
-                  size={20}
-                  color={theme.colors.grey}
-                />
-              </>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => true} style={styles.othersItem}>
-              <>
+            <TouchableOpacity onPress={() => navigation.navigate('Addresses')}>
+              <Animated.View
+                style={[
+                  styles.othersItem,
+                  { transform: [{ translateX: translateX1 }], opacity: x1 },
+                ]}
+              >
                 <PatientIcon />
-                <Text style={styles.othersText}>Patient Information</Text>
+                <Text style={styles.othersText}>My Addresses</Text>
                 <View style={{ flex: 1 }} />
                 <Icon
                   name="chevron-right"
                   size={20}
                   color={theme.colors.grey}
                 />
-              </>
+              </Animated.View>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={async () => authFunc.logOutUser()}
-              style={styles.othersItem}
+              onPress={async () => navigation.navigate('CustomerService')}
             >
-              <>
+              <Animated.View
+                style={[
+                  styles.othersItem,
+                  { transform: [{ translateX: translateX2 }], opacity: x2 },
+                ]}
+              >
                 <CustomerServiceIcon />
                 <Text style={styles.othersText}>Customer Service</Text>
                 <View style={{ flex: 1 }} />
@@ -128,7 +179,44 @@ const Profile = () => {
                   size={20}
                   color={theme.colors.grey}
                 />
-              </>
+              </Animated.View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => true} style={styles.othersItem}>
+              <Animated.View
+                style={[
+                  styles.othersItem,
+                  { transform: [{ translateX: translateX3 }], opacity: x3 },
+                ]}
+              >
+                <AboutUsIcon />
+                <Text style={styles.othersText}>About Us</Text>
+                <View style={{ flex: 1 }} />
+                <Icon
+                  name="chevron-right"
+                  size={20}
+                  color={theme.colors.grey}
+                />
+              </Animated.View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={async () => authFunc.logOutUser()}
+              style={styles.othersItem}
+            >
+              <Animated.View
+                style={[
+                  styles.othersItem,
+                  { transform: [{ translateX: translateX4 }], opacity: x4 },
+                ]}
+              >
+                <LogoutIcon />
+                <Text style={styles.othersText}>Log out</Text>
+                <View style={{ flex: 1 }} />
+                <Icon
+                  name="chevron-right"
+                  size={20}
+                  color={theme.colors.grey}
+                />
+              </Animated.View>
             </TouchableOpacity>
           </View>
         </View>

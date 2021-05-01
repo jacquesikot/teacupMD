@@ -7,6 +7,7 @@ import {
   Image,
   TouchableOpacity,
   FlatList,
+  ScrollView,
 } from 'react-native';
 import StackHeader from '../../components/StackHeader/StackHeader';
 import { HomeNavParamList } from '../../types/navigationTypes';
@@ -15,7 +16,6 @@ import styles, { WIDTH, HEIGHT, PRODUCT_WIDTH, PRODUCT_HEIGHT } from './styles';
 import typeData from './typeData';
 import CategoryItem from '../../components/CategoryItem/CategoryItem';
 import Product from '../../components/Product/Product';
-import { ScrollView } from 'react-native-gesture-handler';
 import productData from '../home/productData';
 
 const Pharmacy = ({

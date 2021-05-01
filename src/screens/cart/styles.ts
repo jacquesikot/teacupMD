@@ -19,14 +19,14 @@ const styles = StyleSheet.create({
     width: theme.constants.screenWidth,
   },
   productContainer: {
-    height: hp('35%'),
+    height: hp('38%'),
   },
   totalText: {
     fontFamily: 'SofiaPro-Bold',
     fontSize: wp('6%'),
     color: theme.colors.dark,
     width: theme.constants.screenWidth,
-    marginTop: hp('5%'),
+    marginTop: hp('2%'),
     marginBottom: hp('1%'),
   },
   summaryContainer: {
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
   summaryItem: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: hp('2%'),
+    marginBottom: hp('1.5%'),
   },
   summaryText: {
     fontFamily: 'SofiaPro-Medium',

@@ -1,14 +1,14 @@
 {
   "expo": {
-    "name": "ePharma-mobile-apps",
-    "slug": "ePharma-mobile-apps",
+    "name": "teacup-md",
+    "slug": "teacup-md",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#0065ff"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -22,7 +22,7 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
+        "backgroundColor": "#0065ff"
       }
     },
     "web": {

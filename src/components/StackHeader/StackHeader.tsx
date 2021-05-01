@@ -4,7 +4,8 @@ import { Feather as Icon } from '@expo/vector-icons';
 
 import styles from './styles';
 import { theme } from '..';
-import { CartIcon2, FavoriteIcon } from '../../svg/profileIcons';
+import { CartIcon2 } from '../../svg/profileIcons';
+import { SaveIcon } from '../../svg/homeIcons';
 
 interface Props {
   label?: string;
@@ -35,7 +36,7 @@ const StackHeader = ({ label, cart, back, favorite, color }: Props) => {
             </View>
           </>
         ) : favorite ? (
-          <FavoriteIcon />
+          <SaveIcon />
         ) : null}
       </TouchableOpacity>
     </View>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   View,
   Text,
@@ -9,24 +9,45 @@ import {
 } from 'react-native';
 import { Feather as Icon } from '@expo/vector-icons';
 import { StackScreenProps } from '@react-navigation/stack';
+import { CommonActions } from '@react-navigation/routers';
+import * as Haptics from 'expo-haptics';
+import Toast from 'react-native-toast-message';
 
 import styles from './styles';
 import HomeHeader from '../../components/HomeHeader/HomeHeader';
 import HomeBanner from '../../components/HomeBanner/HomeBanner';
+import ActivityIndicator from '../../components/ActivityIndicator/ActivityIndicator';
 import { theme } from '../../components';
 import CategoryItem from '../../components/CategoryItem/CategoryItem';
-import categorydata from './categoryData';
-import productData from './productData';
 import Product from '../../components/Product/Product';
 import { HomeNavParamList } from '../../types/navigationTypes';
-import { CommonActions } from '@react-navigation/routers';
+import useHome from './useHome';
+import { useAppContext } from '../../context/context';
 
 const Home = ({ navigation }: StackScreenProps<HomeNavParamList, 'Home'>) => {
+  const { products, departments, loading, error } = useHome();
+
+  const { manageCart } = useAppContext();
+
+  const addToCart = (product: any) => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    manageCart('ADD_TO_CART', product, 1);
+    Toast.show({
+      text1: 'Cart',
+      text2: 'Product added to cart',
+      position: 'top',
+      visibilityTime: 3000,
+      autoHide: true,
+      type: 'success',
+    });
+  };
+
   return (
     <SafeAreaView style={styles.container}>
+      <ActivityIndicator visible={loading} opacity={1} />
       <HomeHeader
         notification={() => navigation.navigate('Notifications')}
-        cart={() => navigation.navigate('Cart')}
+        cartOnPress={() => navigation.navigate('Cart')}
       />
       <ScrollView
         contentContainerStyle={{ alignItems: 'center' }}
@@ -52,19 +73,19 @@ const Home = ({ navigation }: StackScreenProps<HomeNavParamList, 'Home'>) => {
         </View>
         <View style={styles.departmentSlider}>
           <FlatList
-            data={categorydata}
+            data={departments}
             horizontal
             showsHorizontalScrollIndicator={false}
             keyExtractor={(item: any) => item.id.toString()}
             renderItem={({ item }) => (
               <TouchableOpacity
                 activeOpacity={0.7}
-                onPress={() => alert('department')}
+                onPress={() => alert('Departments coming soon')}
               >
                 <CategoryItem
                   bgColor="light"
                   label={item.name}
-                  image={item.image}
+                  image={item.img_url}
                 />
               </TouchableOpacity>
             )}
@@ -82,7 +103,7 @@ const Home = ({ navigation }: StackScreenProps<HomeNavParamList, 'Home'>) => {
         </View>
         <View style={styles.productSlider}>
           <FlatList
-            data={productData}
+            data={products}
             horizontal
             showsHorizontalScrollIndicator={false}
             keyExtractor={(item) => item.id.toString()}
@@ -93,7 +114,7 @@ const Home = ({ navigation }: StackScreenProps<HomeNavParamList, 'Home'>) => {
                 image={item.images[0]}
                 price={item.price}
                 sale={item.sale_price}
-                cart={() => alert('added to cart')}
+                cart={() => addToCart(item)}
                 details={() =>
                   navigation.navigate('ProductDetail', { product: item })
                 }
@@ -106,7 +127,7 @@ const Home = ({ navigation }: StackScreenProps<HomeNavParamList, 'Home'>) => {
         </View>
         <View style={[styles.productSlider, { marginBottom: 30 }]}>
           <FlatList
-            data={productData}
+            data={products}
             horizontal
             showsHorizontalScrollIndicator={false}
             keyExtractor={(item) => item.id.toString()}
@@ -117,7 +138,7 @@ const Home = ({ navigation }: StackScreenProps<HomeNavParamList, 'Home'>) => {
                 image={item.images[0]}
                 price={item.price}
                 sale={item.sale_price}
-                cart={() => alert('added to cart')}
+                cart={() => addToCart(item)}
                 details={() =>
                   navigation.navigate('ProductDetail', { product: item })
                 }
