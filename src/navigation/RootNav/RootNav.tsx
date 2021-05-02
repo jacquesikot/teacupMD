@@ -24,6 +24,7 @@ const RootNav = () => {
         const userDets = await authFunc.getUserDetails();
         if (userDets) {
           const data = {
+            id: userDets.uid,
             displayName: userDets.displayName,
             email: userDets.email,
           };

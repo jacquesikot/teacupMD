@@ -1,19 +1,30 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
   SafeAreaView,
   FlatList,
-  TouchableWithoutFeedback,
+  TouchableOpacity,
 } from 'react-native';
 
 import styles, { WIDTH, HEIGHT } from './styles';
 import ConsultTab from '../../components/ConsultTab/ConsultTab';
 import CategoryItem from '../../components/CategoryItem/CategoryItem';
 import tabData from './tabData';
-import categoryData from '../home/categoryData';
+import departmentsApi from '../../firebase/departments';
 
 const Consult = () => {
+  const [departments, setDepartments] = useState<any[]>([]);
+
+  const getDepartments = async () => {
+    const dept = await departmentsApi.getDepartments();
+    setDepartments(dept);
+  };
+
+  useEffect(() => {
+    getDepartments();
+  }, []);
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headingContainer}>
@@ -34,21 +45,24 @@ const Consult = () => {
       <Text style={styles.clinicalText}>Clinical Departments</Text>
       <View style={styles.grid}>
         <FlatList
-          data={categoryData}
+          data={departments}
           numColumns={3}
           bounces={false}
           showsHorizontalScrollIndicator={false}
           keyExtractor={(item: any) => item.id.toString()}
           renderItem={({ item }) => (
-            <TouchableWithoutFeedback onPress={() => alert('department')}>
+            <TouchableOpacity
+              activeOpacity={0.7}
+              onPress={() => alert('Consultation comming soon')}
+            >
               <CategoryItem
                 bgColor="light"
                 label={item.name}
-                image={item.image}
+                image={item.img_url}
                 width={WIDTH}
                 height={HEIGHT}
               />
-            </TouchableWithoutFeedback>
+            </TouchableOpacity>
           )}
         />
       </View>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -7,23 +7,22 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { SearchIcon, Trash } from '../../svg/searchIcons';
-
+import searchApi from '../../firebase/userSearch';
+import { useAppContext } from '../../context/context';
 import styles from './styles';
 
-const searchHistory = [
-  'Cold',
-  'fever',
-  'Sleep',
-  'dizziness',
-  'fish',
-  'diabetes',
-  'Stomachache',
-  'malaria',
-  'high blood pressure',
-];
-
 const Search = () => {
-  const [search, setSearch] = useState<string>('');
+  const [recentSearch, setRecentSearch] = useState<any[]>([]);
+  const { user } = useAppContext();
+
+  const getRecentSearch = async () => {
+    const result = await searchApi.getRecentSearch(user.id ? user.id : '');
+    setRecentSearch(result);
+  };
+
+  useEffect(() => {
+    getRecentSearch();
+  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -46,11 +45,11 @@ const Search = () => {
         </TouchableOpacity>
       </View>
       <View style={styles.searchHistory}>
-        {searchHistory.map((h, index) => (
-          <TouchableOpacity activeOpacity={0.7} onPress={() => setSearch(h)}>
-            <View key={index} style={styles.historyItem}>
-              <Text key={index} style={styles.historyItemText}>
-                {h}
+        {recentSearch.map((s) => (
+          <TouchableOpacity activeOpacity={0.7} onPress={() => true}>
+            <View key={s.id} style={styles.historyItem}>
+              <Text key={s.id} style={styles.historyItemText}>
+                {s.search_text}
               </Text>
             </View>
           </TouchableOpacity>

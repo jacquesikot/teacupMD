@@ -14,6 +14,7 @@ interface ProviderProps {
 
 const Context = createContext<AppContext>({
   user: {
+    id: '',
     displayName: '',
     email: '',
   },
@@ -26,6 +27,7 @@ const Context = createContext<AppContext>({
 
 const Provider = ({ children }: ProviderProps) => {
   const [user, setUser] = useState<User>({
+    id: '',
     displayName: '',
     email: '',
   });
