@@ -11,11 +11,19 @@ interface Props {
   label?: string;
   cart?: any;
   favorite?: any;
+  isFavorite?: boolean;
   back: any;
   color: 'light' | 'white';
 }
 
-const StackHeader = ({ label, cart, back, favorite, color }: Props) => {
+const StackHeader = ({
+  label,
+  cart,
+  back,
+  favorite,
+  color,
+  isFavorite,
+}: Props) => {
   return (
     <View style={[styles.container, { backgroundColor: theme.colors[color] }]}>
       <TouchableOpacity onPress={back}>
@@ -27,7 +35,8 @@ const StackHeader = ({ label, cart, back, favorite, color }: Props) => {
         />
       </TouchableOpacity>
       {label && <Text style={styles.label}>{label}</Text>}
-      <TouchableOpacity onPress={cart ? cart : favorite}>
+
+      <View>
         {cart ? (
           <>
             <CartIcon2 />
@@ -36,9 +45,17 @@ const StackHeader = ({ label, cart, back, favorite, color }: Props) => {
             </View>
           </>
         ) : favorite ? (
-          <SaveIcon />
+          isFavorite ? (
+            <TouchableOpacity style={{ padding: 5 }} onPress={favorite}>
+              <SaveIcon saved />
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity style={{ padding: 5 }} onPress={favorite}>
+              <SaveIcon />
+            </TouchableOpacity>
+          )
         ) : null}
-      </TouchableOpacity>
+      </View>
     </View>
   );
 };

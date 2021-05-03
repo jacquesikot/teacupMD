@@ -17,6 +17,20 @@ const getUserFavorites = async (user_id: String) => {
   return data;
 };
 
+const listenForFavorites = async (user_id: string) => {
+  const data: any = [];
+  db.collection('user_favorites')
+    .where('user_id', '==', user_id)
+    .onSnapshot((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        data.push({
+          ...doc.data(),
+        });
+      });
+    });
+  return data;
+};
+
 interface FavoriteData {
   category: string[];
   details: string;
@@ -54,11 +68,12 @@ const addToFavorites = async ({
 };
 
 const deleteFavorite = async (favorite_id: string) => {
-  await db.collection('uer_favorite').doc(favorite_id).delete();
+  await db.collection('user_favorite').doc(favorite_id).delete();
 };
 
 export default {
   getUserFavorites,
   addToFavorites,
   deleteFavorite,
+  listenForFavorites,
 };

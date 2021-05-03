@@ -6,7 +6,6 @@ import Button from '../Button/Button';
 import styles from './styles';
 
 interface Props {
-  type: 'emptyCart' | 'orderSuccess' | 'orderFailed';
   image: number;
   heading: string;
   subtext: string;

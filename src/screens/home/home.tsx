@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
   View,
   Text,
@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   FlatList,
   ScrollView,
+  Image,
 } from 'react-native';
 import { Feather as Icon } from '@expo/vector-icons';
 import { StackScreenProps } from '@react-navigation/stack';
@@ -54,7 +55,10 @@ const Home = ({ navigation }: StackScreenProps<HomeNavParamList, 'Home'>) => {
         showsVerticalScrollIndicator={false}
         bounces={false}
       >
-        <HomeBanner />
+        <Image
+          source={require('../../../assets/images/pharmaBanner.png')}
+          style={styles.image}
+        />
         <View style={styles.departmentContainer}>
           <Text style={styles.department}>Departments</Text>
           <TouchableOpacity

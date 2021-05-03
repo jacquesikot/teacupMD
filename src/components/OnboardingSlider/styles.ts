@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     width: SCREEN_WIDTH,
   },
   topText: {
-    fontFamily: 'SofiaPro-Medium',
+    fontFamily: 'SofiaPro-Bold',
     fontSize: wp('7%'),
     color: theme.colors.dark,
     textAlign: 'center',
@@ -41,6 +41,7 @@ const styles = StyleSheet.create({
     fontSize: wp('5%'),
     color: theme.colors.darkGrey,
     textAlign: 'center',
+    lineHeight: 30,
     marginBottom: hp('1%'),
   },
 });

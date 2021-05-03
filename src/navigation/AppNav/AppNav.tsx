@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { TouchableOpacity } from 'react-native';
 import * as Haptics from 'expo-haptics';
 
 import styles from './styles';
@@ -15,7 +14,6 @@ import {
   ConsultIcon,
   ProfileIcon,
 } from '../../svg/homeNavIcons';
-import { StackScreenProps } from '@react-navigation/stack';
 
 const AppStack = createBottomTabNavigator<AppNavParamList>();
 

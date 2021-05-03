@@ -17,8 +17,9 @@ const useHome = () => {
       setDepartments(departments);
       setProducts(products);
       setLoading(false);
+      return;
     } catch (error) {
-      setError(true);
+      return setError(true);
     }
   };
 

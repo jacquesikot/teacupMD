@@ -4,7 +4,7 @@ const data = [
     image: require('../../../assets/images/onboarding1.png'),
     topText: 'Speak With A Specialist',
     bottomText:
-      'No forms, guarantors, processing fees or tidious sign up process.',
+      'Access the best and affordable medical consultants right from your mobile device',
     last: false,
   },
   {
@@ -12,7 +12,7 @@ const data = [
     image: require('../../../assets/images/onboarding2.png'),
     topText: 'Amazing Discounts & Offers',
     bottomText:
-      'You can easily send money to anyone, pay all your bills, and recharge airtime, and more.',
+      'You get the best prices everytime, plus amazing reqards and loyalty bonuses',
     last: false,
   },
   {
@@ -20,7 +20,7 @@ const data = [
     image: require('../../../assets/images/onboarding3.png'),
     topText: 'Delivery in 30 Min',
     bottomText:
-      'For every loan, payment or purchase you make with us, you get points that allow you do more.',
+      'Place your order and get your products delivered immediately, no delays',
     last: true,
   },
 ];

@@ -77,7 +77,6 @@ const Cart = ({ navigation }: StackScreenProps<HomeNavParamList>) => {
         </>
       ) : (
         <StatusScreen
-          type="emptyCart"
           image={require('../../../assets/images/emptyCart.png')}
           heading="Oppss!"
           subtext="Sorry, you have no product in your cart"

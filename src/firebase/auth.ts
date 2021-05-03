@@ -6,6 +6,7 @@ const registerUser = async (
   displayName: string
 ) => {
   await firebase.auth().createUserWithEmailAndPassword(email, password);
+  await firebase.auth().signInWithEmailAndPassword(email, password);
   const user = firebase.auth().currentUser;
   if (user) {
     await user.updateProfile({

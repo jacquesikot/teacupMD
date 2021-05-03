@@ -29,7 +29,7 @@ const useLogin = () => {
         visibilityTime: 7000,
         autoHide: true,
         text1: 'Login Error',
-        text2: error.message,
+        text2: 'Error loggin in',
       });
     }
   };

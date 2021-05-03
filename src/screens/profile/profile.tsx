@@ -19,11 +19,14 @@ import authFunc from '../../firebase/auth';
 import { useAppContext } from '../../context/context';
 import { StackScreenProps } from '@react-navigation/stack';
 import { ProfileNavParamList } from '../../types/navigationTypes';
+import FavoritesApi from '../../firebase/userFavorite';
 
 const Profile = ({
   navigation,
 }: StackScreenProps<ProfileNavParamList, 'Profile'>) => {
   const { user } = useAppContext();
+
+  const [favoriteCount, setFavoriteCount] = useState<number>(0);
 
   const x = useRef(new Animated.Value(0)).current;
   const x1 = useRef(new Animated.Value(0)).current;
@@ -64,6 +67,15 @@ const Profile = ({
   const isFocused = useIsFocused();
 
   if (isFocused) animate();
+
+  const getfavoriteCount = async () => {
+    const res = await FavoritesApi.getUserFavorites(user.id);
+    setFavoriteCount(res.length);
+  };
+
+  useEffect(() => {
+    getfavoriteCount();
+  }, []);
 
   const translateX = x.interpolate({
     inputRange: [0, 1],
@@ -114,15 +126,15 @@ const Profile = ({
         </View>
         <Animated.View style={[styles.accountBottom, { opacity: x }]}>
           <View style={styles.accountBottomItem}>
-            <Text style={styles.accountBottomText1}>3</Text>
+            <Text style={styles.accountBottomText1}>0</Text>
             <Text style={styles.accountBottomText2}>Orders</Text>
           </View>
           <View style={styles.accountBottomItem}>
-            <Text style={styles.accountBottomText1}>1</Text>
+            <Text style={styles.accountBottomText1}>0</Text>
             <Text style={styles.accountBottomText2}>Message</Text>
           </View>
           <View style={styles.accountBottomItem}>
-            <Text style={styles.accountBottomText1}>10</Text>
+            <Text style={styles.accountBottomText1}>{favoriteCount}</Text>
             <Text style={styles.accountBottomText2}>Saved</Text>
           </View>
         </Animated.View>

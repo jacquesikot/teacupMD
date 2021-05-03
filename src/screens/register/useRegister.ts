@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import * as yup from 'yup';
+import Toast from 'react-native-toast-message';
 
 import firebaseFunc from '../../firebase/auth';
 
@@ -20,13 +21,24 @@ const useRegister = () => {
   });
 
   const onSubmit = async (values: RegisterProps) => {
-    setLoading(true);
-    await firebaseFunc.registerUser(
-      values.email,
-      values.password,
-      values.fullName
-    );
-    setLoading(false);
+    try {
+      setLoading(true);
+      await firebaseFunc.registerUser(
+        values.email,
+        values.password,
+        values.fullName
+      );
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      Toast.show({
+        type: 'error',
+        visibilityTime: 7000,
+        autoHide: true,
+        text1: 'Sign up Error',
+        text2: 'Error registering user',
+      });
+    }
   };
 
   return {

@@ -14,10 +14,10 @@ interface Props {
   label: string;
   image: string;
   price: string;
-  cart: any;
+  cart?: any;
   details: any;
   sale: string;
-  saved?: boolean;
+  saved?: any;
   marginRight?: number;
 }
 
@@ -98,7 +98,7 @@ const Product = ({
           </View>
         </View>
         <View style={{ flex: 1 }} />
-        <TouchableOpacity onPress={cart}>
+        <TouchableOpacity onPress={cart ? cart : saved}>
           <View style={styles.cart}>{saved ? <Trash /> : <CartIcon />}</View>
         </TouchableOpacity>
       </View>

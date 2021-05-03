@@ -4,15 +4,18 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import styles from './styles';
 import { CartIcon2, NotificationIcon } from '../../svg/profileIcons';
 import { useAppContext } from '../../context/context';
+import authApi from '../../firebase/auth';
 
 interface Props {
   notification: any;
   cartOnPress: any;
 }
 
+const notif = false;
+
 const HomeHeader = ({ notification, cartOnPress }: Props) => {
   const { user, cart } = useAppContext();
-  const name = user.displayName!.split(' ');
+  const name = user.displayName ? user.displayName.split(' ') : '';
 
   return (
     <View style={styles.container}>
@@ -32,9 +35,11 @@ const HomeHeader = ({ notification, cartOnPress }: Props) => {
         </TouchableOpacity>
         <TouchableOpacity onPress={notification}>
           <NotificationIcon />
-          <View style={styles.alert2}>
-            <Text>3</Text>
-          </View>
+          {notif && (
+            <View style={styles.alert2}>
+              <Text>3</Text>
+            </View>
+          )}
         </TouchableOpacity>
       </View>
     </View>

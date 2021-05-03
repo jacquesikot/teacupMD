@@ -20,8 +20,8 @@ import { theme } from '../../components';
 import Product from '../../components/Product/Product';
 import Button from '../../components/Button/Button';
 import { useAppContext } from '../../context/context';
-import { ProductOrder } from '../../types/contexttypes';
 import productsApi from '../../firebase/products';
+import favoritesApi from '../../firebase/userFavorite';
 
 const ProductDetail = ({
   navigation,
@@ -30,8 +30,9 @@ const ProductDetail = ({
   const [count, setCount] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(false);
   const [products, setProducts] = useState<any[]>([]);
+  const [isFavorite, setIsFavorite] = useState<boolean>(false);
 
-  const { manageCart } = useAppContext();
+  const { manageCart, user } = useAppContext();
 
   const reduce = () => {
     if (count === 1) return;
@@ -58,6 +59,58 @@ const ProductDetail = ({
     });
   };
 
+  const isFav = async () => {
+    const favorites = await favoritesApi.getUserFavorites(user.id);
+    const isFav = favorites.some((f: any) => f.product_id === product.id);
+    isFav && setIsFavorite(true);
+    return;
+  };
+
+  const handleFavorites = async () => {
+    if (isFavorite)
+      return Toast.show({
+        text1: 'Favorites',
+        text2: 'Product already in favorites',
+        position: 'top',
+        visibilityTime: 3000,
+        autoHide: true,
+        type: 'info',
+      });
+
+    const data = {
+      category: product.category,
+      details: product.details,
+      nutrition_details: product.nutrition_details,
+      images: product.images,
+      price: product.price,
+      sale_price: product.sale_price ? product.sale_price : '',
+      title: product.title,
+      product_id: product.id,
+      user_id: user.id,
+    };
+    try {
+      await favoritesApi.addToFavorites(data);
+      setIsFavorite(true);
+      return Toast.show({
+        text1: 'Favorites',
+        text2: 'Product added to favorites',
+        position: 'top',
+        visibilityTime: 3000,
+        autoHide: true,
+        type: 'success',
+      });
+    } catch (error) {
+      Toast.show({
+        text1: 'Favorites',
+        text2: 'Error adding product to favorites',
+        position: 'top',
+        visibilityTime: 3000,
+        autoHide: true,
+        type: 'error',
+      });
+    }
+  };
+
   const loadProducts = async () => {
     setLoading(true);
     const products = await productsApi.getProducts();
@@ -67,6 +120,7 @@ const ProductDetail = ({
 
   useEffect(() => {
     loadProducts();
+    isFav();
   });
 
   return (
@@ -81,7 +135,8 @@ const ProductDetail = ({
             label="Drug Details"
             back={() => navigation.goBack()}
             color="light"
-            favorite={() => alert('favs')}
+            favorite={() => handleFavorites()}
+            isFavorite={isFavorite}
           />
           <ProductImgSlider images={product.images} />
         </View>

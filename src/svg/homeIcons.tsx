@@ -61,8 +61,8 @@ export function SaveIcon({ saved, width, height }: any) {
 
   return (
     <Svg
-      width={width ? width : 15}
-      height={height ? height : 18}
+      width={width ? width : 18}
+      height={height ? height : 21}
       viewBox="0 0 15 18"
       fill="none"
     >

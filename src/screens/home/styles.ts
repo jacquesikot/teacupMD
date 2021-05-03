@@ -3,6 +3,8 @@ import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
 
 import { theme } from '../../components';
 
+const IMG_FORM_FACTOR = 2.68;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -39,6 +41,11 @@ const styles = StyleSheet.create({
   productSlider: {
     width: '100%',
     paddingLeft: theme.constants.screenPadding / 2,
+  },
+  image: {
+    width: theme.constants.screenWidth,
+    height: theme.constants.screenWidth / IMG_FORM_FACTOR,
+    marginBottom: 30,
   },
 });
 
