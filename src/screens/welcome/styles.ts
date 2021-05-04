@@ -37,6 +37,12 @@ const styles = StyleSheet.create({
     paddingTop: 40,
     alignItems: 'center',
   },
+  image: {
+    width: 750,
+    height: 750,
+    position: 'absolute',
+    top: '-4%',
+  },
 });
 
 export default styles;

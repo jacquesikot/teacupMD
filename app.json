@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "teacup-md",
-    "slug": "teacup-md",
+    "name": "TeacupMD",
+    "slug": "teacupmd",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -17,18 +17,13 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.teacup-md.teacupmdiosapp",
+      "supportsTablet": false,
+      "bundleIdentifier": "com.astanah.teacupmdiosapp",
       "buildNumber": "1.0.0"
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#0065ff"
-      }
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "description": "Astanah Shopping App"
   }
 }

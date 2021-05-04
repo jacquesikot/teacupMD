@@ -20,6 +20,7 @@ import { useAppContext } from '../../context/context';
 import { StackScreenProps } from '@react-navigation/stack';
 import { ProfileNavParamList } from '../../types/navigationTypes';
 import FavoritesApi from '../../firebase/userFavorite';
+import Toast from 'react-native-toast-message';
 
 const Profile = ({
   navigation,
@@ -27,6 +28,7 @@ const Profile = ({
   const { user } = useAppContext();
 
   const [favoriteCount, setFavoriteCount] = useState<number>(0);
+  const [displayName, setDisplayName] = useState<string>('');
 
   const x = useRef(new Animated.Value(0)).current;
   const x1 = useRef(new Animated.Value(0)).current;
@@ -70,7 +72,24 @@ const Profile = ({
 
   const getfavoriteCount = async () => {
     const res = await FavoritesApi.getUserFavorites(user.id);
+    const userDetails = await authFunc.getUserDetails();
+    setDisplayName(userDetails?.displayName ? userDetails.displayName : '');
     setFavoriteCount(res.length);
+  };
+
+  const handleLogout = async () => {
+    try {
+      await authFunc.logOutUser();
+    } catch (error) {
+      console.log(error.message);
+      Toast.show({
+        type: 'error',
+        visibilityTime: 7000,
+        autoHide: true,
+        text1: 'Logout Error',
+        text2: 'Error logging in',
+      });
+    }
   };
 
   useEffect(() => {
@@ -117,7 +136,9 @@ const Profile = ({
         <View style={styles.profileContainer}>
           <View style={styles.profileImg} />
           <View style={styles.profileTextContainer}>
-            <Text style={styles.profileText}> {user.displayName} </Text>
+            <Text numberOfLines={1} style={styles.profileText}>
+              {displayName}
+            </Text>
             <View style={styles.account}>
               <Animated.Text style={styles.accountText}>Account</Animated.Text>
               <Icon name="chevron-right" size={15} color={theme.colors.grey} />
@@ -210,10 +231,7 @@ const Profile = ({
                 />
               </Animated.View>
             </TouchableOpacity>
-            <TouchableOpacity
-              onPress={async () => authFunc.logOutUser()}
-              style={styles.othersItem}
-            >
+            <TouchableOpacity onPress={handleLogout} style={styles.othersItem}>
               <Animated.View
                 style={[
                   styles.othersItem,

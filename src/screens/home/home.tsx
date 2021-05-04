@@ -16,7 +16,6 @@ import Toast from 'react-native-toast-message';
 
 import styles from './styles';
 import HomeHeader from '../../components/HomeHeader/HomeHeader';
-import HomeBanner from '../../components/HomeBanner/HomeBanner';
 import ActivityIndicator from '../../components/ActivityIndicator/ActivityIndicator';
 import { theme } from '../../components';
 import CategoryItem from '../../components/CategoryItem/CategoryItem';
@@ -26,9 +25,9 @@ import useHome from './useHome';
 import { useAppContext } from '../../context/context';
 
 const Home = ({ navigation }: StackScreenProps<HomeNavParamList, 'Home'>) => {
-  const { products, departments, loading, error } = useHome();
+  const { products, departments, loading, error, displayName } = useHome();
 
-  const { manageCart } = useAppContext();
+  const { manageCart, user } = useAppContext();
 
   const addToCart = (product: any) => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -43,12 +42,15 @@ const Home = ({ navigation }: StackScreenProps<HomeNavParamList, 'Home'>) => {
     });
   };
 
+  const name = displayName.split(' ');
+
   return (
     <SafeAreaView style={styles.container}>
       <ActivityIndicator visible={loading} opacity={1} />
       <HomeHeader
         notification={() => navigation.navigate('Notifications')}
         cartOnPress={() => navigation.navigate('Cart')}
+        displayName={name!.length > 0 ? name![0] : undefined}
       />
       <ScrollView
         contentContainerStyle={{ alignItems: 'center' }}

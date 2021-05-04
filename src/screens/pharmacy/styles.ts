@@ -8,7 +8,7 @@ import { theme } from '../../components';
 const IMG_FORM_FACTOR = 2.68;
 export const WIDTH = wp('23%');
 export const HEIGHT = hp('21%');
-export const PRODUCT_WIDTH = wp('41%');
+export const PRODUCT_WIDTH = wp('43%');
 export const PRODUCT_HEIGHT = hp('25%');
 
 const styles = StyleSheet.create({
@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
   image: {
     width: theme.constants.screenWidth,
     height: theme.constants.screenWidth / IMG_FORM_FACTOR,
-    marginBottom: 30,
+    marginBottom: hp('4%'),
   },
   sliderContainer: {
     width: '100%',
@@ -30,8 +30,8 @@ const styles = StyleSheet.create({
     fontFamily: 'SofiaPro-Bold',
     fontSize: wp('6%'),
     color: theme.colors.dark,
-    marginTop: 15,
-    marginBottom: 15,
+    marginTop: hp('2%'),
+    marginBottom: hp('4%'),
     width: theme.constants.screenWidth,
   },
   productGrid: {

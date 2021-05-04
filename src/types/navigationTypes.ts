@@ -39,10 +39,16 @@ type ProfileNavParamList = {
   ProductDetail: { product: Product };
 };
 
+type SearchNavParamList = {
+  Search: undefined;
+  ProductDetail: { product: Product };
+};
+
 export {
   AuthParamList,
   AppNavParamList,
   HomeNavParamList,
   RootNavParamList,
   ProfileNavParamList,
+  SearchNavParamList,
 };

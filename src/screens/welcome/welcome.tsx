@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, SafeAreaView } from 'react-native';
+import { View, Text, SafeAreaView, Image } from 'react-native';
 import { theme } from '../../components';
 import { StackScreenProps } from '@react-navigation/stack';
 
@@ -18,6 +18,10 @@ const Welcome = ({
           <Text style={styles.welcomeText2}>TeaCup MD</Text>
         </View>
       </View>
+      <Image
+        source={require('../../../assets/images/welcomeImg.png')}
+        style={styles.image}
+      />
       <View style={styles.bottomSection}>
         <Button
           label="Continue with Email"
@@ -28,7 +32,7 @@ const Welcome = ({
         <View style={{ height: 20 }} />
         <Button
           label="Create an account"
-          type="accent"
+          type="light"
           width={theme.constants.screenWidth}
           onPress={() => navigation.navigate('Register')}
         />

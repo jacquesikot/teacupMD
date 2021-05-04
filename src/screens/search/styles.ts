@@ -6,6 +6,9 @@ import {
 
 import { theme } from '../../components';
 
+export const PRODUCT_WIDTH = wp('43%');
+export const PRODUCT_HEIGHT = hp('25%');
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -28,6 +31,8 @@ const styles = StyleSheet.create({
     fontFamily: 'SofiaPro-Regular',
     paddingLeft: 20,
     color: theme.colors.darkGrey,
+    width: '100%',
+    height: '100%',
   },
   historyContainer: {
     flexDirection: 'row',

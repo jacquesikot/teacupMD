@@ -2,6 +2,24 @@ import firebase from '../firebase';
 
 const db = firebase();
 
+interface AddSearch {
+  user_id: string;
+  search_text: string;
+  created_at: string;
+}
+
+const addRecentSearch = async ({
+  user_id,
+  search_text,
+  created_at,
+}: AddSearch) => {
+  await db.collection('user_search').add({
+    user_id,
+    search_text,
+    created_at,
+  });
+};
+
 const getRecentSearch = async (user_id: String) => {
   const data: any = [];
   const querySnapshot = await db
@@ -19,4 +37,5 @@ const getRecentSearch = async (user_id: String) => {
 
 export default {
   getRecentSearch,
+  addRecentSearch,
 };

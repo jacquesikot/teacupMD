@@ -5,9 +5,10 @@ import * as Haptics from 'expo-haptics';
 import styles from './styles';
 import { theme } from '../../components';
 import { AppNavParamList } from '../../types/navigationTypes';
-import { search, consult } from '../../screens';
+import { consult } from '../../screens';
 import HomeNav from '../HomeNav/HomeNav';
 import ProfileNav from '../ProfileNav/ProfileNav';
+import SearchNav from '../SearchNav/SearchNav';
 import {
   HomeIcon,
   SearchIcon,
@@ -44,7 +45,7 @@ const AppNav = () => {
       />
       <AppStack.Screen
         name="Search"
-        component={search}
+        component={SearchNav}
         options={{
           tabBarIcon: ({ color }) => {
             return <SearchIcon color={color} />;

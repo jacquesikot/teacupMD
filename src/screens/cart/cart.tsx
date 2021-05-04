@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { StackScreenProps } from '@react-navigation/stack';
 import { View, Text, SafeAreaView, FlatList } from 'react-native';
+import * as Animatable from 'react-native-animatable';
 
 import StackHeader from '../../components/StackHeader/StackHeader';
 import Button from '../../components/Button/Button';
@@ -76,13 +77,15 @@ const Cart = ({ navigation }: StackScreenProps<HomeNavParamList>) => {
           />
         </>
       ) : (
-        <StatusScreen
-          image={require('../../../assets/images/emptyCart.png')}
-          heading="Oppss!"
-          subtext="Sorry, you have no product in your cart"
-          buttonLabel="Start Browsing"
-          onPress={() => navigation.navigate('Home')}
-        />
+        <Animatable.View animation="zoomIn">
+          <StatusScreen
+            image={require('../../../assets/images/emptyCart.png')}
+            heading="Oppss!"
+            subtext="Sorry, you have no product in your cart"
+            buttonLabel="Start Browsing"
+            onPress={() => navigation.navigate('Home')}
+          />
+        </Animatable.View>
       )}
     </SafeAreaView>
   );

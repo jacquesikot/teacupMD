@@ -6,10 +6,11 @@ import styles from './styles';
 import { theme } from '..';
 import { CartIcon2 } from '../../svg/profileIcons';
 import { SaveIcon } from '../../svg/homeIcons';
+import { useAppContext } from '../../context/context';
 
 interface Props {
   label?: string;
-  cart?: any;
+  cartOnPress?: any;
   favorite?: any;
   isFavorite?: boolean;
   back: any;
@@ -18,12 +19,13 @@ interface Props {
 
 const StackHeader = ({
   label,
-  cart,
+  cartOnPress,
   back,
   favorite,
   color,
   isFavorite,
 }: Props) => {
+  const { cart } = useAppContext();
   return (
     <View style={[styles.container, { backgroundColor: theme.colors[color] }]}>
       <TouchableOpacity onPress={back}>
@@ -37,13 +39,15 @@ const StackHeader = ({
       {label && <Text style={styles.label}>{label}</Text>}
 
       <View>
-        {cart ? (
-          <>
+        {cartOnPress ? (
+          <TouchableOpacity onPress={cartOnPress}>
             <CartIcon2 />
-            <View style={styles.alert}>
-              <Text style={styles.cartText}>3</Text>
-            </View>
-          </>
+            {cart.length > 0 && (
+              <View style={styles.alert}>
+                <Text style={styles.cartText}>{cart.length}</Text>
+              </View>
+            )}
+          </TouchableOpacity>
         ) : favorite ? (
           isFavorite ? (
             <TouchableOpacity style={{ padding: 5 }} onPress={favorite}>

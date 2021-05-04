@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 
 import styles from './styles';
@@ -9,18 +9,19 @@ import authApi from '../../firebase/auth';
 interface Props {
   notification: any;
   cartOnPress: any;
+  displayName: string | undefined;
 }
 
 const notif = false;
 
-const HomeHeader = ({ notification, cartOnPress }: Props) => {
-  const { user, cart } = useAppContext();
-  const name = user.displayName ? user.displayName.split(' ') : '';
-
+const HomeHeader = ({ notification, cartOnPress, displayName }: Props) => {
+  const { cart } = useAppContext();
   return (
     <View style={styles.container}>
       <View style={styles.textContainer}>
-        <Text style={styles.name}>{`Hi, ${name[0]}`}</Text>
+        <Text style={styles.name}>
+          {displayName !== undefined ? `Hi, ${displayName}` : `Good Day`}
+        </Text>
         <Text style={styles.welcome}>welcome back!</Text>
       </View>
       <View style={{ flex: 1 }} />

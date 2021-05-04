@@ -9,7 +9,7 @@ import { theme } from '../../components';
 const { width } = Dimensions.get('window');
 export const SCREEN_HORIZONTAL_PADDING = 40;
 export const SCREEN_WIDTH = width - SCREEN_HORIZONTAL_PADDING;
-export const IMAGE_FORM_FACTOR = 1.84;
+export const IMAGE_FORM_FACTOR = 1.95;
 
 const styles = StyleSheet.create({
   container: {
