@@ -25,6 +25,7 @@ const getRecentSearch = async (user_id: String) => {
   const querySnapshot = await db
     .collection('user_search')
     .where('user_id', '==', user_id)
+    .limit(20)
     .get();
   querySnapshot.forEach((doc) => {
     data.push({
@@ -35,7 +36,17 @@ const getRecentSearch = async (user_id: String) => {
   return data;
 };
 
+const clearUserSearch = async (user_id: string) => {
+  const result = await getRecentSearch(user_id);
+
+  result.map(async (r: any) => {
+    await db.collection('user_search').doc(r.id).delete();
+  });
+  return;
+};
+
 export default {
   getRecentSearch,
   addRecentSearch,
+  clearUserSearch,
 };

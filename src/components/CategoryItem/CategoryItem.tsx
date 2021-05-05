@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, Text, Image } from 'react-native';
+import { View, Text } from 'react-native';
 import { Feather as Icon } from '@expo/vector-icons';
+import { Image } from 'react-native-expo-image-cache';
 
 import { theme } from '..';
 
@@ -33,6 +34,10 @@ const CategoryItem = ({
   const iconBgColor = active ? theme.colors.primary : theme.colors.white;
   const iconBorderColor = active ? theme.colors.primary : theme.colors.dark;
   const iconColor = active ? theme.colors.white : theme.colors.dark;
+
+  const preview = {
+    uri: `https://via.placeholder.com/${widthValue}/ebf0ff`,
+  };
   return (
     <View
       style={[
@@ -45,7 +50,12 @@ const CategoryItem = ({
         },
       ]}
     >
-      <Image source={{ uri: image }} style={{ width: 50, height: 50 }} />
+      <Image
+        {...{ uri: image }}
+        tint="light"
+        transitionDuration={300}
+        style={{ width: 55, height: 53 }}
+      />
       <View style={{ flex: 1 }} />
       <Text style={[styles.label, { color: labelColor }]}>{label}</Text>
       {icon && (

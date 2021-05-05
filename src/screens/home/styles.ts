@@ -1,5 +1,8 @@
 import { StyleSheet } from 'react-native';
-import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 
 import { theme } from '../../components';
 
@@ -46,6 +49,33 @@ const styles = StyleSheet.create({
     width: theme.constants.screenWidth,
     height: theme.constants.screenWidth / IMG_FORM_FACTOR,
     marginBottom: 30,
+  },
+  tipContainer: {
+    marginBottom: hp('15%'),
+    alignItems: 'center',
+    width: theme.constants.screenWidth,
+  },
+  tipHeading: {
+    fontFamily: 'SofiaPro-Bold',
+    fontSize: wp('3%'),
+    color: theme.colors.grey,
+    marginBottom: hp('2%'),
+  },
+  tipText: {
+    fontFamily: 'SofiaPro-Regular',
+    fontSize: wp('5%'),
+    color: theme.colors.grey,
+    width: theme.constants.screenWidth - 50,
+    textAlign: 'center',
+    marginBottom: hp('7%'),
+    lineHeight: 28,
+  },
+  tipLogo: {
+    fontFamily: 'SofiaPro-Black',
+    fontSize: wp('8%'),
+    color: theme.colors.grey,
+    width: theme.constants.screenWidth - 50,
+    textAlign: 'center',
   },
 });
 

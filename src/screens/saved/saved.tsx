@@ -1,39 +1,36 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { StackScreenProps } from '@react-navigation/stack';
 import { View, SafeAreaView, FlatList } from 'react-native';
 import StackHeader from '../../components/StackHeader/StackHeader';
 import { CommonActions } from '@react-navigation/routers';
 import Toast from 'react-native-toast-message';
 import * as Haptics from 'expo-haptics';
+import * as Animatable from 'react-native-animatable';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { ProfileNavParamList } from '../../types/navigationTypes';
 import styles, { PRODUCT_WIDTH, PRODUCT_HEIGHT, MARGIN_RIGHT } from './styles';
 import Product from '../../components/Product/Product';
 import StatusScreen from '../../components/StatusScreen/StatusScreen';
-import { useAppContext } from '../../context/context';
-import favoritesApi from '../../firebase/userFavorite';
-import ActivityIndicator from '../../components/ActivityIndicator/ActivityIndicator';
-import * as Animatable from 'react-native-animatable';
+import { removeFavorite } from '../../redux/actions';
+import { Product as ProductProps } from '../../types/product';
 
 const Saved = ({
   navigation,
 }: StackScreenProps<ProfileNavParamList, 'Saved'>) => {
-  const [favorites, setFavorites] = useState<any[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
-  const { user } = useAppContext();
-
-  const getFavorites = async () => {
-    setLoading(true);
-    const res = await favoritesApi.getUserFavorites(user.id);
-    setFavorites(res);
-    setLoading(false);
+  const { favorites } = useSelector((state: any) => state.productReducer);
+  const dispatch = useDispatch();
+  const removeFromFavorites = (favorite: any) =>
+    dispatch(removeFavorite(favorite));
+  const handleRemoveFavorite = (favorite: any) => {
+    removeFromFavorites(favorite);
   };
 
-  const deleteFavorite = async (favorite_id: string) => {
+  const deleteFavorite = async (product: ProductProps) => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     navigation.navigate('Profile');
     try {
-      await favoritesApi.deleteFavorite(favorite_id);
+      handleRemoveFavorite(product);
       return Toast.show({
         text1: 'Favorites',
         text2: 'Product removed from favorites',
@@ -54,10 +51,6 @@ const Saved = ({
     }
   };
 
-  useEffect(() => {
-    getFavorites();
-  }, []);
-
   return (
     <SafeAreaView style={styles.container}>
       <StackHeader
@@ -65,8 +58,7 @@ const Saved = ({
         back={() => navigation.goBack()}
         color="white"
       />
-      <ActivityIndicator visible={loading} opacity={1} />
-      {favorites.length > 0 ? (
+      {favorites.length !== 0 ? (
         <View style={styles.productGrid}>
           <FlatList
             data={favorites}
@@ -86,7 +78,7 @@ const Saved = ({
                 width={PRODUCT_WIDTH}
                 height={PRODUCT_HEIGHT}
                 sale={item.sale_price}
-                saved={() => deleteFavorite(item.id)}
+                saved={() => deleteFavorite(item)}
                 marginRight={MARGIN_RIGHT}
               />
             )}
@@ -98,7 +90,7 @@ const Saved = ({
             heading="Oppss!"
             subtext="Sorry, you have no saved products"
             buttonLabel="Start adding"
-            image={require('../../../assets/images/emptyCart.png')}
+            image={require('../../../assets/images/noSaved.png')}
             onPress={() =>
               navigation.dispatch(
                 CommonActions.navigate({

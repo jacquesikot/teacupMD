@@ -7,6 +7,7 @@ import {
   FlatList,
   ScrollView,
   Image,
+  Alert,
 } from 'react-native';
 import { Feather as Icon } from '@expo/vector-icons';
 import { StackScreenProps } from '@react-navigation/stack';
@@ -86,7 +87,9 @@ const Home = ({ navigation }: StackScreenProps<HomeNavParamList, 'Home'>) => {
             renderItem={({ item }) => (
               <TouchableOpacity
                 activeOpacity={0.7}
-                onPress={() => alert('Departments coming soon')}
+                onPress={() =>
+                  Alert.alert('Departments', 'Departments coming soon')
+                }
               >
                 <CategoryItem
                   bgColor="light"
@@ -151,6 +154,14 @@ const Home = ({ navigation }: StackScreenProps<HomeNavParamList, 'Home'>) => {
               />
             )}
           />
+        </View>
+        <View style={styles.tipContainer}>
+          <Text style={styles.tipHeading}>TODAY'S HEALTH TIP</Text>
+          <Text style={styles.tipText}>
+            Feeling stressed? Read. Getting lost in a book can lower levels of
+            cortisol, and hormones, by 68%.
+          </Text>
+          <Text style={styles.tipLogo}>TeaCup MD</Text>
         </View>
       </ScrollView>
     </SafeAreaView>

@@ -54,7 +54,7 @@ const addToFavorites = async ({
   title,
   user_id,
 }: FavoriteData) => {
-  await db.collection('user_favorite').add({
+  const favorite = await db.collection('user_favorite').add({
     category,
     details,
     images,
@@ -65,6 +65,8 @@ const addToFavorites = async ({
     title,
     user_id,
   });
+
+  return favorite.id;
 };
 
 const deleteFavorite = async (favorite_id: string) => {

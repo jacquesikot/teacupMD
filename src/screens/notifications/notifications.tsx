@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  SafeAreaView,
-  FlatList,
-  TouchableOpacity,
-} from 'react-native';
+import { View, SafeAreaView, FlatList, TouchableOpacity } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
 import * as Animatable from 'react-native-animatable';
 
@@ -52,7 +46,7 @@ const Notifications = ({
       ) : (
         <Animatable.View animation="zoomIn">
           <StatusScreen
-            image={require('../../../assets/images/emptyCart.png')}
+            image={require('../../../assets/images/noSaved.png')}
             heading="Oppss!"
             subtext="Sorry, you have no notifications"
             buttonLabel="Go back"

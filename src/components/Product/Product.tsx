@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, Image } from 'react-native';
-// import { Image } from 'react-native-expo-image-cache';
+import { View, Text, TouchableOpacity } from 'react-native';
+import { Image } from 'react-native-expo-image-cache';
 
 import { theme } from '..';
 import { CartIcon } from '../../svg/homeIcons';
@@ -39,9 +39,6 @@ const Product = ({
   const salePrice = Number(sale);
   const marginRightValue = marginRight ? marginRight : MARGIN_RIGHT;
 
-  // const preview = {
-  //   uri: `https://via.placeholder.com/${imageSize}/ebf0ff`,
-  // };
   return (
     <View
       style={[
@@ -55,7 +52,12 @@ const Product = ({
       ]}
     >
       <TouchableOpacity activeOpacity={0.8} onPress={details}>
-        <Image source={{ uri: image }} style={{ width: 100, height: 65 }} />
+        <Image
+          {...{ uri: image }}
+          tint="light"
+          transitionDuration={300}
+          style={{ width: 100, height: 65 }}
+        />
       </TouchableOpacity>
       <Text style={styles.label} numberOfLines={2}>
         {label}

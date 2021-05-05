@@ -3,6 +3,7 @@ import { View, Text, SafeAreaView, Animated } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Feather as Icon } from '@expo/vector-icons';
 import { useIsFocused } from '@react-navigation/native';
+import { useSelector, useDispatch } from 'react-redux';
 
 import {
   FavoriteIcon,
@@ -19,15 +20,14 @@ import authFunc from '../../firebase/auth';
 import { useAppContext } from '../../context/context';
 import { StackScreenProps } from '@react-navigation/stack';
 import { ProfileNavParamList } from '../../types/navigationTypes';
-import FavoritesApi from '../../firebase/userFavorite';
 import Toast from 'react-native-toast-message';
 
 const Profile = ({
   navigation,
 }: StackScreenProps<ProfileNavParamList, 'Profile'>) => {
   const { user } = useAppContext();
+  const { favorites } = useSelector((state: any) => state.productReducer);
 
-  const [favoriteCount, setFavoriteCount] = useState<number>(0);
   const [displayName, setDisplayName] = useState<string>('');
 
   const x = useRef(new Animated.Value(0)).current;
@@ -70,11 +70,9 @@ const Profile = ({
 
   if (isFocused) animate();
 
-  const getfavoriteCount = async () => {
-    const res = await FavoritesApi.getUserFavorites(user.id);
+  const getDisplayName = async () => {
     const userDetails = await authFunc.getUserDetails();
     setDisplayName(userDetails?.displayName ? userDetails.displayName : '');
-    setFavoriteCount(res.length);
   };
 
   const handleLogout = async () => {
@@ -93,7 +91,7 @@ const Profile = ({
   };
 
   useEffect(() => {
-    getfavoriteCount();
+    getDisplayName();
   }, []);
 
   const translateX = x.interpolate({
@@ -155,7 +153,7 @@ const Profile = ({
             <Text style={styles.accountBottomText2}>Message</Text>
           </View>
           <View style={styles.accountBottomItem}>
-            <Text style={styles.accountBottomText1}>{favoriteCount}</Text>
+            <Text style={styles.accountBottomText1}>{favorites.length}</Text>
             <Text style={styles.accountBottomText2}>Saved</Text>
           </View>
         </Animated.View>

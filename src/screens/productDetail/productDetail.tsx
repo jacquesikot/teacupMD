@@ -11,6 +11,7 @@ import { StackScreenProps } from '@react-navigation/stack';
 import { Feather as Icon } from '@expo/vector-icons';
 import Toast from 'react-native-toast-message';
 import * as Haptics from 'expo-haptics';
+import { useSelector, useDispatch } from 'react-redux';
 
 import StackHeader from '../../components/StackHeader/StackHeader';
 import { HomeNavParamList } from '../../types/navigationTypes';
@@ -21,7 +22,8 @@ import Product from '../../components/Product/Product';
 import Button from '../../components/Button/Button';
 import { useAppContext } from '../../context/context';
 import productsApi from '../../firebase/products';
-import favoritesApi from '../../firebase/userFavorite';
+import { addFavorite } from '../../redux/actions';
+import { Product as ProductProps } from '../../types/product';
 
 const ProductDetail = ({
   navigation,
@@ -31,6 +33,12 @@ const ProductDetail = ({
   const [loading, setLoading] = useState<boolean>(false);
   const [products, setProducts] = useState<any[]>([]);
   const [isFavorite, setIsFavorite] = useState<boolean>(false);
+
+  // Redux
+  const { favorites } = useSelector((state: any) => state.productReducer);
+  const dispatch = useDispatch();
+  const handleAddFavorite = (product: ProductProps) =>
+    dispatch(addFavorite(product, user.id));
 
   const { manageCart, user } = useAppContext();
 
@@ -60,8 +68,7 @@ const ProductDetail = ({
   };
 
   const isFav = async () => {
-    const favorites = await favoritesApi.getUserFavorites(user.id);
-    const isFav = favorites.some((f: any) => f.product_id === product.id);
+    const isFav = favorites.some((f: any) => f.id === product.id);
     isFav && setIsFavorite(true);
     return;
   };
@@ -76,20 +83,8 @@ const ProductDetail = ({
         autoHide: true,
         type: 'info',
       });
-
-    const data = {
-      category: product.category,
-      details: product.details,
-      nutrition_details: product.nutrition_details,
-      images: product.images,
-      price: product.price,
-      sale_price: product.sale_price ? product.sale_price : '',
-      title: product.title,
-      product_id: product.id,
-      user_id: user.id,
-    };
     try {
-      await favoritesApi.addToFavorites(data);
+      handleAddFavorite(product);
       setIsFavorite(true);
       return Toast.show({
         text1: 'Favorites',
@@ -121,7 +116,7 @@ const ProductDetail = ({
   useEffect(() => {
     loadProducts();
     isFav();
-  });
+  }, []);
 
   return (
     <SafeAreaView style={styles.container}>

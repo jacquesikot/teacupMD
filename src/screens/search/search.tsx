@@ -9,9 +9,11 @@ import {
   TouchableOpacity,
   NativeSyntheticEvent,
   TextInputSubmitEditingEventData,
+  Keyboard,
 } from 'react-native';
 import Toast from 'react-native-toast-message';
 import * as Haptics from 'expo-haptics';
+import { Feather as Icon } from '@expo/vector-icons';
 
 import { SearchIcon, Trash } from '../../svg/searchIcons';
 import searchApi from '../../firebase/userSearch';
@@ -23,6 +25,7 @@ import { StackScreenProps } from '@react-navigation/stack';
 import { SearchNavParamList } from '../../types/navigationTypes';
 import ActivityIndicator from '../../components/ActivityIndicator/ActivityIndicator';
 import { theme } from '../../components';
+import { AnySchema } from 'yup';
 
 const Search = ({
   navigation,
@@ -31,6 +34,9 @@ const Search = ({
   const [products, setProducts] = useState<any[]>([]);
   const [searchResult, setSearchResult] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const [showHistory, setShowHistory] = useState<boolean>(true);
+  const [showProduct, setShowProduct] = useState<boolean>(false);
+  const [noResult, setNoResult] = useState<boolean>(false);
 
   const { user, manageCart } = useAppContext();
 
@@ -54,18 +60,26 @@ const Search = ({
     setRecentSearch(result);
   };
 
-  const handleSearch = async (
-    e: NativeSyntheticEvent<TextInputSubmitEditingEventData>
-  ) => {
+  // const saveRecentSearch = async (search_text: string ) => {
+  //   if (search_text === ' ')
+  // }
+
+  const handleSearch = async (e: any) => {
     try {
       setLoading(true);
       const arr: any = [];
       products.map((p) => {
-        if (p.title.toLowerCase().includes(e.nativeEvent.text.toString()))
+        if (
+          p.title
+            .toLowerCase()
+            .includes(e.nativeEvent.text.toString().toLowerCase().trim())
+        )
           arr.push(p);
       });
 
+      if (arr.length < 1) setNoResult(true);
       setSearchResult(arr);
+      setShowProduct(true);
       await searchApi.addRecentSearch({
         user_id: user.id,
         search_text: e.nativeEvent.text.toString(),
@@ -84,13 +98,50 @@ const Search = ({
     }
   };
 
+  const keyboardWillShow = () => {
+    setShowHistory(false);
+    setNoResult(false);
+    setShowProduct(false);
+  };
+  const keyboardWillHide = () => {};
+
+  const clearHistory = async () => {
+    try {
+      await searchApi.clearUserSearch(user.id);
+      setRecentSearch([]);
+      Toast.show({
+        type: 'success',
+        visibilityTime: 7000,
+        autoHide: true,
+        text1: 'Recent Search',
+        text2: 'Search history cleared',
+      });
+    } catch (error) {
+      Toast.show({
+        type: 'error',
+        visibilityTime: 7000,
+        autoHide: true,
+        text1: 'Recent Search',
+        text2: 'Search history could not be cleared',
+      });
+    }
+  };
+
   useEffect(() => {
     loadData();
+
+    Keyboard.addListener('keyboardWillShow', keyboardWillShow);
+    Keyboard.addListener('keyboardWillHide', keyboardWillHide);
+
+    return () => {
+      Keyboard.removeListener('keyboardWillShow', keyboardWillShow);
+      Keyboard.removeListener('keyboardWillHide', keyboardWillHide);
+    };
   }, []);
 
   return (
     <>
-      <ActivityIndicator visible={loading} opacity={0.8} />
+      <ActivityIndicator visible={loading} opacity={1} />
       <SafeAreaView style={styles.container}>
         <View style={styles.textInput}>
           <SearchIcon />
@@ -105,53 +156,78 @@ const Search = ({
           />
         </View>
         <ScrollView bounces={false} showsVerticalScrollIndicator={false}>
-          <View style={styles.historyContainer}>
-            <Text style={styles.historyText}>History</Text>
-            <TouchableOpacity style={styles.trashButton}>
-              <Trash />
-              <Text style={styles.trashText}>Clear History</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.searchHistory}>
-            {searchResult.length > 0 ? (
-              <View
-                style={{
-                  width: theme.constants.screenWidth,
-                  height: '100%',
-                }}
-              >
-                <FlatList
-                  data={searchResult}
-                  numColumns={2}
-                  showsHorizontalScrollIndicator={false}
-                  keyExtractor={(item) => item.id.toString()}
-                  renderItem={({ item }) => (
-                    <Product
-                      bgColor="light"
-                      label={item.title}
-                      image={item.images[0]}
-                      price={item.price}
-                      cart={() => addToCart(item)}
-                      details={() =>
-                        navigation.navigate('ProductDetail', { product: item })
-                      }
-                      width={PRODUCT_WIDTH}
-                      height={PRODUCT_HEIGHT}
-                      sale={item.sale_price}
-                    />
-                  )}
-                />
-              </View>
-            ) : (
-              recentSearch.map((s) => (
-                <TouchableOpacity activeOpacity={0.7} onPress={() => true}>
-                  <View key={s.id.toString()} style={styles.historyItem}>
-                    <Text style={styles.historyItemText}>{s.search_text}</Text>
-                  </View>
+          <View style={{ flex: 1 }} />
+          {showHistory && (
+            <>
+              <View style={styles.historyContainer}>
+                <Text style={styles.historyText}>History</Text>
+                <TouchableOpacity
+                  onPress={() => clearHistory()}
+                  style={styles.trashButton}
+                >
+                  <Trash />
+                  <Text style={styles.trashText}>Clear History</Text>
                 </TouchableOpacity>
-              ))
-            )}
-          </View>
+              </View>
+              <View style={styles.searchHistory}>
+                {recentSearch.map((s) => (
+                  <TouchableOpacity
+                    activeOpacity={0.7}
+                    onPress={() =>
+                      handleSearch({
+                        nativeEvent: {
+                          text: s.search_text.toString().toLowerCase().trim(),
+                        },
+                      })
+                    }
+                  >
+                    <View key={s.id.toString()} style={styles.historyItem}>
+                      <Text style={styles.historyItemText}>
+                        {s.search_text}
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            </>
+          )}
+          {showProduct && (
+            <View
+              style={{
+                width: theme.constants.screenWidth,
+                height: '100%',
+              }}
+            >
+              <FlatList
+                data={searchResult}
+                numColumns={2}
+                showsHorizontalScrollIndicator={false}
+                keyExtractor={(item) => item.id.toString()}
+                renderItem={({ item }) => (
+                  <Product
+                    bgColor="light"
+                    label={item.title}
+                    image={item.images[0]}
+                    price={item.price}
+                    cart={() => addToCart(item)}
+                    details={() =>
+                      navigation.navigate('ProductDetail', { product: item })
+                    }
+                    width={PRODUCT_WIDTH}
+                    height={PRODUCT_HEIGHT}
+                    sale={item.sale_price}
+                  />
+                )}
+              />
+            </View>
+          )}
+          {noResult && (
+            <View style={styles.noResultContainer}>
+              <Text style={styles.noResultText}>
+                Oppss... No product found matching your search
+              </Text>
+            </View>
+          )}
         </ScrollView>
       </SafeAreaView>
     </>

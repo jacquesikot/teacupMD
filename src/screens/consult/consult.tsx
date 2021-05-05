@@ -5,7 +5,9 @@ import {
   SafeAreaView,
   FlatList,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
+import * as Animatable from 'react-native-animatable';
 
 import styles, { WIDTH, HEIGHT } from './styles';
 import ConsultTab from '../../components/ConsultTab/ConsultTab';
@@ -31,19 +33,26 @@ const Consult = () => {
         <Text style={styles.heading}>Consult</Text>
         <Text style={styles.subHeading}>Professional Physician</Text>
       </View>
-      <View style={styles.tabContainer}>
+      <Animatable.View animation="fadeIn" style={styles.tabContainer}>
         {tabData.map((d) => (
-          <ConsultTab
+          <TouchableOpacity
+            onPress={() =>
+              Alert.alert('Consultation', 'Consultation coming soon')
+            }
+            activeOpacity={0.8}
             key={d.id.toString()}
-            color={d.color}
-            upperText={d.title}
-            lowerText={d.subText}
-            image={d.img}
-          />
+          >
+            <ConsultTab
+              color={d.color}
+              upperText={d.title}
+              lowerText={d.subText}
+              image={d.img}
+            />
+          </TouchableOpacity>
         ))}
-      </View>
+      </Animatable.View>
       <Text style={styles.clinicalText}>Clinical Departments</Text>
-      <View style={styles.grid}>
+      <Animatable.View animation="zoomIn" style={styles.grid}>
         <FlatList
           data={departments}
           numColumns={3}
@@ -53,7 +62,9 @@ const Consult = () => {
           renderItem={({ item }) => (
             <TouchableOpacity
               activeOpacity={0.7}
-              onPress={() => alert('Consultation comming soon')}
+              onPress={() =>
+                Alert.alert('Consultation', 'Consultation coming soon')
+              }
             >
               <CategoryItem
                 bgColor="light"
@@ -65,7 +76,7 @@ const Consult = () => {
             </TouchableOpacity>
           )}
         />
-      </View>
+      </Animatable.View>
     </SafeAreaView>
   );
 };

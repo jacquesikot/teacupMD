@@ -12,9 +12,8 @@ const styles = StyleSheet.create({
   },
   iconContainer: {
     flexDirection: 'row',
-    width: 100,
+    width: wp('18%'),
     justifyContent: 'space-between',
-    paddingRight: 20,
   },
   textContainer: {},
   name: {

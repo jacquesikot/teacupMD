@@ -78,6 +78,17 @@ const styles = StyleSheet.create({
     fontFamily: 'SofiaPro-Regular',
     color: theme.colors.darkGrey,
   },
+  noResultText: {
+    fontSize: wp('4%'),
+    fontFamily: 'SofiaPro-Bold',
+    color: theme.colors.darkGrey,
+    marginTop: hp('0.5%'),
+  },
+  noResultContainer: {
+    width: theme.constants.screenWidth,
+    alignItems: 'center',
+    marginTop: hp('5%'),
+  },
 });
 
 export default styles;

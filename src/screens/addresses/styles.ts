@@ -34,6 +34,29 @@ const styles = StyleSheet.create({
     marginBottom: hp('10%'),
     marginTop: hp('5%'),
   },
+  addressStatus: {
+    width: theme.constants.screenWidth,
+    height: hp('8%'),
+    borderRadius: 15,
+    backgroundColor: theme.colors.lightGreen,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  addressStatus2: {
+    width: theme.constants.screenWidth,
+    height: hp('13%'),
+    borderRadius: 15,
+    padding: 15,
+    backgroundColor: theme.colors.lightGreen,
+    alignSelf: 'flex-start',
+    justifyContent: 'center',
+  },
+  addressStatusText: {
+    fontFamily: 'SofiaPro-Bold',
+    fontSize: wp('4%'),
+    color: theme.colors.darkGrey,
+    lineHeight: 25,
+  },
 });
 
 export default styles;

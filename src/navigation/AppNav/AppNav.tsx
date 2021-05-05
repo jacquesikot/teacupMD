@@ -50,6 +50,7 @@ const AppNav = () => {
           tabBarIcon: ({ color }) => {
             return <SearchIcon color={color} />;
           },
+          unmountOnBlur: true,
         }}
         listeners={() => ({
           tabPress: (e) => {

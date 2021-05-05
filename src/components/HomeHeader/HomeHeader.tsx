@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 
 import styles from './styles';
 import { CartIcon2, NotificationIcon } from '../../svg/profileIcons';
 import { useAppContext } from '../../context/context';
-import authApi from '../../firebase/auth';
 
 interface Props {
   notification: any;
