@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text } from 'react-native';
+import { Text, ActivityIndicator } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import styles from './styles';
@@ -11,9 +11,10 @@ interface Props {
   label: string;
   onPress: () => void;
   type: 'primary' | 'secondary' | 'light';
+  loading?: boolean;
 }
 
-const Button = ({ width, height, label, onPress, type }: Props) => {
+const Button = ({ width, height, label, onPress, type, loading }: Props) => {
   const backgroundColorValue =
     type === 'primary'
       ? theme.colors.primary
@@ -40,16 +41,20 @@ const Button = ({ width, height, label, onPress, type }: Props) => {
         },
       ]}
     >
-      <Text
-        style={[
-          styles.buttonText,
-          {
-            color: color,
-          },
-        ]}
-      >
-        {label}
-      </Text>
+      {!loading ? (
+        <Text
+          style={[
+            styles.buttonText,
+            {
+              color: color,
+            },
+          ]}
+        >
+          {label}
+        </Text>
+      ) : (
+        <ActivityIndicator color={theme.colors.white} />
+      )}
     </TouchableOpacity>
   );
 };

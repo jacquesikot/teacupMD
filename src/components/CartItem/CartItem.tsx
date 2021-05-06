@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { View, Text, Image, TouchableOpacity } from 'react-native';
-import { Feather as Icon } from '@expo/vector-icons';
+import { View, Text, TouchableOpacity } from 'react-native';
+import { Image } from 'react-native-expo-image-cache';
 import Toast from 'react-native-toast-message';
 
 import { Trash } from '../../svg/searchIcons';
@@ -33,7 +33,12 @@ const CartItem = ({ image, title, price, product }: Props) => {
 
   return (
     <View style={styles.container}>
-      <Image source={{ uri: image }} style={{ width: 90, height: 80 }} />
+      <Image
+        {...{ uri: image }}
+        tint="light"
+        transitionDuration={300}
+        style={{ width: 90, height: 80 }}
+      />
       <View style={styles.titleContainer}>
         <Text numberOfLines={2} style={styles.titleText}>
           {title + ` (X${product.quantity})`}

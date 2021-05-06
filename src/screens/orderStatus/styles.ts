@@ -1,14 +1,11 @@
 import { StyleSheet } from 'react-native';
-
 import { theme } from '../../components';
 
 const styles = StyleSheet.create({
-  tabBar: {
-    height: 52,
-    paddingBottom: 5,
-    paddingTop: 5,
-  },
-  tabBarItem: {
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
     backgroundColor: theme.colors.white,
   },
 });

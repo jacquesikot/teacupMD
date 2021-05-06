@@ -1,5 +1,7 @@
 import React, { useRef } from 'react';
-import { View, Text, Image, Animated, Dimensions } from 'react-native';
+import { View, Text, Animated, Dimensions } from 'react-native';
+import { Image } from 'react-native-expo-image-cache';
+
 import { theme } from '..';
 
 import styles from './styles';
@@ -32,7 +34,13 @@ const ProductImgSlider = ({ images }: Props) => {
         }}
       >
         {images.map((i: any, index: number) => (
-          <Image key={index} source={{ uri: i }} style={styles.image} />
+          <Image
+            key={index}
+            {...{ uri: i }}
+            tint="light"
+            transitionDuration={300}
+            style={styles.image}
+          />
         ))}
       </Animated.ScrollView>
       <View style={styles.pagination}>

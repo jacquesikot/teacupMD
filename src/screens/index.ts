@@ -15,3 +15,4 @@ export { default as saved } from './saved/saved';
 export { default as addresses } from './addresses/addresses';
 export { default as editAddress } from './editAddress/editAddress';
 export { default as customerService } from './customerService/customerService';
+export { default as orderStatus } from './orderStatus/orderStatus';

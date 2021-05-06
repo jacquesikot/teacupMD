@@ -23,13 +23,17 @@ const styles = StyleSheet.create({
     fontSize: wp('8%'),
     color: theme.colors.dark,
     marginTop: hp('4%'),
+    textAlign: 'center',
   },
   subtext: {
     fontFamily: 'SofiaPro-Medium',
     fontSize: wp('5%'),
     color: theme.colors.darkGrey,
     marginTop: hp('3%'),
-    marginBottom: hp('10%'),
+    marginBottom: hp('7%'),
+    width: wp('70%'),
+    textAlign: 'center',
+    lineHeight: 28,
   },
 });
 

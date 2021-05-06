@@ -8,6 +8,7 @@ import {
   pharmacy,
   cart,
   productDetail,
+  orderStatus,
 } from '../../screens';
 
 const HomeStack = createStackNavigator<HomeNavParamList>();
@@ -20,6 +21,7 @@ const HomeNav = () => {
       <HomeStack.Screen name="Pharmacy" component={pharmacy} />
       <HomeStack.Screen name="Cart" component={cart} />
       <HomeStack.Screen name="ProductDetail" component={productDetail} />
+      <HomeStack.Screen name="OrderStatus" component={orderStatus} />
     </HomeStack.Navigator>
   );
 };

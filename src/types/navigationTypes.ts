@@ -22,6 +22,7 @@ type HomeNavParamList = {
   Pharmacy: undefined;
   Cart: undefined;
   ProductDetail: { product: Product };
+  OrderStatus: { status: string };
 };
 
 type RootNavParamList = {
