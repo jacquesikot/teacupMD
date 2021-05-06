@@ -18,12 +18,12 @@
     ],
     "ios": {
       "supportsTablet": false,
-      "bundleIdentifier": "com.astanah.teacupmdiosapp",
-      "buildNumber": "1.0.0"
+      "bundleIdentifier": "com.teacup.teacupmdiosapp",
+      "buildNumber": "1.1.0"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "description": "Astanah Shopping App"
+    "description": "TeaCup MD App"
   }
 }
