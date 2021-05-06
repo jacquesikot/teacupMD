@@ -10,6 +10,7 @@
   "dependencies": {
     "@react-native-community/masked-view": "0.1.10",
     "@react-native-firebase/app": "^11.4.1",
+    "@react-native-masked-view/masked-view": "^0.2.4",
     "@react-navigation/bottom-tabs": "^5.11.10",
     "@react-navigation/native": "^5.9.4",
     "@react-navigation/stack": "^5.14.4",
@@ -37,6 +38,7 @@
     "react-native-responsive-screen": "^1.4.2",
     "react-native-safe-area-context": "3.2.0",
     "react-native-screens": "~3.0.0",
+    "react-native-skeleton-placeholder": "^4.0.0",
     "react-native-svg": "12.1.0",
     "react-native-toast-message": "^1.4.9",
     "react-native-web": "~0.13.12",

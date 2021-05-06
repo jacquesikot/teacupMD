@@ -1,14 +1,23 @@
 import { StyleSheet } from 'react-native';
-import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 
 import { theme } from '../../components';
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: theme.constants.screenPadding,
-    width: theme.constants.screenWidth,
+    paddingTop: hp('5%'),
+    width: '100%',
     flexDirection: 'row',
     paddingBottom: 20,
+    height: hp('13%'),
+    backgroundColor: theme.colors.white,
+    paddingLeft: theme.constants.screenPadding / 2,
+    paddingRight: theme.constants.screenPadding / 2,
+    borderBottomWidth: 1,
+    borderColor: theme.colors.light,
   },
   iconContainer: {
     flexDirection: 'row',

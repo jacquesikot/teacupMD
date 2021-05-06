@@ -3,7 +3,8 @@ import { View, Text, SafeAreaView, Animated } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Feather as Icon } from '@expo/vector-icons';
 import { useIsFocused } from '@react-navigation/native';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import Toast from 'react-native-toast-message';
 
 import {
   FavoriteIcon,
@@ -13,14 +14,13 @@ import {
   LogoutIcon,
   AboutUsIcon,
 } from '../../svg/profileIcons';
-
+import ordersApi from '../../firebase/orders';
 import styles from './styles';
 import { theme } from '../../components';
 import authFunc from '../../firebase/auth';
 import { useAppContext } from '../../context/context';
 import { StackScreenProps } from '@react-navigation/stack';
 import { ProfileNavParamList } from '../../types/navigationTypes';
-import Toast from 'react-native-toast-message';
 
 const Profile = ({
   navigation,
@@ -29,6 +29,7 @@ const Profile = ({
   const { favorites } = useSelector((state: any) => state.productReducer);
 
   const [displayName, setDisplayName] = useState<string>('');
+  const [orderCount, setOrderCount] = useState<string>('');
 
   const x = useRef(new Animated.Value(0)).current;
   const x1 = useRef(new Animated.Value(0)).current;
@@ -70,9 +71,12 @@ const Profile = ({
 
   if (isFocused) animate();
 
-  const getDisplayName = async () => {
+  const loadData = async () => {
     const userDetails = await authFunc.getUserDetails();
     setDisplayName(userDetails?.displayName ? userDetails.displayName : '');
+
+    const orderCount = await ordersApi.userOrderCount(user.id);
+    setOrderCount(orderCount);
   };
 
   const handleLogout = async () => {
@@ -91,7 +95,7 @@ const Profile = ({
   };
 
   useEffect(() => {
-    getDisplayName();
+    loadData();
   }, []);
 
   const translateX = x.interpolate({
@@ -145,7 +149,7 @@ const Profile = ({
         </View>
         <Animated.View style={[styles.accountBottom, { opacity: x }]}>
           <View style={styles.accountBottomItem}>
-            <Text style={styles.accountBottomText1}>0</Text>
+            <Text style={styles.accountBottomText1}>{orderCount}</Text>
             <Text style={styles.accountBottomText2}>Orders</Text>
           </View>
           <View style={styles.accountBottomItem}>

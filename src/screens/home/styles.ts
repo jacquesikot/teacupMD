@@ -15,8 +15,7 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.white,
   },
   departmentContainer: {
-    marginTop: 30,
-    marginBottom: 30,
+    marginBottom: hp('3%'),
     flexDirection: 'row',
     width: theme.constants.screenWidth,
     alignItems: 'center',
@@ -40,10 +39,12 @@ const styles = StyleSheet.create({
   departmentSlider: {
     width: '100%',
     paddingLeft: theme.constants.screenPadding / 2,
+    marginBottom: hp('3%'),
   },
   productSlider: {
     width: '100%',
     paddingLeft: theme.constants.screenPadding / 2,
+    marginBottom: hp('3%'),
   },
   image: {
     width: theme.constants.screenWidth,
@@ -67,7 +68,7 @@ const styles = StyleSheet.create({
     color: theme.colors.grey,
     width: theme.constants.screenWidth - 50,
     textAlign: 'center',
-    marginBottom: hp('7%'),
+    marginBottom: hp('2%'),
     lineHeight: 28,
   },
   tipLogo: {
@@ -76,6 +77,15 @@ const styles = StyleSheet.create({
     color: theme.colors.grey,
     width: theme.constants.screenWidth - 50,
     textAlign: 'center',
+    marginBottom: hp('10%'),
+  },
+  tipTiny: {
+    fontFamily: 'SofiaPro-Regular',
+    fontSize: wp('3%'),
+    color: theme.colors.grey,
+    width: theme.constants.screenWidth - 50,
+    textAlign: 'center',
+    marginBottom: hp('7%'),
   },
 });
 
