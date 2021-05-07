@@ -59,17 +59,18 @@ const Consult = () => {
                 flexWrap: 'wrap',
               }}
             >
-              {data.map(() => (
-                <View
-                  style={{
-                    width: WIDTH,
-                    height: HEIGHT,
-                    borderRadius: 15,
-                    marginRight: 10,
-                    marginBottom: 10,
-                  }}
-                />
-              ))}
+              {data &&
+                data.map(() => (
+                  <View
+                    style={{
+                      width: WIDTH,
+                      height: HEIGHT,
+                      borderRadius: 15,
+                      marginRight: 10,
+                      marginBottom: 10,
+                    }}
+                  />
+                ))}
             </View>
           </SkeletonPlaceholder>
         ) : (
