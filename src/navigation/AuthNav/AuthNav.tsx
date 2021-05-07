@@ -15,8 +15,8 @@ const AuthStack = createStackNavigator<AuthParamList>();
 const AuthNav = () => {
   return (
     <AuthStack.Navigator headerMode="none">
-      <AuthStack.Screen name="Welcome" component={welcome} />
       <AuthStack.Screen name="OnBoarding" component={onboarding} />
+      <AuthStack.Screen name="Welcome" component={welcome} />
       <AuthStack.Screen name="Login" component={login} />
       <AuthStack.Screen name="Register" component={register} />
       <AuthStack.Screen name="ForgotPassword" component={forgotPassword} />

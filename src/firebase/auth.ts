@@ -33,9 +33,14 @@ const logOutUser = async () => {
   await firebase.auth().signOut();
 };
 
+const sendResetPasswordEmail = async (email: string) => {
+  await firebase.auth().sendPasswordResetEmail(email);
+};
+
 export default {
   registerUser,
   signInUser,
   logOutUser,
   getUserDetails,
+  sendResetPasswordEmail,
 };

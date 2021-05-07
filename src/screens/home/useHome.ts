@@ -8,7 +8,7 @@ const useHome = () => {
   const [departments, setDepartments] = useState<any>([]);
   const [products, setProducts] = useState<any>([]);
   const [displayName, setDisplayName] = useState<string>('');
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<boolean>(false);
 
   const loadData = async () => {

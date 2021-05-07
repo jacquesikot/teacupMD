@@ -34,6 +34,8 @@ const Onboarding = ({
                 image={item.image}
                 topText={item.topText}
                 bottomText={item.bottomText}
+                width={item.width}
+                height={item.height}
               />
             );
           }}
@@ -45,7 +47,7 @@ const Onboarding = ({
           onScroll={Animated.event(
             [{ nativeEvent: { contentOffset: { x: scrollX } } }],
             {
-              useNativeDriver: false,
+              useNativeDriver: true,
             }
           )}
           scrollEventThrottle={32}

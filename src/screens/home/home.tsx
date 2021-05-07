@@ -22,7 +22,6 @@ import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
 import styles from './styles';
 import HomeHeader from '../../components/HomeHeader/HomeHeader';
-import ActivityIndicator from '../../components/ActivityIndicator/ActivityIndicator';
 import { theme } from '../../components';
 import CategoryItem from '../../components/CategoryItem/CategoryItem';
 import Product from '../../components/Product/Product';

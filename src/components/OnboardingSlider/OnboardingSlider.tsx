@@ -13,17 +13,20 @@ interface Props {
   image: number;
   topText: string;
   bottomText: string;
+  width: number;
+  height: number;
 }
 
-const Onboarding = ({ image, topText, bottomText }: Props) => {
+const Onboarding = ({ image, topText, bottomText, width, height }: Props) => {
+  const IMG_RATIO = 15;
   return (
     <View style={styles.container}>
       <View style={styles.imageContainer}>
         <Image
           source={image}
           style={{
-            width: IMAGE_WIDTH,
-            height: IMAGE_WIDTH / IMAGE_FORM_FACTOR,
+            width: width / IMG_RATIO,
+            height: height / IMG_RATIO,
           }}
         />
       </View>

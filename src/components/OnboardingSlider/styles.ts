@@ -21,13 +21,14 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     width: SCREEN_WIDTH,
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
     alignItems: 'center',
     marginBottom: hp('7%'),
     height: SCREEN_WIDTH / IMAGE_FORM_FACTOR,
   },
   textContainer: {
     width: SCREEN_WIDTH,
+    alignItems: 'center',
   },
   topText: {
     fontFamily: 'SofiaPro-Bold',
@@ -43,6 +44,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     lineHeight: 30,
     marginBottom: hp('1%'),
+    width: wp('80%'),
   },
 });
 
