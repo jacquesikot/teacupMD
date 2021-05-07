@@ -153,6 +153,8 @@ const Home = ({ navigation }: StackScreenProps<HomeNavParamList, 'Home'>) => {
                     bgColor="light"
                     label={item.name}
                     image={item.img_url}
+                    imgWidth={item.width}
+                    imgHeight={item.height}
                   />
                 </TouchableOpacity>
               )}

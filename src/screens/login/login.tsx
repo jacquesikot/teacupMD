@@ -70,10 +70,10 @@ const Login = ({ navigation }: StackScreenProps<AuthParamList, 'Login'>) => {
                     onBlur={handleBlur('password')}
                     touched={touched.password}
                     error={errors.password}
-                    secureTextEntry={true}
                     textContentType="password"
                     autoCapitalize="none"
                     autoCorrect={false}
+                    secured={true}
                   />
                 </View>
                 <TouchableOpacity

@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   termsOfUseContainer: {
-    paddingBottom: 20,
+    paddingBottom: hp('2%'),
     alignItems: 'center',
   },
   termsOfUseText1: {
@@ -56,6 +56,7 @@ const styles = StyleSheet.create({
     fontSize: wp('4%'),
     color: theme.colors.primary,
     textDecorationLine: 'underline',
+    marginTop: hp('1%'),
   },
 });
 

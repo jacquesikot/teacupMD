@@ -7,13 +7,11 @@ import {
   FlatList,
   ScrollView,
   TouchableOpacity,
-  NativeSyntheticEvent,
-  TextInputSubmitEditingEventData,
   Keyboard,
 } from 'react-native';
 import Toast from 'react-native-toast-message';
 import * as Haptics from 'expo-haptics';
-import { Feather as Icon } from '@expo/vector-icons';
+import { useQuery } from 'react-query';
 
 import { SearchIcon, Trash } from '../../svg/searchIcons';
 import searchApi from '../../firebase/userSearch';
@@ -25,13 +23,10 @@ import { StackScreenProps } from '@react-navigation/stack';
 import { SearchNavParamList } from '../../types/navigationTypes';
 import ActivityIndicator from '../../components/ActivityIndicator/ActivityIndicator';
 import { theme } from '../../components';
-import { AnySchema } from 'yup';
 
 const Search = ({
   navigation,
 }: StackScreenProps<SearchNavParamList, 'Search'>) => {
-  const [recentSearch, setRecentSearch] = useState<any[]>([]);
-  const [products, setProducts] = useState<any[]>([]);
   const [searchResult, setSearchResult] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [showHistory, setShowHistory] = useState<boolean>(true);
@@ -39,6 +34,15 @@ const Search = ({
   const [noResult, setNoResult] = useState<boolean>(false);
 
   const { user, manageCart } = useAppContext();
+
+  const { data: products } = useQuery('products', productsApi.getProducts);
+  const { data: recentSearch } = useQuery(
+    'recentSearch',
+    async () => await searchApi.getRecentSearch(user.id ? user.id : ''),
+    {
+      enabled: !!user.id,
+    }
+  );
 
   const addToCart = (product: any) => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -53,13 +57,6 @@ const Search = ({
     });
   };
 
-  const loadData = async () => {
-    const result = await searchApi.getRecentSearch(user.id ? user.id : '');
-    const products = await productsApi.getProducts();
-    setProducts(products);
-    setRecentSearch(result);
-  };
-
   // const saveRecentSearch = async (search_text: string ) => {
   //   if (search_text === ' ')
   // }
@@ -68,7 +65,7 @@ const Search = ({
     try {
       setLoading(true);
       const arr: any = [];
-      products.map((p) => {
+      products.map((p: any) => {
         if (
           p.title
             .toLowerCase()
@@ -108,7 +105,6 @@ const Search = ({
   const clearHistory = async () => {
     try {
       await searchApi.clearUserSearch(user.id);
-      setRecentSearch([]);
       Toast.show({
         type: 'success',
         visibilityTime: 7000,
@@ -128,8 +124,6 @@ const Search = ({
   };
 
   useEffect(() => {
-    loadData();
-
     Keyboard.addListener('keyboardWillShow', keyboardWillShow);
     Keyboard.addListener('keyboardWillHide', keyboardWillHide);
 
@@ -170,24 +164,25 @@ const Search = ({
                 </TouchableOpacity>
               </View>
               <View style={styles.searchHistory}>
-                {recentSearch.map((s) => (
-                  <TouchableOpacity
-                    activeOpacity={0.7}
-                    onPress={() =>
-                      handleSearch({
-                        nativeEvent: {
-                          text: s.search_text.toString().toLowerCase().trim(),
-                        },
-                      })
-                    }
-                  >
-                    <View key={s.id.toString()} style={styles.historyItem}>
-                      <Text style={styles.historyItemText}>
-                        {s.search_text}
-                      </Text>
-                    </View>
-                  </TouchableOpacity>
-                ))}
+                {recentSearch &&
+                  recentSearch.map((s: any) => (
+                    <TouchableOpacity
+                      activeOpacity={0.7}
+                      onPress={() =>
+                        handleSearch({
+                          nativeEvent: {
+                            text: s.search_text.toString().toLowerCase().trim(),
+                          },
+                        })
+                      }
+                    >
+                      <View key={s.id.toString()} style={styles.historyItem}>
+                        <Text style={styles.historyItemText}>
+                          {s.search_text}
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
+                  ))}
               </View>
             </>
           )}

@@ -12,9 +12,11 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.white,
     paddingLeft: wp('5%'),
     borderWidth: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   input: {
-    width: TEXT_INPUT_WIDTH,
+    width: TEXT_INPUT_WIDTH - wp('15%'),
     height: TEXT_INPUT_HEIGHT,
     color: theme.colors.subText,
   },
@@ -26,6 +28,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: theme.colors.red,
   },
+  eye: {},
 });
 
 export default styles;

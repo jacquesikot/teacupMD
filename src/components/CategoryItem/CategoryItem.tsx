@@ -15,6 +15,8 @@ interface Props {
   image: string;
   icon?: boolean;
   active?: boolean;
+  imgWidth?: number;
+  imgHeight?: number;
 }
 
 const CategoryItem = ({
@@ -25,6 +27,8 @@ const CategoryItem = ({
   image,
   icon,
   active,
+  imgWidth,
+  imgHeight,
 }: Props) => {
   const widthValue = width ? width : 105;
   const heightValue = height ? height : 116;
@@ -54,7 +58,10 @@ const CategoryItem = ({
         {...{ uri: image }}
         tint="light"
         transitionDuration={300}
-        style={{ width: 55, height: 53 }}
+        style={{
+          width: imgWidth ? imgWidth : 55,
+          height: imgHeight ? imgHeight : 53,
+        }}
       />
       <View style={{ flex: 1 }} />
       <Text style={[styles.label, { color: labelColor }]}>{label}</Text>

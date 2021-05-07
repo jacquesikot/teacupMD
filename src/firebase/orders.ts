@@ -27,7 +27,7 @@ const newOrder = async ({
   });
 };
 
-const userOrderCount = async (user_id: string) => {
+const userOrderCount = async (user_id: any) => {
   const data: any = [];
   const querySnapshot = await db
     .collection('orders')

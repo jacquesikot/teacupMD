@@ -5,6 +5,7 @@ import { Feather as Icon } from '@expo/vector-icons';
 import { useIsFocused } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
 import Toast from 'react-native-toast-message';
+import { useQuery } from 'react-query';
 
 import {
   FavoriteIcon,
@@ -27,9 +28,6 @@ const Profile = ({
 }: StackScreenProps<ProfileNavParamList, 'Profile'>) => {
   const { user } = useAppContext();
   const { favorites } = useSelector((state: any) => state.productReducer);
-
-  const [displayName, setDisplayName] = useState<string>('');
-  const [orderCount, setOrderCount] = useState<string>('');
 
   const x = useRef(new Animated.Value(0)).current;
   const x1 = useRef(new Animated.Value(0)).current;
@@ -71,13 +69,15 @@ const Profile = ({
 
   if (isFocused) animate();
 
-  const loadData = async () => {
-    const userDetails = await authFunc.getUserDetails();
-    setDisplayName(userDetails?.displayName ? userDetails.displayName : '');
+  const userDetails = useQuery('userDetails', authFunc.getUserDetails);
 
-    const orderCount = await ordersApi.userOrderCount(user.id);
-    setOrderCount(orderCount);
-  };
+  const { data: orderCount } = useQuery(
+    'orderCount',
+    async () => await ordersApi.userOrderCount(user.id),
+    {
+      enabled: !!user.id,
+    }
+  );
 
   const handleLogout = async () => {
     try {
@@ -93,10 +93,6 @@ const Profile = ({
       });
     }
   };
-
-  useEffect(() => {
-    loadData();
-  }, []);
 
   const translateX = x.interpolate({
     inputRange: [0, 1],
@@ -139,7 +135,7 @@ const Profile = ({
           <View style={styles.profileImg} />
           <View style={styles.profileTextContainer}>
             <Text numberOfLines={1} style={styles.profileText}>
-              {displayName}
+              {userDetails.data?.displayName}
             </Text>
             <View style={styles.account}>
               <Animated.Text style={styles.accountText}>Account</Animated.Text>

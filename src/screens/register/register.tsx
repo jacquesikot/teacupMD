@@ -89,6 +89,7 @@ const Register = ({
                   secureTextEntry={true}
                   keyboardType="default"
                   autoCapitalize="none"
+                  secured={true}
                 />
               </View>
             </KeyboardAvoidingView>

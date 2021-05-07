@@ -1,12 +1,5 @@
 import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  ScrollView,
-  Image,
-  KeyboardAvoidingView,
-  Platform,
-} from 'react-native';
+import { View, Text, ScrollView, Image } from 'react-native';
 import * as yup from 'yup';
 import Toast from 'react-native-toast-message';
 import { Formik } from 'formik';
@@ -68,56 +61,52 @@ const ForgotPassword = ({
       bounces={false}
       showsVerticalScrollIndicator={false}
     >
-      <KeyboardAvoidingView
-        behavior={Platform.OS == 'ios' ? 'position' : 'height'}
-      >
-        <View style={{ alignItems: 'center' }}>
-          <Image
-            source={require('../../../assets/images/forgotPassword.png')}
-            style={{ width: WIDTH / FACTOR, height: HEIGHT / FACTOR }}
-          />
-          <Text style={styles.header}>Forgot Password?</Text>
-          <Formik
-            initialValues={{ email: '' }}
-            validationSchema={forgotPasswordSchema}
-            onSubmit={onSubmit}
-          >
-            {({
-              errors,
-              touched,
-              handleChange,
-              handleBlur,
-              values,
-              handleReset,
-            }) => (
-              <>
-                <TextInput
-                  placeholder="Enter your email"
-                  onChangeText={handleChange('email')}
-                  onBlur={handleBlur('email')}
-                  keyboardType="email-address"
-                  textContentType="emailAddress"
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                  returnKeyType="default"
-                  touched={touched.email}
-                  error={errors.email}
-                  value={values.email}
+      <View style={{ alignItems: 'center' }}>
+        <Image
+          source={require('../../../assets/images/forgotPassword.png')}
+          style={{ width: WIDTH / FACTOR, height: HEIGHT / FACTOR }}
+        />
+        <Text style={styles.header}>Forgot Password?</Text>
+        <Formik
+          initialValues={{ email: '' }}
+          validationSchema={forgotPasswordSchema}
+          onSubmit={onSubmit}
+        >
+          {({
+            errors,
+            touched,
+            handleChange,
+            handleBlur,
+            values,
+            handleReset,
+          }) => (
+            <>
+              <TextInput
+                placeholder="Enter your email"
+                onChangeText={handleChange('email')}
+                onBlur={handleBlur('email')}
+                keyboardType="email-address"
+                textContentType="emailAddress"
+                autoCapitalize="none"
+                autoCorrect={false}
+                returnKeyType="default"
+                touched={touched.email}
+                error={errors.email}
+                value={values.email}
+              />
+              <View style={styles.buttonContainer}>
+                <Button
+                  label="Recover password"
+                  type="primary"
+                  onPress={() => onSubmit(values, handleReset)}
+                  width={theme.constants.screenWidth}
+                  loading={loading}
                 />
-                <View style={styles.buttonContainer}>
-                  <Button
-                    label="Recover password"
-                    type="primary"
-                    onPress={() => onSubmit(values, handleReset)}
-                    width={theme.constants.screenWidth}
-                    loading={loading}
-                  />
-                </View>
-              </>
-            )}
-          </Formik>
-        </View>
-      </KeyboardAvoidingView>
+              </View>
+            </>
+          )}
+        </Formik>
+      </View>
     </ScrollView>
   );
 };

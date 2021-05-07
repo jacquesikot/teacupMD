@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
   View,
   Text,
@@ -8,24 +8,21 @@ import {
   Alert,
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
+import { useQuery } from 'react-query';
 
 import styles, { WIDTH, HEIGHT } from './styles';
 import ConsultTab from '../../components/ConsultTab/ConsultTab';
 import CategoryItem from '../../components/CategoryItem/CategoryItem';
 import tabData from './tabData';
 import departmentsApi from '../../firebase/departments';
+import { theme } from '../../components';
+import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
 const Consult = () => {
-  const [departments, setDepartments] = useState<any[]>([]);
-
-  const getDepartments = async () => {
-    const dept = await departmentsApi.getDepartments();
-    setDepartments(dept);
-  };
-
-  useEffect(() => {
-    getDepartments();
-  }, []);
+  const { isError, data, isLoading } = useQuery(
+    'departments',
+    departmentsApi.getDepartments
+  );
 
   return (
     <SafeAreaView style={styles.container}>
@@ -53,29 +50,55 @@ const Consult = () => {
       </Animatable.View>
       <Text style={styles.clinicalText}>Clinical Departments</Text>
       <Animatable.View animation="zoomIn" style={styles.grid}>
-        <FlatList
-          data={departments}
-          numColumns={3}
-          bounces={false}
-          showsHorizontalScrollIndicator={false}
-          keyExtractor={(item: any) => item.id.toString()}
-          renderItem={({ item }) => (
-            <TouchableOpacity
-              activeOpacity={0.7}
-              onPress={() =>
-                Alert.alert('Consultation', 'Consultation coming soon')
-              }
+        {isLoading ? (
+          <SkeletonPlaceholder backgroundColor={theme.colors.light}>
+            <View
+              style={{
+                flexDirection: 'row',
+                width: theme.constants.screenWidth,
+                flexWrap: 'wrap',
+              }}
             >
-              <CategoryItem
-                bgColor="light"
-                label={item.name}
-                image={item.img_url}
-                width={WIDTH}
-                height={HEIGHT}
-              />
-            </TouchableOpacity>
-          )}
-        />
+              {data.map(() => (
+                <View
+                  style={{
+                    width: WIDTH,
+                    height: HEIGHT,
+                    borderRadius: 15,
+                    marginRight: 10,
+                    marginBottom: 10,
+                  }}
+                />
+              ))}
+            </View>
+          </SkeletonPlaceholder>
+        ) : (
+          <FlatList
+            data={data}
+            numColumns={3}
+            bounces={false}
+            showsHorizontalScrollIndicator={false}
+            keyExtractor={(item: any) => item.id.toString()}
+            renderItem={({ item }) => (
+              <TouchableOpacity
+                activeOpacity={0.7}
+                onPress={() =>
+                  Alert.alert('Consultation', 'Consultation coming soon')
+                }
+              >
+                <CategoryItem
+                  bgColor="light"
+                  label={item.name}
+                  image={item.img_url}
+                  width={WIDTH}
+                  height={HEIGHT}
+                  imgWidth={item.width}
+                  imgHeight={item.height}
+                />
+              </TouchableOpacity>
+            )}
+          />
+        )}
       </Animatable.View>
     </SafeAreaView>
   );
