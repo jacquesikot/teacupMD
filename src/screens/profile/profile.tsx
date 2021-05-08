@@ -1,11 +1,11 @@
-import React, { useRef, useEffect, useState, useCallback } from 'react';
+import React from 'react';
 import { View, Text, SafeAreaView, Animated } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Feather as Icon } from '@expo/vector-icons';
-import { useIsFocused } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
 import Toast from 'react-native-toast-message';
 import { useQuery } from 'react-query';
+import * as Linking from 'expo-linking';
 
 import {
   FavoriteIcon,
@@ -28,46 +28,6 @@ const Profile = ({
 }: StackScreenProps<ProfileNavParamList, 'Profile'>) => {
   const { user } = useAppContext();
   const { favorites } = useSelector((state: any) => state.productReducer);
-
-  const x = useRef(new Animated.Value(0)).current;
-  const x1 = useRef(new Animated.Value(0)).current;
-  const x2 = useRef(new Animated.Value(0)).current;
-  const x3 = useRef(new Animated.Value(0)).current;
-  const x4 = useRef(new Animated.Value(0)).current;
-
-  const animate = () => {
-    return Animated.parallel([
-      Animated.timing(x, {
-        useNativeDriver: true,
-        toValue: 1,
-        duration: 700,
-      }),
-      Animated.timing(x1, {
-        useNativeDriver: true,
-        toValue: 1,
-        duration: 800,
-      }),
-      Animated.timing(x2, {
-        useNativeDriver: true,
-        toValue: 1,
-        duration: 900,
-      }),
-      Animated.timing(x3, {
-        useNativeDriver: true,
-        toValue: 1,
-        duration: 1000,
-      }),
-      Animated.timing(x4, {
-        useNativeDriver: true,
-        toValue: 1,
-        duration: 1100,
-      }),
-    ]).start();
-  };
-
-  const isFocused = useIsFocused();
-
-  if (isFocused) animate();
 
   const userDetails = useQuery('userDetails', authFunc.getUserDetails);
 
@@ -94,31 +54,6 @@ const Profile = ({
     }
   };
 
-  const translateX = x.interpolate({
-    inputRange: [0, 1],
-    outputRange: [-theme.constants.screenWidth, 0],
-  });
-
-  const translateX1 = x1.interpolate({
-    inputRange: [0, 1],
-    outputRange: [-theme.constants.screenWidth, 0],
-  });
-
-  const translateX2 = x2.interpolate({
-    inputRange: [0, 1],
-    outputRange: [-theme.constants.screenWidth, 0],
-  });
-
-  const translateX3 = x3.interpolate({
-    inputRange: [0, 1],
-    outputRange: [-theme.constants.screenWidth, 0],
-  });
-
-  const translateX4 = x4.interpolate({
-    inputRange: [0, 1],
-    outputRange: [-theme.constants.screenWidth, 0],
-  });
-
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.topContainer}>
@@ -126,9 +61,9 @@ const Profile = ({
           <TouchableOpacity
             onPress={() => navigation.navigate('Notifications')}
           >
-            <Animated.View style={{ opacity: x }}>
+            <View>
               <NotificationIcon />
-            </Animated.View>
+            </View>
           </TouchableOpacity>
         </View>
         <View style={styles.profileContainer}>
@@ -143,7 +78,7 @@ const Profile = ({
             </View>
           </View>
         </View>
-        <Animated.View style={[styles.accountBottom, { opacity: x }]}>
+        <View style={styles.accountBottom}>
           <View style={styles.accountBottomItem}>
             <Text style={styles.accountBottomText1}>{orderCount}</Text>
             <Text style={styles.accountBottomText2}>Orders</Text>
@@ -156,16 +91,11 @@ const Profile = ({
             <Text style={styles.accountBottomText1}>{favorites.length}</Text>
             <Text style={styles.accountBottomText2}>Saved</Text>
           </View>
-        </Animated.View>
+        </View>
         <View style={styles.others}>
           <View style={styles.othersContainer}>
             <TouchableOpacity onPress={() => navigation.navigate('Saved')}>
-              <Animated.View
-                style={[
-                  styles.othersItem,
-                  { transform: [{ translateX: translateX }], opacity: x },
-                ]}
-              >
+              <View style={styles.othersItem}>
                 <FavoriteIcon />
                 <Text style={styles.othersText}>Saved</Text>
                 <View style={{ flex: 1 }} />
@@ -174,15 +104,12 @@ const Profile = ({
                   size={20}
                   color={theme.colors.grey}
                 />
-              </Animated.View>
+              </View>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate('Addresses')}>
-              <Animated.View
-                style={[
-                  styles.othersItem,
-                  { transform: [{ translateX: translateX1 }], opacity: x1 },
-                ]}
-              >
+            <TouchableOpacity
+              onPress={() => navigation.navigate('ManageAddress')}
+            >
+              <View style={styles.othersItem}>
                 <PatientIcon />
                 <Text style={styles.othersText}>My Addresses</Text>
                 <View style={{ flex: 1 }} />
@@ -191,17 +118,12 @@ const Profile = ({
                   size={20}
                   color={theme.colors.grey}
                 />
-              </Animated.View>
+              </View>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={async () => navigation.navigate('CustomerService')}
+              onPress={() => Linking.openURL('tel:+260975356162')}
             >
-              <Animated.View
-                style={[
-                  styles.othersItem,
-                  { transform: [{ translateX: translateX2 }], opacity: x2 },
-                ]}
-              >
+              <View style={styles.othersItem}>
                 <CustomerServiceIcon />
                 <Text style={styles.othersText}>Customer Service</Text>
                 <View style={{ flex: 1 }} />
@@ -210,15 +132,10 @@ const Profile = ({
                   size={20}
                   color={theme.colors.grey}
                 />
-              </Animated.View>
+              </View>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => true} style={styles.othersItem}>
-              <Animated.View
-                style={[
-                  styles.othersItem,
-                  { transform: [{ translateX: translateX3 }], opacity: x3 },
-                ]}
-              >
+              <View style={styles.othersItem}>
                 <AboutUsIcon />
                 <Text style={styles.othersText}>About Us</Text>
                 <View style={{ flex: 1 }} />
@@ -227,15 +144,10 @@ const Profile = ({
                   size={20}
                   color={theme.colors.grey}
                 />
-              </Animated.View>
+              </View>
             </TouchableOpacity>
             <TouchableOpacity onPress={handleLogout} style={styles.othersItem}>
-              <Animated.View
-                style={[
-                  styles.othersItem,
-                  { transform: [{ translateX: translateX4 }], opacity: x4 },
-                ]}
-              >
+              <View style={styles.othersItem}>
                 <LogoutIcon />
                 <Text style={styles.othersText}>Log out</Text>
                 <View style={{ flex: 1 }} />
@@ -244,7 +156,7 @@ const Profile = ({
                   size={20}
                   color={theme.colors.grey}
                 />
-              </Animated.View>
+              </View>
             </TouchableOpacity>
           </View>
         </View>

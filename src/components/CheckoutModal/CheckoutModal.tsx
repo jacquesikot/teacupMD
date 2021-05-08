@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, FlatList } from 'react-native';
+import { View, Text, TouchableOpacity, FlatList, Alert } from 'react-native';
 import Modal from 'react-native-modal';
 import { Feather as Icon } from '@expo/vector-icons';
 import * as Browser from 'expo-web-browser';
@@ -21,6 +21,7 @@ interface Props {
   cartTotal: string;
   userAddress: any;
   onFinish: any;
+  handleAddress: any;
 }
 
 const CheckoutModal = ({
@@ -29,6 +30,7 @@ const CheckoutModal = ({
   cartTotal,
   userAddress,
   onFinish,
+  handleAddress,
 }: Props) => {
   const options = [
     {
@@ -55,6 +57,7 @@ const CheckoutModal = ({
   });
 
   const handleCheckout = async () => {
+    if (!userAddress) return Alert.alert('', 'No Address Found');
     setLoading(true);
     try {
       if (selected.id === options[0].id) {
@@ -133,22 +136,43 @@ const CheckoutModal = ({
             </View>
           </View>
           <Text style={styles.deliveryAddress}>Delivery Address</Text>
-          <View style={styles.deliveryContainer}>
-            <View style={styles.deliveryTextContainer}>
-              <Text style={styles.deliveryText1} numberOfLines={1}>
-                Home Address
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={() => {
+              if (!userAddress) {
+                handleAddress();
+              }
+              return;
+            }}
+            style={styles.deliveryContainer}
+          >
+            {userAddress ? (
+              <>
+                <View style={styles.deliveryTextContainer}>
+                  <Text style={styles.deliveryText1} numberOfLines={1}>
+                    Home Address
+                  </Text>
+                  <Text style={styles.deliveryText2} numberOfLines={1}>
+                    {userAddress && userAddress.phone_number}
+                  </Text>
+                  <Text style={styles.deliveryText2} numberOfLines={1}>
+                    {userAddress && userAddress.address}
+                  </Text>
+                </View>
+              </>
+            ) : (
+              <Text style={styles.deliveryText1}>
+                No delivery address found
               </Text>
-              <Text style={styles.deliveryText2} numberOfLines={1}>
-                {userAddress.phone_number}
-              </Text>
-              <Text style={styles.deliveryText2} numberOfLines={1}>
-                {userAddress.address}
-              </Text>
-            </View>
+            )}
             <View style={styles.icon}>
-              <Icon name="check" size={14} color={theme.colors.white} />
+              <Icon
+                name={userAddress ? 'check' : 'plus'}
+                size={14}
+                color={theme.colors.primary}
+              />
             </View>
-          </View>
+          </TouchableOpacity>
           <Text style={styles.method}>Method</Text>
           <View style={styles.cartMethodContainer}>
             <FlatList

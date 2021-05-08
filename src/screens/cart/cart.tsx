@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { StackScreenProps } from '@react-navigation/stack';
 import { View, Text, SafeAreaView, FlatList } from 'react-native';
 import * as Animatable from 'react-native-animatable';
+import { useQuery } from 'react-query';
 
 import StackHeader from '../../components/StackHeader/StackHeader';
 import Button from '../../components/Button/Button';
@@ -13,22 +14,25 @@ import { theme } from '../../components';
 import { useAppContext } from '../../context/context';
 import StatusScreen from '../../components/StatusScreen/StatusScreen';
 import addressApi from '../../firebase/address';
+import { CommonActions } from '@react-navigation/native';
 
 const Cart = ({ navigation }: StackScreenProps<HomeNavParamList>) => {
   const [showModal, setShowModal] = useState<boolean>(false);
-  const [address, setAddress] = useState<string>('');
   const { cart, cartTotal, user, manageCart } = useAppContext();
+  const [address, setAddress] = useState<any[]>([]);
 
   const delivery = 25;
 
   const loadData = async () => {
-    const userAddress = await addressApi.getUserAddress(user.id);
-    setAddress(userAddress[0]);
+    const address = await addressApi.getUserAddress({
+      pageParam: user.id,
+    });
+    setAddress(address);
   };
 
   useEffect(() => {
     loadData();
-  }, []);
+  });
 
   return (
     <SafeAreaView style={styles.container}>
@@ -85,7 +89,7 @@ const Cart = ({ navigation }: StackScreenProps<HomeNavParamList>) => {
             show={showModal}
             onRequestClose={() => setShowModal(false)}
             cartTotal={(cartTotal + delivery).toString()}
-            userAddress={address}
+            userAddress={address[0]}
             onFinish={(status: string) => {
               if (status === 'success') {
                 navigation.navigate('OrderStatus', { status: status });
@@ -95,6 +99,10 @@ const Cart = ({ navigation }: StackScreenProps<HomeNavParamList>) => {
                 navigation.navigate('OrderStatus', { status: status });
                 setShowModal(false);
               }
+            }}
+            handleAddress={() => {
+              setShowModal(false);
+              navigation.navigate('EditAddress');
             }}
           />
         </>

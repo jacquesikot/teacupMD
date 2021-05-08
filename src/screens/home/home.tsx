@@ -47,6 +47,8 @@ const Home = ({ navigation }: StackScreenProps<HomeNavParamList, 'Home'>) => {
     });
   };
 
+  const skeletonArray = [1, 2, 3, 4, 5, 6, 7, 8];
+
   const name = displayName.split(' ');
 
   const HEADER_HEIGHT = hp('8%') + theme.constants.screenPadding;
@@ -124,7 +126,7 @@ const Home = ({ navigation }: StackScreenProps<HomeNavParamList, 'Home'>) => {
                   width: theme.constants.screenWidth,
                 }}
               >
-                {departments.map(() => (
+                {skeletonArray.map(() => (
                   <View
                     style={{
                       width: 105,
@@ -180,7 +182,7 @@ const Home = ({ navigation }: StackScreenProps<HomeNavParamList, 'Home'>) => {
                   width: theme.constants.screenWidth,
                 }}
               >
-                {products.map(() => (
+                {skeletonArray.map(() => (
                   <View
                     style={{
                       width: 145,
@@ -226,7 +228,7 @@ const Home = ({ navigation }: StackScreenProps<HomeNavParamList, 'Home'>) => {
                   width: theme.constants.screenWidth,
                 }}
               >
-                {products.map(() => (
+                {skeletonArray.map(() => (
                   <View
                     style={{
                       width: 145,

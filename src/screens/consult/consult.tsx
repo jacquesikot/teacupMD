@@ -18,6 +18,8 @@ import departmentsApi from '../../firebase/departments';
 import { theme } from '../../components';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
+const skeletonArray = [1, 2, 3, 4, 5, 6, 7];
+
 const Consult = () => {
   const { isError, data, isLoading } = useQuery(
     'departments',
@@ -59,18 +61,17 @@ const Consult = () => {
                 flexWrap: 'wrap',
               }}
             >
-              {data &&
-                data.map(() => (
-                  <View
-                    style={{
-                      width: WIDTH,
-                      height: HEIGHT,
-                      borderRadius: 15,
-                      marginRight: 10,
-                      marginBottom: 10,
-                    }}
-                  />
-                ))}
+              {skeletonArray.map(() => (
+                <View
+                  style={{
+                    width: WIDTH,
+                    height: HEIGHT,
+                    borderRadius: 15,
+                    marginRight: 10,
+                    marginBottom: 10,
+                  }}
+                />
+              ))}
             </View>
           </SkeletonPlaceholder>
         ) : (

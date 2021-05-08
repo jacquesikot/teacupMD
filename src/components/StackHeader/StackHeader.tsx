@@ -58,7 +58,9 @@ const StackHeader = ({
               <SaveIcon />
             </TouchableOpacity>
           )
-        ) : null}
+        ) : (
+          <View style={{ padding: 5 }} />
+        )}
       </View>
     </View>
   );

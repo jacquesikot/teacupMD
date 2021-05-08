@@ -44,8 +44,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: theme.colors.red,
     position: 'absolute',
-    bottom: 35,
+    bottom: 28,
     left: 10,
+    borderWidth: 1,
+    borderColor: theme.colors.white,
   },
   alert2: {
     width: 20,
@@ -57,6 +59,11 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 35,
     left: 7.5,
+  },
+  number: {
+    fontFamily: 'SofiaPro-Medium',
+    fontSize: wp('3%'),
+    color: theme.colors.dark,
   },
 });
 

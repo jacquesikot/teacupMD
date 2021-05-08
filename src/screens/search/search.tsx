@@ -23,6 +23,7 @@ import { StackScreenProps } from '@react-navigation/stack';
 import { SearchNavParamList } from '../../types/navigationTypes';
 import ActivityIndicator from '../../components/ActivityIndicator/ActivityIndicator';
 import { theme } from '../../components';
+import { AnyObjectSchema } from 'yup';
 
 const Search = ({
   navigation,
@@ -36,7 +37,7 @@ const Search = ({
   const { user, manageCart } = useAppContext();
 
   const { data: products } = useQuery('products', productsApi.getProducts);
-  const { data: recentSearch } = useQuery(
+  const { data: recentSearch, refetch: refetchRecentSearch } = useQuery(
     'recentSearch',
     async () => await searchApi.getRecentSearch(user.id ? user.id : ''),
     {
@@ -57,9 +58,20 @@ const Search = ({
     });
   };
 
-  // const saveRecentSearch = async (search_text: string ) => {
-  //   if (search_text === ' ')
-  // }
+  const saveRecentSearch = async (e: any) => {
+    if (e.nativeEvent.text.toString().trim().toLowercase() === ' ') {
+      return;
+    } else if (e.nativeEvent.text.toString().trim().toLowercase().length < 2) {
+      return;
+    } else {
+      await searchApi.addRecentSearch({
+        user_id: user.id,
+        search_text: e.nativeEvent.text.toString().trim().toLowercase(),
+        created_at: new Date().toISOString(),
+      });
+      refetchRecentSearch();
+    }
+  };
 
   const handleSearch = async (e: any) => {
     try {
@@ -73,15 +85,10 @@ const Search = ({
         )
           arr.push(p);
       });
-
+      saveRecentSearch(e);
       if (arr.length < 1) setNoResult(true);
       setSearchResult(arr);
       setShowProduct(true);
-      await searchApi.addRecentSearch({
-        user_id: user.id,
-        search_text: e.nativeEvent.text.toString(),
-        created_at: new Date().toISOString(),
-      });
       setLoading(false);
     } catch (error) {
       setLoading(false);
@@ -105,6 +112,7 @@ const Search = ({
   const clearHistory = async () => {
     try {
       await searchApi.clearUserSearch(user.id);
+      refetchRecentSearch();
       Toast.show({
         type: 'success',
         visibilityTime: 7000,

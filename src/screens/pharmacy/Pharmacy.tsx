@@ -21,6 +21,8 @@ import { useAppContext } from '../../context/context';
 import productsApi from '../../firebase/products';
 import categoriesApi from '../../firebase/categories';
 import ActivityIndicator from '../../components/ActivityIndicator/ActivityIndicator';
+import { theme } from '../../components';
+import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
 const Pharmacy = ({
   navigation,
@@ -68,16 +70,17 @@ const Pharmacy = ({
     return setSearchProducts(productsArr);
   };
 
+  const skeletonArray = [1, 2, 3, 4, 5, 6, 7, 8];
+
   useEffect(() => {
     loadData();
   }, []);
 
   return (
     <>
-      <ActivityIndicator visible={loading} opacity={1} />
       <SafeAreaView style={styles.container}>
         <StackHeader
-          color="light"
+          color="white"
           label="Pharmacy"
           back={() => navigation.goBack()}
           cartOnPress={() => navigation.navigate('Cart')}
@@ -94,52 +97,96 @@ const Pharmacy = ({
             style={styles.image}
           />
           <View style={styles.sliderContainer}>
-            <FlatList
-              data={categories}
-              horizontal
-              showsVerticalScrollIndicator={false}
-              keyExtractor={(item: any) => item.id.toString()}
-              renderItem={({ item }: any) => (
-                <TouchableOpacity
-                  activeOpacity={0.9}
-                  onPress={() => handleCategoryChange(item)}
+            {loading ? (
+              <SkeletonPlaceholder backgroundColor={theme.colors.light}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    width: theme.constants.screenWidth,
+                  }}
                 >
-                  <CategoryItem
-                    bgColor="white"
-                    label={item.name}
-                    image={item.imgUrl}
-                    width={WIDTH}
-                    height={HEIGHT}
-                    icon
-                    active={type === item.name ? true : false}
-                  />
-                </TouchableOpacity>
-              )}
-            />
+                  {skeletonArray.map(() => (
+                    <View
+                      style={{
+                        width: WIDTH,
+                        height: HEIGHT,
+                        borderRadius: 15,
+                        marginRight: 15,
+                      }}
+                    />
+                  ))}
+                </View>
+              </SkeletonPlaceholder>
+            ) : (
+              <FlatList
+                data={categories}
+                horizontal
+                showsVerticalScrollIndicator={false}
+                keyExtractor={(item: any) => item.id.toString()}
+                renderItem={({ item }: any) => (
+                  <TouchableOpacity
+                    activeOpacity={0.9}
+                    onPress={() => handleCategoryChange(item)}
+                  >
+                    <CategoryItem
+                      bgColor="light"
+                      label={item.name}
+                      image={item.imgUrl}
+                      width={WIDTH}
+                      height={HEIGHT}
+                      icon
+                      active={type === item.name ? true : false}
+                    />
+                  </TouchableOpacity>
+                )}
+              />
+            )}
           </View>
           <Text style={styles.heading}>{type}</Text>
           <View style={styles.productGrid}>
-            <FlatList
-              data={searchProducts}
-              numColumns={2}
-              showsHorizontalScrollIndicator={false}
-              keyExtractor={(item) => item.id.toString()}
-              renderItem={({ item }) => (
-                <Product
-                  bgColor="white"
-                  label={item.title}
-                  image={item.images[0]}
-                  price={item.price}
-                  cart={() => addToCart(item)}
-                  details={() =>
-                    navigation.navigate('ProductDetail', { product: item })
-                  }
-                  width={PRODUCT_WIDTH}
-                  height={PRODUCT_HEIGHT}
-                  sale={item.sale_price}
-                />
-              )}
-            />
+            {loading ? (
+              <SkeletonPlaceholder backgroundColor={theme.colors.light}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    width: theme.constants.screenWidth,
+                  }}
+                >
+                  {skeletonArray.map(() => (
+                    <View
+                      style={{
+                        width: PRODUCT_WIDTH,
+                        height: PRODUCT_HEIGHT,
+                        borderRadius: 15,
+                        marginRight: 15,
+                      }}
+                    />
+                  ))}
+                </View>
+              </SkeletonPlaceholder>
+            ) : (
+              <FlatList
+                data={searchProducts}
+                numColumns={2}
+                showsHorizontalScrollIndicator={false}
+                keyExtractor={(item) => item.id.toString()}
+                renderItem={({ item }) => (
+                  <Product
+                    bgColor="light"
+                    label={item.title}
+                    image={item.images[0]}
+                    price={item.price}
+                    cart={() => addToCart(item)}
+                    details={() =>
+                      navigation.navigate('ProductDetail', { product: item })
+                    }
+                    width={PRODUCT_WIDTH}
+                    height={PRODUCT_HEIGHT}
+                    sale={item.sale_price}
+                  />
+                )}
+              />
+            )}
           </View>
         </ScrollView>
       </SafeAreaView>

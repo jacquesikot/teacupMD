@@ -23,6 +23,8 @@ type HomeNavParamList = {
   Cart: undefined;
   ProductDetail: { product: Product };
   OrderStatus: { status: string };
+  EditAddress: { address: DeliveryAddress } | undefined;
+  ManageAddress: undefined;
 };
 
 type RootNavParamList = {
@@ -33,10 +35,10 @@ type RootNavParamList = {
 type ProfileNavParamList = {
   Profile: undefined;
   Saved: undefined;
-  Addresses: undefined;
+  EditAddress: { address: DeliveryAddress } | undefined;
   CustomerService: undefined;
   Notifications: undefined;
-  EditAddress: { address: DeliveryAddress };
+  ManageAddress: undefined;
   ProductDetail: { product: Product };
 };
 

@@ -29,7 +29,7 @@ const HomeHeader = ({ notification, cartOnPress, displayName }: Props) => {
           <CartIcon2 />
           {cart.length > 0 && (
             <View style={styles.alert1}>
-              <Text>{cart.length}</Text>
+              <Text style={styles.number}>{cart.length}</Text>
             </View>
           )}
         </TouchableOpacity>
@@ -37,7 +37,7 @@ const HomeHeader = ({ notification, cartOnPress, displayName }: Props) => {
           <NotificationIcon />
           {notif && (
             <View style={styles.alert2}>
-              <Text>3</Text>
+              <Text style={styles.number}>3</Text>
             </View>
           )}
         </TouchableOpacity>

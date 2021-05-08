@@ -12,7 +12,7 @@ export { default as pharmacy } from './pharmacy/Pharmacy';
 export { default as cart } from './cart/cart';
 export { default as productDetail } from './productDetail/productDetail';
 export { default as saved } from './saved/saved';
-export { default as addresses } from './addresses/addresses';
 export { default as editAddress } from './editAddress/editAddress';
+export { default as manageAddress } from './manageAddress/manageAddress';
 export { default as customerService } from './customerService/customerService';
 export { default as orderStatus } from './orderStatus/orderStatus';

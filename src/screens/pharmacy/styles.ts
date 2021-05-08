@@ -14,7 +14,7 @@ export const PRODUCT_HEIGHT = hp('25%');
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: theme.colors.light,
+    backgroundColor: theme.colors.white,
     alignItems: 'center',
   },
   image: {

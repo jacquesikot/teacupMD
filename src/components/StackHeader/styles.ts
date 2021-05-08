@@ -24,12 +24,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: theme.colors.red,
     position: 'absolute',
+    borderWidth: 1,
+    borderColor: theme.colors.white,
     bottom: 10,
     left: 10,
   },
   cartText: {
     fontFamily: 'SofiaPro-Medium',
-    fontSize: wp('3.4%'),
+    fontSize: wp('3%'),
     color: theme.colors.dark,
   },
 });

@@ -16,7 +16,7 @@ interface AddressProps {
   zipcode: string;
 }
 
-const useAddresses = () => {
+const useEditAddress = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const { user } = useAppContext();
 
@@ -27,7 +27,9 @@ const useAddresses = () => {
   }, []);
 
   const getUserAddress = async () => {
-    const address = await addressApi.getUserAddress(user.id);
+    const address = await addressApi.getUserAddress({
+      pageParam: user.id,
+    });
     setUserAddress(address);
   };
 
@@ -41,35 +43,30 @@ const useAddresses = () => {
     zipcode: yup.string().required(),
   });
 
-  const handleSubmit = async (values: AddressProps) => {
+  const handleSubmit = async (values: AddressProps, handleReset: any) => {
     try {
       setLoading(true);
-      const address = await addressApi.getUserAddress(user.id);
-      if (address.length > 0) {
-        await addressApi.updatedUserAddress(
-          {
-            address: values.address.trim() + values.address2?.trim(),
-            city: values.city,
-            name: values.name.trim(),
-            phone_number: values.phone_number.trim(),
-            state: values.state.trim(),
-            zipcode: values.zipcode.trim(),
-            user_id: user.id.trim(),
-          },
-          address[0].id
-        );
-      } else {
-        await addressApi.addUserAddress({
-          address: values.address.trim() + values.address2?.trim(),
-          city: values.city,
-          name: values.name.trim(),
-          phone_number: values.phone_number.trim(),
-          state: values.state.trim(),
-          zipcode: values.zipcode.trim(),
-          user_id: user.id.trim(),
-        });
-      }
-      getUserAddress();
+
+      await addressApi.addUserAddress({
+        address: values.address.trim() + values.address2?.trim(),
+        city: values.city,
+        name: values.name.trim(),
+        phone_number: values.phone_number.trim(),
+        state: values.state.trim(),
+        zipcode: values.zipcode.trim(),
+        user_id: user.id.trim(),
+      });
+      handleReset({
+        values: {
+          address: '',
+          city: '',
+          name: '',
+          phone_number: '',
+          state: '',
+          zipcode: '',
+          user_id: '',
+        },
+      });
       setLoading(false);
       Toast.show({
         type: 'success',
@@ -79,7 +76,6 @@ const useAddresses = () => {
         text2: 'Address added succesfully',
       });
     } catch (error) {
-      console.log(error.message);
       setLoading(false);
       Toast.show({
         type: 'error',
@@ -99,4 +95,4 @@ const useAddresses = () => {
   };
 };
 
-export default useAddresses;
+export default useEditAddress;

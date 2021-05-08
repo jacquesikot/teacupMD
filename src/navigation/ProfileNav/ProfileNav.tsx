@@ -6,8 +6,8 @@ import {
   profile,
   notifications,
   saved,
+  manageAddress,
   editAddress,
-  addresses,
   customerService,
   productDetail,
 } from '../../screens';
@@ -20,8 +20,8 @@ const ProfileNav = () => {
       <ProfileStack.Screen name="Profile" component={profile} />
       <ProfileStack.Screen name="Notifications" component={notifications} />
       <ProfileStack.Screen name="Saved" component={saved} />
-      <ProfileStack.Screen name="Addresses" component={addresses} />
       <ProfileStack.Screen name="EditAddress" component={editAddress} />
+      <ProfileStack.Screen name="ManageAddress" component={manageAddress} />
       <ProfileStack.Screen name="CustomerService" component={customerService} />
       <ProfileStack.Screen name="ProductDetail" component={productDetail} />
     </ProfileStack.Navigator>

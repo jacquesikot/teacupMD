@@ -86,7 +86,6 @@ const Register = ({
                   onBlur={handleBlur('password')}
                   touched={touched.password}
                   error={errors.password}
-                  secureTextEntry={true}
                   keyboardType="default"
                   autoCapitalize="none"
                   secured={true}
