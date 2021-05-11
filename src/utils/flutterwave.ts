@@ -21,7 +21,7 @@ const getPaymentLink = async ({
 }: PaymentProps) => {
   const options = {
     headers: {
-      Authorization: `Bearer ${config.testSecretKey}`,
+      Authorization: `Bearer ${config.secretKey}`,
     },
   };
 

@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
   },
   pagination: {
     position: 'absolute',
-    top: '62%',
+    top: hp(30),
     width: '100%',
     height: hp('2%'),
     flexDirection: 'row',
@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   dot: {
-    marginHorizontal: 2,
+    marginHorizontal: wp(0.7),
     width: wp('1.4%'),
     height: wp('1.4%'),
     borderRadius: wp('0.7%'),

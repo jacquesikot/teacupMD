@@ -8,15 +8,17 @@ import { theme } from '..';
 const styles = StyleSheet.create({
   container: {
     width: theme.constants.screenWidth,
-    borderRadius: 15,
+    borderRadius: wp(5),
     height: hp('17%'),
     borderWidth: 1,
     borderColor: theme.colors.light,
     padding: wp('5%'),
     flexDirection: 'row',
+    marginBottom: hp(3),
   },
   addressContainer: {
     width: '90%',
+    justifyContent: 'space-around',
   },
   name: {
     fontFamily: 'SofiaPro-Medium',

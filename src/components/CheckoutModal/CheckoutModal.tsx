@@ -57,7 +57,9 @@ const CheckoutModal = ({
   });
 
   const handleCheckout = async () => {
-    if (!userAddress) return Alert.alert('', 'No Address Found');
+    if (!user.id) return Alert.alert('', 'Please login to place order');
+    if (!userAddress)
+      return Alert.alert('', 'No Address Found, please add address');
     setLoading(true);
     try {
       if (selected.id === options[0].id) {
@@ -121,6 +123,7 @@ const CheckoutModal = ({
         isVisible={show}
         onBackdropPress={onRequestClose}
         style={styles.container}
+        useNativeDriver={true}
       >
         <View style={styles.modal}>
           <View style={styles.topView}>

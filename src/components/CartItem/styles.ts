@@ -10,12 +10,12 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     width: theme.constants.screenWidth,
-    height: hp('17%'),
+    height: hp('15%'),
     borderWidth: 1,
     borderColor: theme.colors.light,
-    borderRadius: 15,
+    borderRadius: wp(4),
     marginTop: hp('2%'),
-    padding: 20,
+    padding: wp(5),
     alignItems: 'center',
   },
   titleContainer: {
@@ -35,10 +35,7 @@ const styles = StyleSheet.create({
     color: theme.colors.dark,
   },
   trashContainer: {
-    marginLeft: wp('9%'),
-    height: '30%',
-    alignSelf: 'flex-start',
-    marginTop: hp('1%'),
+    height: '40%',
   },
   counterContainer: {
     flexDirection: 'row',

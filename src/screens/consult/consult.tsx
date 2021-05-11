@@ -1,14 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
   SafeAreaView,
   FlatList,
   TouchableOpacity,
-  Alert,
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import { useQuery } from 'react-query';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 
 import styles, { WIDTH, HEIGHT } from './styles';
 import ConsultTab from '../../components/ConsultTab/ConsultTab';
@@ -17,10 +20,13 @@ import tabData from './tabData';
 import departmentsApi from '../../firebase/departments';
 import { theme } from '../../components';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
+import ComingSoon from '../../components/ComingSoon/ComingSoon';
 
 const skeletonArray = [1, 2, 3, 4, 5, 6, 7];
 
 const Consult = () => {
+  const [showModal, SetShowModal] = useState<boolean>(false);
+
   const { isError, data, isLoading } = useQuery(
     'departments',
     departmentsApi.getDepartments
@@ -32,12 +38,14 @@ const Consult = () => {
         <Text style={styles.heading}>Consult</Text>
         <Text style={styles.subHeading}>Professional Physician</Text>
       </View>
-      <Animatable.View animation="fadeIn" style={styles.tabContainer}>
+      <Animatable.View
+        animation="fadeIn"
+        useNativeDriver={true}
+        style={styles.tabContainer}
+      >
         {tabData.map((d) => (
           <TouchableOpacity
-            onPress={() =>
-              Alert.alert('Consultation', 'Consultation coming soon')
-            }
+            onPress={d.onPress}
             activeOpacity={0.8}
             key={d.id.toString()}
           >
@@ -51,7 +59,11 @@ const Consult = () => {
         ))}
       </Animatable.View>
       <Text style={styles.clinicalText}>Clinical Departments</Text>
-      <Animatable.View animation="zoomIn" style={styles.grid}>
+      <Animatable.View
+        animation="zoomIn"
+        useNativeDriver={true}
+        style={styles.grid}
+      >
         {isLoading ? (
           <SkeletonPlaceholder backgroundColor={theme.colors.light}>
             <View
@@ -61,14 +73,15 @@ const Consult = () => {
                 flexWrap: 'wrap',
               }}
             >
-              {skeletonArray.map(() => (
+              {skeletonArray.map((index) => (
                 <View
+                  key={index}
                   style={{
                     width: WIDTH,
                     height: HEIGHT,
-                    borderRadius: 15,
-                    marginRight: 10,
-                    marginBottom: 10,
+                    borderRadius: wp(4),
+                    marginRight: wp(2.6),
+                    marginBottom: wp(4),
                   }}
                 />
               ))}
@@ -84,9 +97,7 @@ const Consult = () => {
             renderItem={({ item }) => (
               <TouchableOpacity
                 activeOpacity={0.7}
-                onPress={() =>
-                  Alert.alert('Consultation', 'Consultation coming soon')
-                }
+                onPress={() => SetShowModal(true)}
               >
                 <CategoryItem
                   bgColor="light"
@@ -102,6 +113,7 @@ const Consult = () => {
           />
         )}
       </Animatable.View>
+      <ComingSoon show={showModal} onRequestClose={() => SetShowModal(false)} />
     </SafeAreaView>
   );
 };

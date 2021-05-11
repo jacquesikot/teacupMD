@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     color: theme.colors.primary,
   },
   buttonContainer: {
-    marginTop: hp('28.5%'),
+    marginTop: hp('22%'),
   },
 });
 

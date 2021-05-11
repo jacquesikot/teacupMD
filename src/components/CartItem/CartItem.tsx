@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { Image } from 'react-native-expo-image-cache';
 import Toast from 'react-native-toast-message';
@@ -8,6 +8,10 @@ import styles from './styles';
 import { theme } from '..';
 import { useAppContext } from '../../context/context';
 import { ProductOrder } from '../../types/contexttypes';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 
 interface Props {
   image: string;
@@ -25,7 +29,7 @@ const CartItem = ({ image, title, price, product }: Props) => {
       text1: 'Cart',
       text2: 'Product removed from cart',
       position: 'top',
-      visibilityTime: 3000,
+      visibilityTime: 2000,
       autoHide: true,
       type: 'success',
     });
@@ -37,7 +41,7 @@ const CartItem = ({ image, title, price, product }: Props) => {
         {...{ uri: image }}
         tint="light"
         transitionDuration={300}
-        style={{ width: 90, height: 80 }}
+        style={{ width: wp(18), height: wp(16) }}
       />
       <View style={styles.titleContainer}>
         <Text numberOfLines={2} style={styles.titleText}>
@@ -45,12 +49,13 @@ const CartItem = ({ image, title, price, product }: Props) => {
         </Text>
         <Text style={styles.priceText}>{'ZK ' + price}</Text>
       </View>
+      <View style={{ flex: 1 }} />
       <TouchableOpacity
         onPress={() => removeFromCart()}
         activeOpacity={0.7}
         style={styles.trashContainer}
       >
-        <Trash width={20} height={22} />
+        <Trash width={wp(5)} height={wp(6)} />
       </TouchableOpacity>
     </View>
   );

@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { StackScreenProps } from '@react-navigation/stack';
-import { View, Text, SafeAreaView, FlatList } from 'react-native';
-import * as Animatable from 'react-native-animatable';
-import { useQuery } from 'react-query';
+import { View, Text, SafeAreaView, FlatList, Alert } from 'react-native';
 
 import StackHeader from '../../components/StackHeader/StackHeader';
 import Button from '../../components/Button/Button';
@@ -14,7 +12,6 @@ import { theme } from '../../components';
 import { useAppContext } from '../../context/context';
 import StatusScreen from '../../components/StatusScreen/StatusScreen';
 import addressApi from '../../firebase/address';
-import { CommonActions } from '@react-navigation/native';
 
 const Cart = ({ navigation }: StackScreenProps<HomeNavParamList>) => {
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -32,7 +29,7 @@ const Cart = ({ navigation }: StackScreenProps<HomeNavParamList>) => {
 
   useEffect(() => {
     loadData();
-  });
+  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -101,13 +98,17 @@ const Cart = ({ navigation }: StackScreenProps<HomeNavParamList>) => {
               }
             }}
             handleAddress={() => {
-              setShowModal(false);
-              navigation.navigate('EditAddress');
+              if (user.id) {
+                setShowModal(false);
+                navigation.navigate('EditAddress');
+              } else {
+                Alert.alert('', 'Please login to add address');
+              }
             }}
           />
         </>
       ) : (
-        <Animatable.View animation="zoomIn">
+        <View>
           <StatusScreen
             image={require('../../../assets/images/emptyCart.png')}
             heading="Oppss!"
@@ -115,7 +116,7 @@ const Cart = ({ navigation }: StackScreenProps<HomeNavParamList>) => {
             buttonLabel="Start Browsing"
             onPress={() => navigation.navigate('Home')}
           />
-        </Animatable.View>
+        </View>
       )}
     </SafeAreaView>
   );

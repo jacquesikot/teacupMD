@@ -10,6 +10,7 @@ const useHome = () => {
   const [displayName, setDisplayName] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<boolean>(false);
+  const [showModal, setShowModal] = useState<boolean>(false);
 
   const loadData = async () => {
     try {
@@ -37,6 +38,8 @@ const useHome = () => {
     loading,
     error,
     displayName,
+    showModal,
+    setShowModal,
   };
 };
 

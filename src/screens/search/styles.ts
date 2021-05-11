@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     fontFamily: 'SofiaPro-Regular',
     paddingLeft: 20,
     color: theme.colors.darkGrey,
-    width: '100%',
+    width: '78%',
     height: '100%',
   },
   historyContainer: {
@@ -62,6 +62,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     width: theme.constants.screenWidth,
     flexWrap: 'wrap',
+    height: hp(15),
   },
   historyItem: {
     height: 40,
@@ -87,7 +88,8 @@ const styles = StyleSheet.create({
   noResultContainer: {
     width: theme.constants.screenWidth,
     alignItems: 'center',
-    marginTop: hp('5%'),
+    marginTop: hp(45),
+    position: 'absolute',
   },
 });
 

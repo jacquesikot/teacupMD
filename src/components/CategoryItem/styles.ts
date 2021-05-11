@@ -1,30 +1,37 @@
 import { StyleSheet } from 'react-native';
-import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 
 import { theme } from '..';
 
+export const WIDTH = wp(26);
+export const HEIGHT = hp(16);
+
 const styles = StyleSheet.create({
   container: {
-    borderRadius: 15,
+    borderRadius: wp(4),
     alignItems: 'center',
-    padding: 15,
-    marginRight: 15,
-    marginBottom: 15,
+    padding: wp(4),
+    marginRight: wp(4),
+    marginBottom: wp(4),
     borderWidth: 1,
   },
   label: {
     fontFamily: 'SofiaPro-Regular',
-    fontSize: wp('3.8%'),
-    marginTop: 15,
+    fontSize: wp(3.8),
+    marginTop: wp(4),
   },
   iconContainer: {
-    width: 20,
-    height: 20,
-    borderRadius: 10,
+    width: wp(6),
+    height: wp(6),
+    borderRadius: wp(3),
     borderWidth: 1,
+    borderColor: theme.colors.dark,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 15,
+    marginTop: wp(3.5),
   },
 });
 

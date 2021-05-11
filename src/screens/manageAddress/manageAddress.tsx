@@ -32,6 +32,10 @@ const ManageAddress = ({
     setLoading(false);
   };
 
+  useEffect(() => {
+    getAddress();
+  }, []);
+
   const deleteAddress = async (id: string) => {
     try {
       Alert.alert(
@@ -62,7 +66,7 @@ const ManageAddress = ({
     } catch (error) {
       Toast.show({
         type: 'error',
-        visibilityTime: 7000,
+        visibilityTime: 3000,
         autoHide: true,
         text1: 'Address Error',
         text2: 'Error deleting address',
@@ -74,53 +78,55 @@ const ManageAddress = ({
   }, []);
 
   return (
-    <SafeAreaView style={styles.container}>
+    <>
       <ActivityIndicator visible={loading} opacity={1} />
-      <StackHeader
-        label="Addresses"
-        back={() => navigation.goBack()}
-        color="white"
-      />
-      {addresses.length > 0 ? (
-        <>
-          <View style={styles.list}>
-            <FlatList
-              data={addresses}
-              showsVerticalScrollIndicator={false}
-              bounces={false}
-              keyExtractor={(item: DeliveryAddress) => item.id.toString()}
-              renderItem={({ item }) => (
-                <AddressItem
-                  name={item.name}
-                  address={item.address}
-                  city={item.city}
-                  state={item.state}
-                  phone={item.phone_number}
-                  onPressEdit={() =>
-                    navigation.navigate('EditAddress', { address: item })
-                  }
-                  onPressDelete={() => deleteAddress(item.id)}
-                />
-              )}
-            />
-          </View>
-          <Button
-            type="primary"
-            width={theme.constants.screenWidth}
-            label="Add Address"
-            onPress={() => navigation.navigate('EditAddress')}
-          />
-        </>
-      ) : (
-        <StatusScreen
-          heading="Oops, No address found"
-          subtext="You havent added any address. Add a delivery address now"
-          buttonLabel="Add Address"
-          onPress={() => navigation.navigate('EditAddress')}
-          image={require('../../../assets/images/noSaved.png')}
+      <SafeAreaView style={styles.container}>
+        <StackHeader
+          label="Addresses"
+          back={() => navigation.goBack()}
+          color="white"
         />
-      )}
-    </SafeAreaView>
+        {user.id && addresses.length > 0 ? (
+          <>
+            <View style={styles.list}>
+              <FlatList
+                data={addresses}
+                showsVerticalScrollIndicator={false}
+                bounces={false}
+                keyExtractor={(item: DeliveryAddress) => item.id.toString()}
+                renderItem={({ item }) => (
+                  <AddressItem
+                    name={item.name}
+                    address={item.address}
+                    city={item.city}
+                    state={item.state}
+                    phone={item.phone_number}
+                    onPressEdit={() =>
+                      navigation.navigate('EditAddress', { address: item })
+                    }
+                    onPressDelete={() => deleteAddress(item.id)}
+                  />
+                )}
+              />
+            </View>
+            <Button
+              type="primary"
+              width={theme.constants.screenWidth}
+              label="Add Address"
+              onPress={() => navigation.navigate('EditAddress')}
+            />
+          </>
+        ) : (
+          <StatusScreen
+            heading="Oops, No address found"
+            subtext="You havent added any address. Add a delivery address now"
+            buttonLabel="Add Address"
+            onPress={() => navigation.navigate('EditAddress')}
+            image={require('../../../assets/images/noSaved.png')}
+          />
+        )}
+      </SafeAreaView>
+    </>
   );
 };
 

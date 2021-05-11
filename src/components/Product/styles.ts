@@ -7,10 +7,12 @@ import {
 import { theme } from '..';
 
 export const MARGIN_RIGHT = wp('5%');
+export const WIDTH = wp(35);
+export const HEIGHT = wp(45);
 
 const styles = StyleSheet.create({
   container: {
-    borderRadius: 15,
+    borderRadius: wp(4),
     alignItems: 'center',
     padding: wp('3.7%'),
     marginBottom: hp('2.5%'),
@@ -47,7 +49,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   sale: {
-    borderRadius: 5,
+    borderRadius: wp(1.5),
     justifyContent: 'center',
     alignItems: 'center',
     padding: wp('1%'),
@@ -55,7 +57,7 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
   },
   saleText: {
-    fontFamily: 'SofiaPro-Medium',
+    fontFamily: 'SofiaPro-Regular',
     fontSize: hp('2%'),
     color: theme.colors.light,
   },

@@ -20,8 +20,8 @@ const styles = StyleSheet.create({
   },
   bottomContainer: {
     backgroundColor: theme.colors.white,
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
+    borderTopLeftRadius: wp(8),
+    borderTopRightRadius: wp(8),
     height: '100%',
     width: '100%',
     paddingLeft: theme.constants.screenPadding / 2,

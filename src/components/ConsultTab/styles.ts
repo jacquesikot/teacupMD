@@ -10,16 +10,16 @@ const styles = StyleSheet.create({
   container: {
     width: wp('43%'),
     height: hp('12%'),
-    borderRadius: 15,
-    padding: 15,
+    borderRadius: wp(5),
+    padding: wp(4),
   },
   upperText: {
     fontFamily: 'SofiaPro-Bold',
-    fontSize: wp('4%'),
+    fontSize: wp('3.5%'),
     color: theme.colors.dark,
-    width: '70%',
+    width: '65%',
     lineHeight: 23,
-    marginBottom: 10,
+    marginBottom: hp(1),
   },
   lowerText: {
     fontFamily: 'SofiaPro-Regular',

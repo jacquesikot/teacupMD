@@ -5,7 +5,7 @@ import { Image } from 'react-native-expo-image-cache';
 import { theme } from '..';
 import { CartIcon } from '../../svg/homeIcons';
 import { Trash } from '../../svg/searchIcons';
-import styles, { MARGIN_RIGHT } from './styles';
+import styles, { MARGIN_RIGHT, WIDTH, HEIGHT } from './styles';
 
 interface Props {
   width?: number;
@@ -34,8 +34,8 @@ const Product = ({
   saved,
   marginRight,
 }: Props) => {
-  const widthValue = width ? width : 145;
-  const heightValue = height ? height : 185;
+  const widthValue = width ? width : WIDTH;
+  const heightValue = height ? height : HEIGHT;
   const salePrice = Number(sale);
   const marginRightValue = marginRight ? marginRight : MARGIN_RIGHT;
 
@@ -89,13 +89,15 @@ const Product = ({
                   ).toFixed(0) + '% Off'}
                 </Text>
               ) : (
-                'Available'
+                <Text style={styles.discountText}>Available</Text>
               )}
             </Text>
           </View>
 
           <View style={styles.priceContainer}>
-            <Text style={styles.priceText}>ZK {sale ? sale : price}</Text>
+            <Text style={styles.priceText}>
+              ZK {Number(sale) > 0 ? sale : price}
+            </Text>
             <View style={{ flex: 1 }} />
           </View>
         </View>

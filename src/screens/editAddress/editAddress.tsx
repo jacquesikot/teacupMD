@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -8,6 +8,7 @@ import {
   Platform,
 } from 'react-native';
 import { Formik } from 'formik';
+import Toast from 'react-native-toast-message';
 
 import styles, { FORM_WIDTH } from './styles';
 import StackHeader from '../../components/StackHeader/StackHeader';
@@ -18,12 +19,85 @@ import { theme } from '../../components';
 import Button from '../../components/Button/Button';
 import useEditAddress from './useEditAddress';
 import ActivityIndicator from '../../components/ActivityIndicator/ActivityIndicator';
+import addressApi from '../../firebase/address';
+import { useAppContext } from '../../context/context';
 
 const EditAddress = ({
   navigation,
   route,
 }: StackScreenProps<ProfileNavParamList, 'EditAddress'>) => {
-  const { loading, handleSubmit, addressSchema } = useEditAddress();
+  const { addressSchema } = useEditAddress();
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const { user } = useAppContext();
+
+  const [userAddress, setUserAddress] = useState<any>([]);
+
+  useEffect(() => {
+    getUserAddress();
+  }, []);
+
+  const getUserAddress = async () => {
+    const address = await addressApi.getUserAddress({
+      pageParam: user.id,
+    });
+    setUserAddress(address);
+  };
+
+  interface AddressProps {
+    address: string;
+    address2?: string;
+    city: string;
+    name: string;
+    phone_number: string;
+    state: string;
+    user_id?: string;
+    zipcode: string;
+  }
+
+  const handleSubmit = async (values: AddressProps, handleReset: any) => {
+    try {
+      setLoading(true);
+
+      await addressApi.addUserAddress({
+        address: values.address.trim() + values.address2?.trim(),
+        city: values.city,
+        name: values.name.trim(),
+        phone_number: values.phone_number.trim(),
+        state: values.state.trim(),
+        zipcode: values.zipcode.trim(),
+        user_id: user.id.trim(),
+      });
+      handleReset({
+        values: {
+          address: '',
+          city: '',
+          name: '',
+          phone_number: '',
+          state: '',
+          zipcode: '',
+        },
+      });
+      navigation.navigate('Profile');
+      setLoading(false);
+      Toast.show({
+        type: 'success',
+        visibilityTime: 7000,
+        autoHide: true,
+        text1: 'Address',
+        text2: 'Address added succesfully',
+      });
+    } catch (error) {
+      setLoading(false);
+      Toast.show({
+        type: 'error',
+        visibilityTime: 7000,
+        autoHide: true,
+        text1: 'Address Error',
+        text2: 'Error adding address',
+      });
+    }
+  };
 
   const routeParams = route.params;
 

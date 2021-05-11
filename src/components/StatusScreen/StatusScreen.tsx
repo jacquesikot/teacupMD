@@ -3,7 +3,7 @@ import { View, Text, Image } from 'react-native';
 import { theme } from '..';
 import Button from '../Button/Button';
 
-import styles from './styles';
+import styles, { IMG_SIZE } from './styles';
 
 interface Props {
   image: number;
@@ -23,7 +23,7 @@ const StatusScreen = ({
   return (
     <View style={styles.container}>
       <View style={styles.circleBg}>
-        <Image source={image} style={{ width: 200, height: 165 }} />
+        <Image source={image} style={{ width: IMG_SIZE, height: IMG_SIZE }} />
       </View>
       <Text style={styles.heading}>{heading}</Text>
       <Text style={styles.subtext}>{subtext}</Text>

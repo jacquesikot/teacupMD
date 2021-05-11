@@ -1,10 +1,13 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, SafeAreaView, Text, ScrollView } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { StackScreenProps } from '@react-navigation/stack';
 import { Formik } from 'formik';
 import { Feather as Icon } from '@expo/vector-icons';
+import Toast from 'react-native-toast-message';
+import { CommonActions } from '@react-navigation/native';
 
+import firebaseFunc from '../../firebase/auth';
 import styles from './styles';
 import { theme } from '../../components';
 import TextInput from '../../components/TextInput/TextInput';
@@ -14,27 +17,53 @@ import { AuthParamList } from '../../types/navigationTypes';
 import useLogin from './useLogin';
 
 const Login = ({ navigation }: StackScreenProps<AuthParamList, 'Login'>) => {
-  const { loginSchema, onSubmit, loading } = useLogin();
+  const { loginSchema } = useLogin();
+  const [loading, setLoading] = useState<boolean>(false);
 
-  const inputRef = useRef(null);
-  // const [emailError, setEmailError] = useState<any[]>([]);
+  interface LoginProps {
+    email: string;
+    password: string;
+  }
 
-  // useEffect(() => {
-  //   if (arr.length === 1) {
-  //     inputRef.current.animate('shake', 500, 'linear');
-  //   }
-  // }, []);
+  const onSubmit = async (values: LoginProps) => {
+    try {
+      setLoading(true);
+      await firebaseFunc.signInUser(values.email, values.password);
+      navigation.dispatch(
+        CommonActions.navigate({
+          name: 'Home',
+        })
+      );
+      setLoading(false);
+      Toast.show({
+        type: 'success',
+        visibilityTime: 2000,
+        autoHide: true,
+        text1: 'Login Success',
+        text2: 'You have been successfully logged in',
+      });
+    } catch (error) {
+      setLoading(false);
+      Toast.show({
+        type: 'error',
+        visibilityTime: 2000,
+        autoHide: true,
+        text1: 'Login Error',
+        text2: 'Error logging in',
+      });
+    }
+  };
 
   return (
     <ScrollView
       style={styles.container}
-      contentContainerStyle={{ alignItems: 'center' }}
+      contentContainerStyle={{ alignItems: 'center', height: '100%' }}
       bounces={false}
     >
       <SafeAreaView>
         <ActivityIndicator visible={loading} />
         <View style={styles.welcomeContainer}>
-          <Text style={styles.heading}>Welcome,</Text>
+          <Text style={styles.heading}>Login,</Text>
           <Text style={styles.subText}>sign in to continue</Text>
         </View>
 

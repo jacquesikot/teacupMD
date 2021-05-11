@@ -2,11 +2,9 @@ import React from 'react';
 import {
   View,
   Text,
-  SafeAreaView,
   TouchableOpacity,
   FlatList,
   Image,
-  Alert,
   Animated,
 } from 'react-native';
 import { Feather as Icon } from '@expo/vector-icons';
@@ -28,23 +26,42 @@ import Product from '../../components/Product/Product';
 import { HomeNavParamList } from '../../types/navigationTypes';
 import useHome from './useHome';
 import { useAppContext } from '../../context/context';
+import ComingSoon from '../../components/ComingSoon/ComingSoon';
 
 const Home = ({ navigation }: StackScreenProps<HomeNavParamList, 'Home'>) => {
-  const { products, departments, loading, displayName } = useHome();
+  const {
+    products,
+    departments,
+    loading,
+    displayName,
+    showModal,
+    setShowModal,
+  } = useHome();
 
-  const { manageCart } = useAppContext();
+  const { manageCart, isProductInCart } = useAppContext();
 
   const addToCart = (product: any) => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-    manageCart('ADD_TO_CART', product, 1);
-    Toast.show({
-      text1: 'Cart',
-      text2: 'Product added to cart',
-      position: 'top',
-      visibilityTime: 2000,
-      autoHide: true,
-      type: 'success',
-    });
+    if (isProductInCart(product)) {
+      Toast.show({
+        text1: 'Cart',
+        text2: 'Product already in cart',
+        position: 'top',
+        visibilityTime: 2000,
+        autoHide: true,
+        type: 'info',
+      });
+    } else {
+      manageCart('ADD_TO_CART', product, 1);
+      Toast.show({
+        text1: 'Cart',
+        text2: 'Product added to cart',
+        position: 'top',
+        visibilityTime: 2000,
+        autoHide: true,
+        type: 'success',
+      });
+    }
   };
 
   const skeletonArray = [1, 2, 3, 4, 5, 6, 7, 8];
@@ -61,14 +78,14 @@ const Home = ({ navigation }: StackScreenProps<HomeNavParamList, 'Home'>) => {
   });
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <Animated.View
         style={{
           alignItems: 'center',
           zIndex: 1,
           elevation: 1,
           position: 'absolute',
-          top: 20,
+          top: 0,
           left: 0,
           right: 0,
           transform: [{ translateY: translateY }],
@@ -77,7 +94,7 @@ const Home = ({ navigation }: StackScreenProps<HomeNavParamList, 'Home'>) => {
         <HomeHeader
           notification={() => navigation.navigate('Notifications')}
           cartOnPress={() => navigation.navigate('Cart')}
-          displayName={name!.length > 0 ? name![0] : undefined}
+          // displayName={name!.length > 0 ? name![0] : undefined}
         />
       </Animated.View>
       <Animated.ScrollView
@@ -98,7 +115,7 @@ const Home = ({ navigation }: StackScreenProps<HomeNavParamList, 'Home'>) => {
         )}
       >
         <Image
-          source={require('../../../assets/images/pharmaBanner.png')}
+          source={require('../../../assets/images/infoBanner.png')}
           style={styles.image}
         />
         <View style={styles.departmentContainer}>
@@ -126,13 +143,14 @@ const Home = ({ navigation }: StackScreenProps<HomeNavParamList, 'Home'>) => {
                   width: theme.constants.screenWidth,
                 }}
               >
-                {skeletonArray.map(() => (
+                {skeletonArray.map((index) => (
                   <View
+                    key={index}
                     style={{
-                      width: 105,
-                      height: 116,
-                      borderRadius: 15,
-                      marginRight: 15,
+                      width: wp(26),
+                      height: hp(16),
+                      borderRadius: wp(4),
+                      marginRight: wp(4),
                     }}
                   />
                 ))}
@@ -147,9 +165,7 @@ const Home = ({ navigation }: StackScreenProps<HomeNavParamList, 'Home'>) => {
               renderItem={({ item }) => (
                 <TouchableOpacity
                   activeOpacity={0.7}
-                  onPress={() =>
-                    Alert.alert('Departments', 'Departments coming soon')
-                  }
+                  onPress={() => setShowModal(true)}
                 >
                   <CategoryItem
                     bgColor="light"
@@ -163,6 +179,7 @@ const Home = ({ navigation }: StackScreenProps<HomeNavParamList, 'Home'>) => {
             />
           )}
         </View>
+        {loading && <View style={{ height: hp(3) }} />}
         <View style={styles.departmentContainer}>
           <Text style={styles.department}>Pharmacy</Text>
           <TouchableOpacity
@@ -182,12 +199,13 @@ const Home = ({ navigation }: StackScreenProps<HomeNavParamList, 'Home'>) => {
                   width: theme.constants.screenWidth,
                 }}
               >
-                {skeletonArray.map(() => (
+                {skeletonArray.map((index) => (
                   <View
+                    key={index}
                     style={{
-                      width: 145,
-                      height: 185,
-                      borderRadius: 15,
+                      width: wp(35),
+                      height: wp(45),
+                      borderRadius: wp(4),
                       marginRight: wp('5%'),
                     }}
                   />
@@ -228,12 +246,13 @@ const Home = ({ navigation }: StackScreenProps<HomeNavParamList, 'Home'>) => {
                   width: theme.constants.screenWidth,
                 }}
               >
-                {skeletonArray.map(() => (
+                {skeletonArray.map((index) => (
                   <View
+                    key={index}
                     style={{
-                      width: 145,
-                      height: 185,
-                      borderRadius: 15,
+                      width: wp(35),
+                      height: wp(45),
+                      borderRadius: wp(4),
                       marginRight: wp('5%'),
                     }}
                   />
@@ -272,7 +291,8 @@ const Home = ({ navigation }: StackScreenProps<HomeNavParamList, 'Home'>) => {
           <Text style={styles.tipLogo}>TeaCup MD</Text>
         </View>
       </Animated.ScrollView>
-    </SafeAreaView>
+      <ComingSoon show={showModal} onRequestClose={() => setShowModal(false)} />
+    </View>
   );
 };
 

@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import Toast from 'react-native-toast-message';
 import { useQuery } from 'react-query';
 import * as Linking from 'expo-linking';
+import { CommonActions } from '@react-navigation/native';
 
 import {
   FavoriteIcon,
@@ -26,7 +27,7 @@ import { ProfileNavParamList } from '../../types/navigationTypes';
 const Profile = ({
   navigation,
 }: StackScreenProps<ProfileNavParamList, 'Profile'>) => {
-  const { user } = useAppContext();
+  const { user, addUserDetails } = useAppContext();
   const { favorites } = useSelector((state: any) => state.productReducer);
 
   const userDetails = useQuery('userDetails', authFunc.getUserDetails);
@@ -41,12 +42,32 @@ const Profile = ({
 
   const handleLogout = async () => {
     try {
-      await authFunc.logOutUser();
+      if (user.id) {
+        await authFunc.logOutUser();
+        addUserDetails({
+          id: null,
+          displayName: null,
+          email: null,
+        });
+        navigation.dispatch(
+          CommonActions.navigate({
+            name: 'Home',
+          })
+        );
+        Toast.show({
+          type: 'success',
+          visibilityTime: 2000,
+          autoHide: true,
+          text1: 'Logout Success',
+          text2: 'You have been successfully logged out',
+        });
+      } else {
+        navigation.navigate('Login');
+      }
     } catch (error) {
-      console.log(error.message);
       Toast.show({
         type: 'error',
-        visibilityTime: 7000,
+        visibilityTime: 2000,
         autoHide: true,
         text1: 'Logout Error',
         text2: 'Error logging in',
@@ -66,21 +87,37 @@ const Profile = ({
             </View>
           </TouchableOpacity>
         </View>
-        <View style={styles.profileContainer}>
-          <View style={styles.profileImg} />
-          <View style={styles.profileTextContainer}>
-            <Text numberOfLines={1} style={styles.profileText}>
-              {userDetails.data?.displayName}
-            </Text>
-            <View style={styles.account}>
-              <Animated.Text style={styles.accountText}>Account</Animated.Text>
-              <Icon name="chevron-right" size={15} color={theme.colors.grey} />
+        {user.id ? (
+          <View style={styles.profileContainer}>
+            <View style={styles.profileImg} />
+            <View style={styles.profileTextContainer}>
+              <Text numberOfLines={1} style={styles.profileText}>
+                {userDetails.data?.displayName}
+              </Text>
+              <View style={styles.account}>
+                <Animated.Text style={styles.accountText}>
+                  Account
+                </Animated.Text>
+                <Icon
+                  name="chevron-right"
+                  size={15}
+                  color={theme.colors.grey}
+                />
+              </View>
             </View>
           </View>
-        </View>
+        ) : (
+          <View style={styles.authBanner}>
+            <Text style={styles.authText}>
+              Sign up or Login to save your profile
+            </Text>
+          </View>
+        )}
         <View style={styles.accountBottom}>
           <View style={styles.accountBottomItem}>
-            <Text style={styles.accountBottomText1}>{orderCount}</Text>
+            <Text style={styles.accountBottomText1}>
+              {orderCount && user.id ? orderCount : '0'}
+            </Text>
             <Text style={styles.accountBottomText2}>Orders</Text>
           </View>
           <View style={styles.accountBottomItem}>
@@ -88,13 +125,30 @@ const Profile = ({
             <Text style={styles.accountBottomText2}>Message</Text>
           </View>
           <View style={styles.accountBottomItem}>
-            <Text style={styles.accountBottomText1}>{favorites.length}</Text>
+            <Text style={styles.accountBottomText1}>
+              {user.id ? favorites.length : '0'}
+            </Text>
             <Text style={styles.accountBottomText2}>Saved</Text>
           </View>
         </View>
         <View style={styles.others}>
           <View style={styles.othersContainer}>
-            <TouchableOpacity onPress={() => navigation.navigate('Saved')}>
+            <TouchableOpacity
+              onPress={() => {
+                if (user.id) {
+                  navigation.navigate('Saved');
+                } else {
+                  Toast.show({
+                    text1: 'Login Required',
+                    text2: 'Sign up or login to add favorites',
+                    position: 'top',
+                    visibilityTime: 3000,
+                    autoHide: true,
+                    type: 'info',
+                  });
+                }
+              }}
+            >
               <View style={styles.othersItem}>
                 <FavoriteIcon />
                 <Text style={styles.othersText}>Saved</Text>
@@ -107,7 +161,20 @@ const Profile = ({
               </View>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => navigation.navigate('ManageAddress')}
+              onPress={() => {
+                if (user.id) {
+                  navigation.navigate('ManageAddress');
+                } else {
+                  Toast.show({
+                    text1: 'Login Required',
+                    text2: 'Sign up or login to add favorites',
+                    position: 'top',
+                    visibilityTime: 3000,
+                    autoHide: true,
+                    type: 'info',
+                  });
+                }
+              }}
             >
               <View style={styles.othersItem}>
                 <PatientIcon />
@@ -134,10 +201,13 @@ const Profile = ({
                 />
               </View>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => true} style={styles.othersItem}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('ForgotPassword')}
+              style={styles.othersItem}
+            >
               <View style={styles.othersItem}>
                 <AboutUsIcon />
-                <Text style={styles.othersText}>About Us</Text>
+                <Text style={styles.othersText}>Recover Password</Text>
                 <View style={{ flex: 1 }} />
                 <Icon
                   name="chevron-right"
@@ -148,8 +218,14 @@ const Profile = ({
             </TouchableOpacity>
             <TouchableOpacity onPress={handleLogout} style={styles.othersItem}>
               <View style={styles.othersItem}>
-                <LogoutIcon />
-                <Text style={styles.othersText}>Log out</Text>
+                {user.id ? (
+                  <LogoutIcon />
+                ) : (
+                  <LogoutIcon color={theme.colors.green} />
+                )}
+                <Text style={styles.othersText}>
+                  {user.id ? 'Log out' : 'Login or Register'}
+                </Text>
                 <View style={{ flex: 1 }} />
                 <Icon
                   name="chevron-right"

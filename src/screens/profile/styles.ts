@@ -34,7 +34,8 @@ const styles = StyleSheet.create({
   },
   profileImg: {
     width: wp('15%'),
-    borderRadius: wp('7.5%'),
+    height: wp(15),
+    borderRadius: wp(7.5),
     backgroundColor: theme.colors.dark,
     marginRight: 15,
   },
@@ -47,7 +48,7 @@ const styles = StyleSheet.create({
     fontFamily: 'SofiaPro-Bold',
     fontSize: wp('6%'),
     color: theme.colors.dark,
-    marginBottom: 5,
+    marginBottom: wp(1),
   },
   account: {
     flexDirection: 'row',
@@ -60,14 +61,16 @@ const styles = StyleSheet.create({
   },
   accountBottom: {
     flexDirection: 'row',
-    width: '70%',
+    width: '60%',
     height: hp('7%'),
-    marginLeft: wp('16%'),
-    marginTop: hp('2%'),
+    marginTop: hp('4%'),
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
   accountBottomItem: {
     flexDirection: 'column',
     alignItems: 'center',
+    justifyContent: 'center',
     marginRight: 50,
   },
   accountBottomText1: {
@@ -110,6 +113,19 @@ const styles = StyleSheet.create({
     fontSize: wp('4%'),
     color: theme.colors.darkGrey,
     marginLeft: wp('5%'),
+  },
+  authBanner: {
+    width: wp('70%'),
+    height: hp('5%'),
+    borderRadius: wp('2%'),
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: theme.colors.lightGreen,
+  },
+  authText: {
+    fontFamily: 'SofiaPro-Medium',
+    fontSize: wp('4%'),
+    color: theme.colors.darkGrey,
   },
 });
 

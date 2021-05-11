@@ -318,8 +318,8 @@ export function LogoutIcon(props: SvgProps) {
       />
       <Path
         d="M18.175 7.643a.69.69 0 00-.973.973l3.2 3.2H6.45a.69.69 0 00-.66.957.689.689 0 00.66.418H20.4l-3.2 3.2a.69.69 0 00.746 1.126.671.671 0 00.222-.149l4.37-4.37a.685.685 0 00.005-.978l-4.368-4.377z"
-        fill={theme.colors.red}
-        stroke={theme.colors.red}
+        fill={props.color ? props.color : theme.colors.red}
+        stroke={props.color ? props.color : theme.colors.red}
         strokeWidth={0.8}
         strokeLinecap="round"
         strokeLinejoin="round"

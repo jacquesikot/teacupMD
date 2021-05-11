@@ -8,19 +8,16 @@ import { useAppContext } from '../../context/context';
 interface Props {
   notification: any;
   cartOnPress: any;
-  displayName: string | undefined;
 }
 
 const notif = false;
 
-const HomeHeader = ({ notification, cartOnPress, displayName }: Props) => {
+const HomeHeader = ({ notification, cartOnPress }: Props) => {
   const { cart } = useAppContext();
   return (
     <View style={styles.container}>
       <View style={styles.textContainer}>
-        <Text style={styles.name}>
-          {displayName !== undefined ? `Hi, ${displayName}` : `Good Day`}
-        </Text>
+        <Text style={styles.name}>Good Day,</Text>
         <Text style={styles.welcome}>welcome back!</Text>
       </View>
       <View style={{ flex: 1 }} />

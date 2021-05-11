@@ -5,12 +5,12 @@ import { StackScreenProps } from '@react-navigation/stack';
 import styles from './styles';
 import OnBoardingSlider from '../../components/OnboardingSlider/OnboardingSlider';
 import data from './data';
-import { AuthParamList } from '../../types/navigationTypes';
+import { RootNavParamList } from '../../types/navigationTypes';
 import OnboardingButton from '../../components/OnboardingButton/OnboardingButton';
 
 const Onboarding = ({
   navigation,
-}: StackScreenProps<AuthParamList, 'OnBoarding'>) => {
+}: StackScreenProps<RootNavParamList, 'Onboarding'>) => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const scrollX = useRef(new Animated.Value(0)).current;
 
@@ -64,7 +64,7 @@ const Onboarding = ({
             if (slidesRef.current && currentIndex < 2) {
               slidesRef.current.scrollToIndex({ index: currentIndex + 1 });
             } else {
-              navigation.navigate('Welcome');
+              navigation.navigate('AppNav');
             }
           }}
         />

@@ -5,7 +5,7 @@ import { Image } from 'react-native-expo-image-cache';
 
 import { theme } from '..';
 
-import styles from './styles';
+import styles, { WIDTH, HEIGHT } from './styles';
 
 interface Props {
   width?: number;
@@ -30,8 +30,8 @@ const CategoryItem = ({
   imgWidth,
   imgHeight,
 }: Props) => {
-  const widthValue = width ? width : 105;
-  const heightValue = height ? height : 116;
+  const widthValue = width ? width : WIDTH;
+  const heightValue = height ? height : HEIGHT;
   const labelColor = icon ? theme.colors.dark : theme.colors.darkGrey;
   const borderColor = active ? theme.colors.primary : theme.colors.white;
   const color = active ? theme.colors.lightBlue : theme.colors[bgColor];
@@ -39,9 +39,6 @@ const CategoryItem = ({
   const iconBorderColor = active ? theme.colors.primary : theme.colors.dark;
   const iconColor = active ? theme.colors.white : theme.colors.dark;
 
-  const preview = {
-    uri: `https://via.placeholder.com/${widthValue}/ebf0ff`,
-  };
   return (
     <View
       style={[
@@ -64,7 +61,9 @@ const CategoryItem = ({
         }}
       />
       <View style={{ flex: 1 }} />
-      <Text style={[styles.label, { color: labelColor }]}>{label}</Text>
+      <Text numberOfLines={1} style={[styles.label, { color: labelColor }]}>
+        {label}
+      </Text>
       {icon && (
         <View
           style={[

@@ -85,7 +85,7 @@ const Saved = ({
           />
         </View>
       ) : (
-        <Animatable.View animation="zoomIn">
+        <View>
           <StatusScreen
             heading="Oppss!"
             subtext="Sorry, you have no saved products"
@@ -99,7 +99,7 @@ const Saved = ({
               )
             }
           />
-        </Animatable.View>
+        </View>
       )}
     </SafeAreaView>
   );

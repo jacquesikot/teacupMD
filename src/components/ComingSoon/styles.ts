@@ -3,38 +3,35 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-
 import { theme } from '..';
 
-export const IMG_SIZE = wp(60);
+export const BUTTON_WIDTH = wp(50);
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: theme.colors.white,
+    width: wp(90),
+    height: hp(60),
+    borderRadius: wp(7),
     alignItems: 'center',
-  },
-  circleBg: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: theme.constants.screenWidth - wp(27),
-    height: theme.constants.screenWidth - wp(27),
-    borderRadius: theme.constants.screenWidth - wp(27) / 2,
+    padding: wp(10),
   },
   heading: {
     fontFamily: 'SofiaPro-Bold',
-    fontSize: wp('7%'),
+    fontSize: wp(7),
     color: theme.colors.dark,
-    marginTop: hp('4%'),
+    marginTop: hp(2),
     textAlign: 'center',
   },
   subtext: {
     fontFamily: 'SofiaPro-Medium',
-    fontSize: wp('4.5%'),
+    fontSize: wp(4.5),
     color: theme.colors.darkGrey,
-    marginTop: hp('3%'),
-    marginBottom: hp('10%'),
+    marginTop: hp(2),
+    marginBottom: hp(3),
     width: wp(80),
     textAlign: 'center',
-    lineHeight: hp('4%'),
+    lineHeight: hp(4),
   },
 });
 

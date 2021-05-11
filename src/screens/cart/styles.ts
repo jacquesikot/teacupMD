@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     width: theme.constants.screenWidth,
   },
   productContainer: {
-    height: hp('38%'),
+    height: hp('35%'),
   },
   totalText: {
     fontFamily: 'SofiaPro-Bold',

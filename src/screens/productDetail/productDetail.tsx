@@ -38,7 +38,7 @@ const ProductDetail = ({
   const { favorites } = useSelector((state: any) => state.productReducer);
   const dispatch = useDispatch();
   const handleAddFavorite = (product: ProductProps) =>
-    dispatch(addFavorite(product, user.id));
+    dispatch(addFavorite(product, user.id ? user.id : ''));
 
   const { manageCart, user } = useAppContext();
 
@@ -74,6 +74,15 @@ const ProductDetail = ({
   };
 
   const handleFavorites = async () => {
+    if (!user.id)
+      return Toast.show({
+        text1: 'Login Required',
+        text2: 'Sign up or login to add favorites',
+        position: 'top',
+        visibilityTime: 3000,
+        autoHide: true,
+        type: 'info',
+      });
     if (isFavorite)
       return Toast.show({
         text1: 'Favorites',

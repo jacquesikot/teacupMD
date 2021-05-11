@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.white,
   },
   list: {
-    height: hp('65%'),
+    height: hp('61%'),
   },
 });
 

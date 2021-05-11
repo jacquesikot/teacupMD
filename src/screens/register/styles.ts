@@ -40,11 +40,11 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   buttonContainer: {
-    marginBottom: 20,
+    marginBottom: hp(5),
   },
   termsOfUseContainer: {
-    paddingBottom: hp('2%'),
     alignItems: 'center',
+    marginBottom: hp(3),
   },
   termsOfUseText1: {
     fontFamily: 'SofiaPro-Medium',

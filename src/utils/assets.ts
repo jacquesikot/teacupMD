@@ -12,6 +12,8 @@ const assets = [
   require('../../assets/images/orderFail.png'),
   require('../../assets/images/orderSuccess.png'),
   require('../../assets/images/welcomeImg.png'),
+  require('../../assets/images/infoBanner.png'),
+  require('../../assets/images/comingSoon.png'),
 ];
 
 export default assets;

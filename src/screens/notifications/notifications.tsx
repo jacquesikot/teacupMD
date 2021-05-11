@@ -44,7 +44,7 @@ const Notifications = ({
           />
         </View>
       ) : (
-        <Animatable.View animation="zoomIn">
+        <View>
           <StatusScreen
             image={require('../../../assets/images/noSaved.png')}
             heading="Oppss!"
@@ -52,7 +52,7 @@ const Notifications = ({
             buttonLabel="Go back"
             onPress={() => navigation.goBack()}
           />
-        </Animatable.View>
+        </View>
       )}
     </SafeAreaView>
   );

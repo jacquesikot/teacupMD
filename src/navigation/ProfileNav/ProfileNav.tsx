@@ -10,6 +10,9 @@ import {
   editAddress,
   customerService,
   productDetail,
+  login,
+  register,
+  forgotPassword,
 } from '../../screens';
 
 const ProfileStack = createStackNavigator<ProfileNavParamList>();
@@ -20,6 +23,9 @@ const ProfileNav = () => {
       <ProfileStack.Screen name="Profile" component={profile} />
       <ProfileStack.Screen name="Notifications" component={notifications} />
       <ProfileStack.Screen name="Saved" component={saved} />
+      <ProfileStack.Screen name="Login" component={login} />
+      <ProfileStack.Screen name="Register" component={register} />
+      <ProfileStack.Screen name="ForgotPassword" component={forgotPassword} />
       <ProfileStack.Screen name="EditAddress" component={editAddress} />
       <ProfileStack.Screen name="ManageAddress" component={manageAddress} />
       <ProfileStack.Screen name="CustomerService" component={customerService} />

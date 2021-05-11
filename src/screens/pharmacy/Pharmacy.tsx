@@ -121,7 +121,7 @@ const Pharmacy = ({
               <FlatList
                 data={categories}
                 horizontal
-                showsVerticalScrollIndicator={false}
+                showsHorizontalScrollIndicator={false}
                 keyExtractor={(item: any) => item.id.toString()}
                 renderItem={({ item }: any) => (
                   <TouchableOpacity

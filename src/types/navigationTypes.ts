@@ -28,7 +28,7 @@ type HomeNavParamList = {
 };
 
 type RootNavParamList = {
-  AuthNav: undefined;
+  Onboarding: undefined;
   AppNav: undefined;
 };
 
@@ -40,6 +40,9 @@ type ProfileNavParamList = {
   Notifications: undefined;
   ManageAddress: undefined;
   ProductDetail: { product: Product };
+  Login: undefined;
+  Register: undefined;
+  ForgotPassword: undefined;
 };
 
 type SearchNavParamList = {

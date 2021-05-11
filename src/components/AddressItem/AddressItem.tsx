@@ -27,11 +27,15 @@ const AddressItem = ({
   return (
     <View style={styles.container}>
       <View style={styles.addressContainer}>
-        <Text style={styles.name}>{name}</Text>
+        <Text numberOfLines={1} style={styles.name}>
+          {name}
+        </Text>
         <Text numberOfLines={2} style={styles.address}>
           {address + ', ' + city + ', ' + state}
         </Text>
-        <Text style={styles.phone}>{phone}</Text>
+        <Text numberOfLines={1} style={styles.phone}>
+          {phone}
+        </Text>
       </View>
       <View style={styles.iconContainer}>
         <TouchableOpacity activeOpacity={0.7} onPress={onPressDelete}>

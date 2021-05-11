@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.white,
   },
   headingContainer: {
-    marginTop: theme.constants.screenPadding,
+    marginTop: theme.constants.screenPadding - 10,
     width: theme.constants.screenWidth,
   },
   heading: {
@@ -28,21 +28,21 @@ const styles = StyleSheet.create({
     fontFamily: 'SofiaPro-Medium',
     fontSize: wp('4%'),
     color: theme.colors.darkGrey,
-    marginTop: 5,
+    marginTop: hp(0.8),
   },
   tabContainer: {
     flexDirection: 'row',
     width: theme.constants.screenWidth,
     justifyContent: 'space-between',
-    marginTop: 30,
+    marginTop: hp(3),
   },
   clinicalText: {
     fontFamily: 'SofiaPro-Bold',
     fontSize: wp('6.5%'),
     color: theme.colors.dark,
     width: theme.constants.screenWidth,
-    marginTop: 30,
-    marginBottom: 30,
+    marginTop: hp(4),
+    marginBottom: hp(4),
   },
   grid: {
     width: theme.constants.screenWidth,

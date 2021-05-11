@@ -39,17 +39,17 @@ const styles = StyleSheet.create({
   departmentSlider: {
     width: '100%',
     paddingLeft: theme.constants.screenPadding / 2,
-    marginBottom: hp('3%'),
+    marginBottom: hp('1%'),
   },
   productSlider: {
     width: '100%',
     paddingLeft: theme.constants.screenPadding / 2,
-    marginBottom: hp('3%'),
+    marginBottom: hp('4%'),
   },
   image: {
     width: theme.constants.screenWidth,
     height: theme.constants.screenWidth / IMG_FORM_FACTOR,
-    marginBottom: 30,
+    marginBottom: hp(4),
   },
   tipContainer: {
     marginBottom: hp('15%'),

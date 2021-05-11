@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   SafeAreaView,
@@ -10,6 +10,7 @@ import { StackScreenProps } from '@react-navigation/stack';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Feather as Icon } from '@expo/vector-icons';
 import { Formik } from 'formik';
+import Toast from 'react-native-toast-message';
 
 import styles from './styles';
 import { theme } from '../../components';
@@ -18,11 +19,53 @@ import TextInput from '../../components/TextInput/TextInput';
 import Button from '../../components/Button/Button';
 import useRegister from './useRegister';
 import ActivityIndicator from '../../components/ActivityIndicator/ActivityIndicator';
+import firebaseFunc from '../../firebase/auth';
+import { CommonActions } from '@react-navigation/native';
 
 const Register = ({
   navigation,
 }: StackScreenProps<AuthParamList, 'Register'>) => {
-  const { registerSchema, onSubmit, loading } = useRegister();
+  const { registerSchema } = useRegister();
+  const [loading, setLoading] = useState<boolean>(false);
+
+  interface RegisterProps {
+    fullName: string;
+    email: string;
+    password: string;
+  }
+
+  const onSubmit = async (values: RegisterProps) => {
+    try {
+      setLoading(true);
+      await firebaseFunc.registerUser(
+        values.email,
+        values.password,
+        values.fullName
+      );
+      navigation.dispatch(
+        CommonActions.navigate({
+          name: 'Home',
+        })
+      );
+      setLoading(false);
+      Toast.show({
+        type: 'success',
+        visibilityTime: 2000,
+        autoHide: true,
+        text1: 'Registeration Success',
+        text2: 'You have been successfully registered',
+      });
+    } catch (error) {
+      setLoading(false);
+      Toast.show({
+        type: 'error',
+        visibilityTime: 7000,
+        autoHide: true,
+        text1: 'Sign up Error',
+        text2: 'Error registering user',
+      });
+    }
+  };
 
   return (
     <SafeAreaView style={styles.container}>

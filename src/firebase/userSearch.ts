@@ -45,8 +45,30 @@ const clearUserSearch = async (user_id: string) => {
   return;
 };
 
+const checkSearch = async (user_id: string, search_text: string) => {
+  const data: any = [];
+  const querySnapshot = await db
+    .collection('user_search')
+    .where('user_id', '==', user_id)
+    .where('search_text', '==', search_text)
+    .limit(20)
+    .get();
+  querySnapshot.forEach((doc) => {
+    data.push({
+      id: doc.id,
+      ...doc.data(),
+    });
+  });
+  if (data.length < 1) {
+    return false;
+  } else {
+    return true;
+  }
+};
+
 export default {
   getRecentSearch,
   addRecentSearch,
   clearUserSearch,
+  checkSearch,
 };

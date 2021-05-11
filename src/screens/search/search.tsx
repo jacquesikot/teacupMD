@@ -23,7 +23,6 @@ import { StackScreenProps } from '@react-navigation/stack';
 import { SearchNavParamList } from '../../types/navigationTypes';
 import ActivityIndicator from '../../components/ActivityIndicator/ActivityIndicator';
 import { theme } from '../../components';
-import { AnyObjectSchema } from 'yup';
 
 const Search = ({
   navigation,
@@ -33,6 +32,7 @@ const Search = ({
   const [showHistory, setShowHistory] = useState<boolean>(true);
   const [showProduct, setShowProduct] = useState<boolean>(false);
   const [noResult, setNoResult] = useState<boolean>(false);
+  const [focus, setFocus] = useState<boolean>(false);
 
   const { user, manageCart } = useAppContext();
 
@@ -58,18 +58,23 @@ const Search = ({
     });
   };
 
-  const saveRecentSearch = async (e: any) => {
-    if (e.nativeEvent.text.toString().trim().toLowercase() === ' ') {
+  const saveRecentSearch = async (e: string) => {
+    if (e === '') {
       return;
-    } else if (e.nativeEvent.text.toString().trim().toLowercase().length < 2) {
+    } else if (e.length < 2) {
       return;
     } else {
-      await searchApi.addRecentSearch({
-        user_id: user.id,
-        search_text: e.nativeEvent.text.toString().trim().toLowercase(),
-        created_at: new Date().toISOString(),
-      });
-      refetchRecentSearch();
+      const check = await searchApi.checkSearch(user.id ? user.id : '', e);
+      if (check) {
+        return;
+      } else {
+        await searchApi.addRecentSearch({
+          user_id: user.id ? user.id : '',
+          search_text: e,
+          created_at: new Date().toISOString(),
+        });
+        refetchRecentSearch();
+      }
     }
   };
 
@@ -85,7 +90,7 @@ const Search = ({
         )
           arr.push(p);
       });
-      saveRecentSearch(e);
+      saveRecentSearch(e.nativeEvent.text.toString().toLowerCase().trim());
       if (arr.length < 1) setNoResult(true);
       setSearchResult(arr);
       setShowProduct(true);
@@ -111,11 +116,11 @@ const Search = ({
 
   const clearHistory = async () => {
     try {
-      await searchApi.clearUserSearch(user.id);
+      await searchApi.clearUserSearch(user.id ? user.id : '');
       refetchRecentSearch();
       Toast.show({
         type: 'success',
-        visibilityTime: 7000,
+        visibilityTime: 2000,
         autoHide: true,
         text1: 'Recent Search',
         text2: 'Search history cleared',
@@ -123,7 +128,7 @@ const Search = ({
     } catch (error) {
       Toast.show({
         type: 'error',
-        visibilityTime: 7000,
+        visibilityTime: 2000,
         autoHide: true,
         text1: 'Recent Search',
         text2: 'Search history could not be cleared',
@@ -145,55 +150,61 @@ const Search = ({
     <>
       <ActivityIndicator visible={loading} opacity={1} />
       <SafeAreaView style={styles.container}>
-        <View style={styles.textInput}>
-          <SearchIcon />
-          <TextInput
-            placeholder="Enter keywords to search"
-            style={styles.placeholder}
-            keyboardType="default"
-            returnKeyType="search"
-            autoCompleteType="off"
-            autoCapitalize="none"
-            onSubmitEditing={handleSearch}
-          />
-        </View>
         <ScrollView bounces={false} showsVerticalScrollIndicator={false}>
+          <View style={styles.textInput}>
+            <SearchIcon />
+            <TextInput
+              placeholder="Enter keywords to search"
+              style={styles.placeholder}
+              keyboardType="default"
+              returnKeyType="search"
+              autoCompleteType="off"
+              autoCapitalize="none"
+              onSubmitEditing={handleSearch}
+              // onFocus={() => setFocus(true)}
+            />
+            {/* {focus && (
+            <TouchableOpacity onPress={() => setFocus(false)}>
+              <Text>cancel</Text>
+            </TouchableOpacity>
+          )} */}
+          </View>
           <View style={{ flex: 1 }} />
-          {showHistory && (
-            <>
-              <View style={styles.historyContainer}>
-                <Text style={styles.historyText}>History</Text>
-                <TouchableOpacity
-                  onPress={() => clearHistory()}
-                  style={styles.trashButton}
-                >
-                  <Trash />
-                  <Text style={styles.trashText}>Clear History</Text>
-                </TouchableOpacity>
-              </View>
-              <View style={styles.searchHistory}>
-                {recentSearch &&
-                  recentSearch.map((s: any) => (
-                    <TouchableOpacity
-                      activeOpacity={0.7}
-                      onPress={() =>
-                        handleSearch({
-                          nativeEvent: {
-                            text: s.search_text.toString().toLowerCase().trim(),
-                          },
-                        })
-                      }
-                    >
-                      <View key={s.id.toString()} style={styles.historyItem}>
-                        <Text style={styles.historyItemText}>
-                          {s.search_text}
-                        </Text>
-                      </View>
-                    </TouchableOpacity>
-                  ))}
-              </View>
-            </>
-          )}
+
+          <>
+            <View style={styles.historyContainer}>
+              <Text style={styles.historyText}>History</Text>
+              <TouchableOpacity
+                onPress={() => clearHistory()}
+                style={styles.trashButton}
+              >
+                <Trash />
+                <Text style={styles.trashText}>Clear History</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.searchHistory}>
+              {recentSearch &&
+                recentSearch.map((s: any) => (
+                  <TouchableOpacity
+                    activeOpacity={0.7}
+                    onPress={() =>
+                      handleSearch({
+                        nativeEvent: {
+                          text: s.search_text.toString().toLowerCase().trim(),
+                        },
+                      })
+                    }
+                  >
+                    <View key={s.id.toString()} style={styles.historyItem}>
+                      <Text style={styles.historyItemText}>
+                        {s.search_text}
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
+                ))}
+            </View>
+          </>
+
           {showProduct && (
             <View
               style={{
@@ -224,7 +235,7 @@ const Search = ({
               />
             </View>
           )}
-          {noResult && (
+          {noResult && searchResult.length < 1 && (
             <View style={styles.noResultContainer}>
               <Text style={styles.noResultText}>
                 Oppss... No product found matching your search
