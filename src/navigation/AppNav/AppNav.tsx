@@ -87,7 +87,7 @@ const AppNav = () => {
             },
           })}
         />
-        <AppStack.Screen
+        {/* <AppStack.Screen
           name="Consult"
           component={consult}
           options={{
@@ -100,7 +100,7 @@ const AppNav = () => {
               Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
             },
           })}
-        />
+        /> */}
         <AppStack.Screen
           name="Profile"
           component={ProfileNav}
