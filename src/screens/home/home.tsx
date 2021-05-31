@@ -118,7 +118,7 @@ const Home = ({ navigation }: StackScreenProps<HomeNavParamList, 'Home'>) => {
           source={require('../../../assets/images/infoBanner.png')}
           style={styles.image}
         />
-        {/* <View style={styles.departmentContainer}>
+        <View style={styles.departmentContainer}>
           <Text style={styles.department}>Departments</Text>
           <TouchableOpacity
             style={styles.moreContainer}
@@ -133,8 +133,8 @@ const Home = ({ navigation }: StackScreenProps<HomeNavParamList, 'Home'>) => {
             <Text style={styles.more}>More</Text>
             <Icon name="chevron-right" color={theme.colors.darkGrey} />
           </TouchableOpacity>
-        </View> */}
-        {/* <View style={styles.departmentSlider}>
+        </View>
+        <View style={styles.departmentSlider}>
           {loading ? (
             <SkeletonPlaceholder backgroundColor={theme.colors.light}>
               <View
@@ -178,7 +178,7 @@ const Home = ({ navigation }: StackScreenProps<HomeNavParamList, 'Home'>) => {
               )}
             />
           )}
-        </View> */}
+        </View>
         {loading && <View style={{ height: hp(3) }} />}
         <View style={styles.departmentContainer}>
           <Text style={styles.department}>Pharmacy</Text>
