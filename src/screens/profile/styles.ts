@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   profileText: {
-    fontFamily: 'SofiaPro-Bold',
+    fontFamily: 'SofiaPro-Medium',
     fontSize: wp('6%'),
     color: theme.colors.dark,
     marginBottom: wp(1),
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
   accountText: {
     fontFamily: 'SofiaPro-Medium',
     fontSize: wp('4%'),
-    color: theme.colors.darkGrey,
+    color: theme.colors.grey,
   },
   accountBottom: {
     flexDirection: 'row',

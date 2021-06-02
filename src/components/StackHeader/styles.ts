@@ -17,9 +17,10 @@ const styles = StyleSheet.create({
     color: theme.colors.dark,
   },
   alert: {
-    width: 20,
-    height: 15,
-    borderRadius: 7.5,
+    width: wp(5),
+    height: wp(4),
+    padding: wp(0.5),
+    borderRadius: wp(2.5),
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: theme.colors.red,
@@ -32,7 +33,7 @@ const styles = StyleSheet.create({
   cartText: {
     fontFamily: 'SofiaPro-Medium',
     fontSize: wp('3%'),
-    color: theme.colors.dark,
+    color: theme.colors.white,
   },
 });
 

@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
   summaryItem: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: hp('1.5%'),
+    marginBottom: hp('2.5%'),
   },
   summaryText: {
     fontFamily: 'SofiaPro-Medium',
@@ -48,6 +48,11 @@ const styles = StyleSheet.create({
     fontFamily: 'SofiaPro-Medium',
     fontSize: wp('4%'),
     color: theme.colors.dark,
+  },
+  summaryPriceFinal: {
+    fontFamily: 'SofiaPro-Medium',
+    fontSize: wp('4%'),
+    color: theme.colors.primary,
   },
 });
 

@@ -17,7 +17,7 @@ const HomeHeader = ({ notification, cartOnPress }: Props) => {
   return (
     <View style={styles.container}>
       <View style={styles.textContainer}>
-        <Text style={styles.name}>Good Day,</Text>
+        <Text style={styles.name}>Hello,</Text>
         <Text style={styles.welcome}>welcome back!</Text>
       </View>
       <View style={{ flex: 1 }} />

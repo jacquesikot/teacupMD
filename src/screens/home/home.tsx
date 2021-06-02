@@ -27,6 +27,7 @@ import { HomeNavParamList } from '../../types/navigationTypes';
 import useHome from './useHome';
 import { useAppContext } from '../../context/context';
 import ComingSoon from '../../components/ComingSoon/ComingSoon';
+import categoryData from './categoryData';
 
 const Home = ({ navigation }: StackScreenProps<HomeNavParamList, 'Home'>) => {
   const {
@@ -65,8 +66,6 @@ const Home = ({ navigation }: StackScreenProps<HomeNavParamList, 'Home'>) => {
   };
 
   const skeletonArray = [1, 2, 3, 4, 5, 6, 7, 8];
-
-  const name = displayName.split(' ');
 
   const HEADER_HEIGHT = hp('8%') + theme.constants.screenPadding;
 
@@ -131,7 +130,7 @@ const Home = ({ navigation }: StackScreenProps<HomeNavParamList, 'Home'>) => {
             }
           >
             <Text style={styles.more}>More</Text>
-            <Icon name="chevron-right" color={theme.colors.darkGrey} />
+            <Icon name="chevron-right" color={theme.colors.grey} />
           </TouchableOpacity>
         </View>
         <View style={styles.departmentSlider}>
@@ -158,7 +157,7 @@ const Home = ({ navigation }: StackScreenProps<HomeNavParamList, 'Home'>) => {
             </SkeletonPlaceholder>
           ) : (
             <FlatList
-              data={departments}
+              data={categoryData}
               horizontal
               showsHorizontalScrollIndicator={false}
               keyExtractor={(item: any) => item.id.toString()}
@@ -170,9 +169,7 @@ const Home = ({ navigation }: StackScreenProps<HomeNavParamList, 'Home'>) => {
                   <CategoryItem
                     bgColor="light"
                     label={item.name}
-                    image={item.img_url}
-                    imgWidth={item.width}
-                    imgHeight={item.height}
+                    svg={item.svg}
                   />
                 </TouchableOpacity>
               )}
@@ -187,7 +184,7 @@ const Home = ({ navigation }: StackScreenProps<HomeNavParamList, 'Home'>) => {
             onPress={() => navigation.navigate('Pharmacy')}
           >
             <Text style={styles.more}>More</Text>
-            <Icon name="chevron-right" color={theme.colors.darkGrey} />
+            <Icon name="chevron-right" color={theme.colors.grey} />
           </TouchableOpacity>
         </View>
         <View style={styles.productSlider}>
@@ -226,6 +223,8 @@ const Home = ({ navigation }: StackScreenProps<HomeNavParamList, 'Home'>) => {
                   price={item.price}
                   sale={item.sale_price}
                   cart={() => addToCart(item)}
+                  qty={item.qty}
+                  main_content={item.main_content}
                   details={() =>
                     navigation.navigate('ProductDetail', { product: item })
                   }
@@ -273,6 +272,8 @@ const Home = ({ navigation }: StackScreenProps<HomeNavParamList, 'Home'>) => {
                   price={item.price}
                   sale={item.sale_price}
                   cart={() => addToCart(item)}
+                  qty={item.qty}
+                  main_content={item.main_content}
                   details={() =>
                     navigation.navigate('ProductDetail', { product: item })
                   }

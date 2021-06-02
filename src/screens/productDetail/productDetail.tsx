@@ -225,6 +225,8 @@ const ProductDetail = ({
                   image={item.images[0]}
                   price={item.price}
                   sale={item.sale_price}
+                  qty={item.qty}
+                  main_content={item.main_content}
                   cart={() => alert('added to cart')}
                   details={() =>
                     navigation.push('ProductDetail', { product: item })

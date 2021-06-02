@@ -4,7 +4,7 @@ const { width } = Dimensions.get('window');
 
 export default {
   colors: {
-    primary: '#0065ff',
+    primary: '#009EFF',
     secondary: '#36B37E',
     green: '#36B37E',
     grey: '#B3BAC5',
@@ -15,7 +15,7 @@ export default {
     white: '#fff',
     subText: 'rgba(16, 10, 57, 0.5)',
     red: '#FF628D',
-    lightBlue: '#b9d5ff',
+    lightBlue: 'rgba(0, 158, 255, 0.2)',
     lightGreen: '#d5f3e8',
     orange: '#ff5630',
     lightOrange: '#fff6e5',

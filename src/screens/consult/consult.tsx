@@ -21,6 +21,7 @@ import departmentsApi from '../../firebase/departments';
 import { theme } from '../../components';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import ComingSoon from '../../components/ComingSoon/ComingSoon';
+import categoryData from '../home/categoryData';
 
 const skeletonArray = [1, 2, 3, 4, 5, 6, 7];
 
@@ -89,7 +90,7 @@ const Consult = () => {
           </SkeletonPlaceholder>
         ) : (
           <FlatList
-            data={data}
+            data={categoryData}
             numColumns={3}
             bounces={false}
             showsHorizontalScrollIndicator={false}
@@ -102,11 +103,9 @@ const Consult = () => {
                 <CategoryItem
                   bgColor="light"
                   label={item.name}
-                  image={item.img_url}
                   width={WIDTH}
                   height={HEIGHT}
-                  imgWidth={item.width}
-                  imgHeight={item.height}
+                  svg={item.svg}
                 />
               </TouchableOpacity>
             )}

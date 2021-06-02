@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
   },
   iconContainer: {
     flexDirection: 'row',
-    width: wp('18%'),
+    width: wp('15%'),
     justifyContent: 'space-between',
   },
   textContainer: {},
@@ -40,6 +40,7 @@ const styles = StyleSheet.create({
   alert1: {
     width: wp(5),
     height: wp(4),
+    padding: wp(0.5),
     borderRadius: wp(2.5),
     justifyContent: 'center',
     alignItems: 'center',
@@ -47,12 +48,13 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 10,
     left: 10,
-    borderWidth: 1,
+    borderWidth: 1.5,
     borderColor: theme.colors.white,
   },
   alert2: {
     width: wp(5),
     height: wp(4),
+    padding: wp(0.5),
     borderRadius: wp(2.5),
     justifyContent: 'center',
     alignItems: 'center',
@@ -60,7 +62,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 35,
     left: 7.5,
-    borderWidth: 1,
+    borderWidth: 1.5,
     borderColor: theme.colors.white,
   },
   number: {

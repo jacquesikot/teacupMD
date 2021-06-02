@@ -80,7 +80,7 @@ const Pharmacy = ({
     <>
       <SafeAreaView style={styles.container}>
         <StackHeader
-          color="white"
+          color="light"
           label="Pharmacy"
           back={() => navigation.goBack()}
           cartOnPress={() => navigation.navigate('Cart')}
@@ -98,15 +98,16 @@ const Pharmacy = ({
           />
           <View style={styles.sliderContainer}>
             {loading ? (
-              <SkeletonPlaceholder backgroundColor={theme.colors.light}>
+              <SkeletonPlaceholder backgroundColor={theme.colors.white}>
                 <View
                   style={{
                     flexDirection: 'row',
                     width: theme.constants.screenWidth,
                   }}
                 >
-                  {skeletonArray.map(() => (
+                  {skeletonArray.map((s) => (
                     <View
+                      key={s}
                       style={{
                         width: WIDTH,
                         height: HEIGHT,
@@ -129,7 +130,7 @@ const Pharmacy = ({
                     onPress={() => handleCategoryChange(item)}
                   >
                     <CategoryItem
-                      bgColor="light"
+                      bgColor="white"
                       label={item.name}
                       image={item.imgUrl}
                       width={WIDTH}
@@ -145,15 +146,16 @@ const Pharmacy = ({
           <Text style={styles.heading}>{type}</Text>
           <View style={styles.productGrid}>
             {loading ? (
-              <SkeletonPlaceholder backgroundColor={theme.colors.light}>
+              <SkeletonPlaceholder backgroundColor={theme.colors.white}>
                 <View
                   style={{
                     flexDirection: 'row',
                     width: theme.constants.screenWidth,
                   }}
                 >
-                  {skeletonArray.map(() => (
+                  {skeletonArray.map((s) => (
                     <View
+                      key={s}
                       style={{
                         width: PRODUCT_WIDTH,
                         height: PRODUCT_HEIGHT,
@@ -172,10 +174,12 @@ const Pharmacy = ({
                 keyExtractor={(item) => item.id.toString()}
                 renderItem={({ item }) => (
                   <Product
-                    bgColor="light"
+                    bgColor="white"
                     label={item.title}
                     image={item.images[0]}
                     price={item.price}
+                    qty={item.qty}
+                    main_content={item.main_content}
                     cart={() => addToCart(item)}
                     details={() =>
                       navigation.navigate('ProductDetail', { product: item })

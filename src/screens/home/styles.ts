@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
   more: {
     fontFamily: 'SofiaPro-Medium',
     fontSize: wp('4%'),
-    color: theme.colors.darkGrey,
+    color: theme.colors.grey,
   },
   departmentSlider: {
     width: '100%',

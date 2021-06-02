@@ -25,6 +25,12 @@ const styles = StyleSheet.create({
     width: '100%',
     height: hp('4%'),
   },
+  main_content: {
+    fontFamily: 'SofiaPro-Regular',
+    color: theme.colors.grey,
+    fontSize: wp('3.1%'),
+    width: '100%',
+  },
   priceContainer: {
     flexDirection: 'row',
     alignItems: 'center',

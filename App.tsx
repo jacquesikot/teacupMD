@@ -2,13 +2,14 @@ import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import Toast from 'react-native-toast-message';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import NavigationContainer from 'react-native-navigation-container';
 
 import { RootNav } from './src/navigation';
 import firebaseInit from './src/firebase';
 import { Provider } from './src/context/context';
 import { Provider as RProvider } from 'react-redux';
 import { store } from './src/redux/store';
-import { NavigationContainer, fonts, assets } from './src/utils';
+import { fonts, assets } from './src/utils';
 import { theme } from './src/components';
 
 export default function App() {
@@ -16,7 +17,7 @@ export default function App() {
   firebaseInit();
 
   return (
-    <NavigationContainer fonts={fonts} assets={assets}>
+    <NavigationContainer fonts={fonts} assets={assets} stickyNav={true}>
       <QueryClientProvider client={queryClient}>
         <RProvider store={store}>
           <Provider>

@@ -16,6 +16,8 @@ interface Props {
   price: string;
   cart?: any;
   details: any;
+  qty: string;
+  main_content: string;
   sale: string;
   saved?: any;
   marginRight?: number;
@@ -30,6 +32,8 @@ const Product = ({
   price,
   cart,
   details,
+  qty,
+  main_content,
   sale,
   saved,
   marginRight,
@@ -59,8 +63,12 @@ const Product = ({
           style={{ width: 100, height: 65 }}
         />
       </TouchableOpacity>
-      <Text style={styles.label} numberOfLines={2}>
-        {label}
+      <Text style={styles.label} numberOfLines={1}>
+        {`${label} (${qty})`}
+      </Text>
+
+      <Text style={styles.main_content} numberOfLines={1}>
+        {main_content}
       </Text>
 
       <View
@@ -71,7 +79,7 @@ const Product = ({
         }}
       >
         <View>
-          <View
+          {/* <View
             style={[
               styles.sale,
               {
@@ -92,7 +100,7 @@ const Product = ({
                 <Text style={styles.discountText}>Available</Text>
               )}
             </Text>
-          </View>
+          </View> */}
 
           <View style={styles.priceContainer}>
             <Text style={styles.priceText}>
@@ -103,7 +111,13 @@ const Product = ({
         </View>
         <View style={{ flex: 1 }} />
         <TouchableOpacity onPress={cart ? cart : saved}>
-          <View style={styles.cart}>{saved ? <Trash /> : <CartIcon />}</View>
+          <View style={styles.cart}>
+            {saved ? (
+              <Trash />
+            ) : (
+              <CartIcon color={theme.colors.primary} width={12} />
+            )}
+          </View>
         </TouchableOpacity>
       </View>
     </View>

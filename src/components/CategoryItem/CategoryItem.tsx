@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { View, Text } from 'react-native';
 import { Feather as Icon } from '@expo/vector-icons';
 import { Image } from 'react-native-expo-image-cache';
@@ -12,11 +12,12 @@ interface Props {
   height?: number;
   bgColor: 'light' | 'white';
   label: string;
-  image: string;
+  image?: string;
   icon?: boolean;
   active?: boolean;
   imgWidth?: number;
   imgHeight?: number;
+  svg?: ReactNode;
 }
 
 const CategoryItem = ({
@@ -29,6 +30,7 @@ const CategoryItem = ({
   active,
   imgWidth,
   imgHeight,
+  svg,
 }: Props) => {
   const widthValue = width ? width : WIDTH;
   const heightValue = height ? height : HEIGHT;
@@ -51,15 +53,19 @@ const CategoryItem = ({
         },
       ]}
     >
-      <Image
-        {...{ uri: image }}
-        tint="light"
-        transitionDuration={300}
-        style={{
-          width: imgWidth ? imgWidth : 55,
-          height: imgHeight ? imgHeight : 53,
-        }}
-      />
+      {svg ? (
+        svg
+      ) : (
+        <Image
+          {...{ uri: image! }}
+          tint="light"
+          transitionDuration={300}
+          style={{
+            width: imgWidth ? imgWidth : 55,
+            height: imgHeight ? imgHeight : 53,
+          }}
+        />
+      )}
       <View style={{ flex: 1 }} />
       <Text numberOfLines={1} style={[styles.label, { color: labelColor }]}>
         {label}

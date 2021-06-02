@@ -71,7 +71,7 @@ const Cart = ({ navigation }: StackScreenProps<HomeNavParamList>) => {
             <View style={{ height: 20 }} />
             <View style={styles.summaryItem}>
               <Text style={styles.summaryText}>Summary</Text>
-              <Text style={styles.summaryPrice}>
+              <Text style={styles.summaryPriceFinal}>
                 ZK {(cartTotal + delivery).toString()}
               </Text>
             </View>

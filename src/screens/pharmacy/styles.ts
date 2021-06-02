@@ -6,7 +6,7 @@ import {
 import { theme } from '../../components';
 
 const IMG_FORM_FACTOR = 2.68;
-export const WIDTH = wp('23%');
+export const WIDTH = wp('25%');
 export const HEIGHT = hp('21%');
 export const PRODUCT_WIDTH = wp('43%');
 export const PRODUCT_HEIGHT = hp('25%');
@@ -14,7 +14,7 @@ export const PRODUCT_HEIGHT = hp('25%');
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: theme.colors.white,
+    backgroundColor: theme.colors.light,
     alignItems: 'center',
   },
   image: {
