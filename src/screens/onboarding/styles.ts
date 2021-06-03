@@ -5,6 +5,7 @@ import {
 } from 'react-native-responsive-screen';
 
 import { theme } from '../../components';
+import isAndroid from '../../utils/isAndroid';
 
 const { width } = Dimensions.get('window');
 export const SCREEN_WIDTH = width - theme.constants.screenPadding;
@@ -19,7 +20,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: SCREEN_WIDTH,
-    marginBottom: 30,
+    marginBottom: isAndroid ? 0 : 30,
   },
   buttonContainer: {
     marginBottom: 60,

@@ -5,6 +5,7 @@ import {
 } from 'react-native-responsive-screen';
 
 import { theme } from '../../components';
+import isAndroid from '../../utils/isAndroid';
 
 const styles = StyleSheet.create({
   container: {
@@ -13,8 +14,8 @@ const styles = StyleSheet.create({
   },
   welcomeContainer: {
     width: theme.constants.screenWidth,
-    height: hp('10%'),
-    marginTop: hp('10%'),
+    height: hp(10),
+    marginTop: isAndroid ? hp(5) : hp(10),
     justifyContent: 'space-between',
   },
   heading: {

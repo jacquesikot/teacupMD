@@ -5,7 +5,6 @@ import StackHeader from '../../components/StackHeader/StackHeader';
 import { CommonActions } from '@react-navigation/routers';
 import Toast from 'react-native-toast-message';
 import * as Haptics from 'expo-haptics';
-import * as Animatable from 'react-native-animatable';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { ProfileNavParamList } from '../../types/navigationTypes';
@@ -72,6 +71,8 @@ const Saved = ({
                 label={item.title}
                 image={item.images[0]}
                 price={item.price}
+                qty={item.qty}
+                main_content={item.main_content}
                 details={() =>
                   navigation.navigate('ProductDetail', { product: item })
                 }

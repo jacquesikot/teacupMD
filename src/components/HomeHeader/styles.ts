@@ -5,6 +5,7 @@ import {
 } from 'react-native-responsive-screen';
 
 import { theme } from '../../components';
+import isAndroid from '../../utils/isAndroid';
 
 const styles = StyleSheet.create({
   container: {
@@ -40,7 +41,7 @@ const styles = StyleSheet.create({
   alert1: {
     width: wp(5),
     height: wp(4),
-    padding: wp(0.5),
+    padding: isAndroid ? 0 : wp(0.3),
     borderRadius: wp(2.5),
     justifyContent: 'center',
     alignItems: 'center',
@@ -67,7 +68,7 @@ const styles = StyleSheet.create({
   },
   number: {
     fontFamily: 'SofiaPro-Medium',
-    fontSize: wp('3%'),
+    fontSize: isAndroid ? wp(2.5) : wp(3),
     color: theme.colors.white,
   },
 });

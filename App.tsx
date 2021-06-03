@@ -17,7 +17,7 @@ export default function App() {
   firebaseInit();
 
   return (
-    <NavigationContainer fonts={fonts} assets={assets} stickyNav={true}>
+    <NavigationContainer fonts={fonts} assets={assets} stickyNav={false}>
       <QueryClientProvider client={queryClient}>
         <RProvider store={store}>
           <Provider>

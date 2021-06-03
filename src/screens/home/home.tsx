@@ -65,6 +65,8 @@ const Home = ({ navigation }: StackScreenProps<HomeNavParamList, 'Home'>) => {
     }
   };
 
+  const closeComingSoonModal = () => setShowModal(false);
+
   const skeletonArray = [1, 2, 3, 4, 5, 6, 7, 8];
 
   const HEADER_HEIGHT = hp('8%') + theme.constants.screenPadding;
@@ -292,7 +294,7 @@ const Home = ({ navigation }: StackScreenProps<HomeNavParamList, 'Home'>) => {
           <Text style={styles.tipLogo}>TeaCup MD</Text>
         </View>
       </Animated.ScrollView>
-      <ComingSoon show={showModal} onRequestClose={() => setShowModal(false)} />
+      <ComingSoon show={showModal} onRequestClose={closeComingSoonModal} />
     </View>
   );
 };

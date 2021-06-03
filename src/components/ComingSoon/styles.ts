@@ -3,9 +3,11 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import { theme } from '..';
 
-export const BUTTON_WIDTH = wp(50);
+import { theme } from '..';
+import isAndroid from '../../utils/isAndroid';
+
+export const BUTTON_WIDTH = wp(40);
 
 const styles = StyleSheet.create({
   container: {
@@ -14,18 +16,19 @@ const styles = StyleSheet.create({
     height: hp(60),
     borderRadius: wp(7),
     alignItems: 'center',
+    justifyContent: 'center',
     padding: wp(10),
   },
   heading: {
     fontFamily: 'SofiaPro-Bold',
-    fontSize: wp(7),
+    fontSize: isAndroid ? wp(5.5) : wp(7),
     color: theme.colors.dark,
     marginTop: hp(2),
     textAlign: 'center',
   },
   subtext: {
     fontFamily: 'SofiaPro-Medium',
-    fontSize: wp(4.5),
+    fontSize: isAndroid ? wp(4) : wp(4.5),
     color: theme.colors.darkGrey,
     marginTop: hp(2),
     marginBottom: hp(3),

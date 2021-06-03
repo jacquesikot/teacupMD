@@ -68,7 +68,7 @@ const ProductDetail = ({
   };
 
   const isFav = async () => {
-    const isFav = favorites.some((f: any) => f.id === product.id);
+    const isFav = favorites.some((f: any) => f.product_id === product.id);
     isFav && setIsFavorite(true);
     return;
   };
@@ -133,6 +133,7 @@ const ProductDetail = ({
         style={{ width: '100%' }}
         contentContainerStyle={{ alignItems: 'center' }}
         bounces={false}
+        showsVerticalScrollIndicator={false}
       >
         <View style={styles.topContainer}>
           <StackHeader

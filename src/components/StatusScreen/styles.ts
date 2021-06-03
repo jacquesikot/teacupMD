@@ -5,6 +5,7 @@ import {
 } from 'react-native-responsive-screen';
 
 import { theme } from '..';
+import isAndroid from '../../utils/isAndroid';
 
 export const IMG_SIZE = wp(60);
 
@@ -21,20 +22,20 @@ const styles = StyleSheet.create({
   },
   heading: {
     fontFamily: 'SofiaPro-Bold',
-    fontSize: wp('7%'),
+    fontSize: isAndroid ? wp(6.5) : wp(7),
     color: theme.colors.dark,
-    marginTop: hp('4%'),
+    marginTop: isAndroid ? hp(3.5) : hp(4),
     textAlign: 'center',
   },
   subtext: {
     fontFamily: 'SofiaPro-Medium',
-    fontSize: wp('4.5%'),
+    fontSize: isAndroid ? wp(4) : wp(4.5),
     color: theme.colors.darkGrey,
-    marginTop: hp('3%'),
-    marginBottom: hp('10%'),
+    marginTop: hp(3),
+    marginBottom: hp(10),
     width: wp(80),
     textAlign: 'center',
-    lineHeight: hp('4%'),
+    lineHeight: hp(4),
   },
 });
 

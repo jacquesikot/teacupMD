@@ -23,6 +23,7 @@ import { StackScreenProps } from '@react-navigation/stack';
 import { SearchNavParamList } from '../../types/navigationTypes';
 import ActivityIndicator from '../../components/ActivityIndicator/ActivityIndicator';
 import { theme } from '../../components';
+import { heightPercentageToDP } from 'react-native-responsive-screen';
 
 const Search = ({
   navigation,
@@ -91,7 +92,10 @@ const Search = ({
           arr.push(p);
       });
       saveRecentSearch(e.nativeEvent.text.toString().toLowerCase().trim());
-      if (arr.length < 1) setNoResult(true);
+      if (arr.length < 1) {
+        setNoResult(true);
+        setShowProduct(false);
+      }
       setSearchResult(arr);
       setShowProduct(true);
       setLoading(false);
@@ -150,7 +154,11 @@ const Search = ({
     <>
       <ActivityIndicator visible={loading} opacity={1} />
       <SafeAreaView style={styles.container}>
-        <ScrollView bounces={false} showsVerticalScrollIndicator={false}>
+        <ScrollView
+          bounces={false}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ flex: 1 }}
+        >
           <View style={styles.textInput}>
             <SearchIcon />
             <TextInput
@@ -169,8 +177,6 @@ const Search = ({
             </TouchableOpacity>
           )} */}
           </View>
-          <View style={{ flex: 1 }} />
-
           <>
             <View style={styles.historyContainer}>
               <Text style={styles.historyText}>History</Text>
@@ -179,13 +185,16 @@ const Search = ({
                 style={styles.trashButton}
               >
                 <Trash />
+                <View style={{ width: 5 }} />
                 <Text style={styles.trashText}>Clear History</Text>
               </TouchableOpacity>
             </View>
             <View style={styles.searchHistory}>
               {recentSearch &&
-                recentSearch.map((s: any) => (
+                !showProduct &&
+                recentSearch.map((s: any, index: number) => (
                   <TouchableOpacity
+                    key={index}
                     activeOpacity={0.7}
                     onPress={() =>
                       handleSearch({
@@ -224,6 +233,8 @@ const Search = ({
                     image={item.images[0]}
                     price={item.price}
                     cart={() => addToCart(item)}
+                    qty={item.qty}
+                    main_content={item.main_content}
                     details={() =>
                       navigation.navigate('ProductDetail', { product: item })
                     }

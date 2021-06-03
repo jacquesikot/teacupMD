@@ -5,6 +5,8 @@ export interface Product {
   nutrition_details: string;
   price: string;
   sale_price?: string;
+  qty: string;
+  main_content: string;
   images: string[];
   category: string[];
 }

@@ -5,6 +5,7 @@ import {
 } from 'react-native-responsive-screen';
 
 import { theme } from '../../components';
+import isAndroid from '../../utils/isAndroid';
 
 const styles = StyleSheet.create({
   container: {
@@ -17,26 +18,26 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
     width: theme.constants.screenWidth,
-    marginTop: hp('2.5%'),
+    marginTop: hp(2.5),
   },
   backText: {
     fontFamily: 'SofiaPro-Bold',
-    fontSize: wp('5%'),
-    marginLeft: wp('2%'),
+    fontSize: wp(5),
+    marginLeft: wp(2),
     color: theme.colors.dark,
   },
   headingContainer: {
     flexDirection: 'row',
     width: theme.constants.screenWidth,
-    marginVertical: hp('4.8%'),
+    marginVertical: isAndroid ? hp(3) : hp(4.8),
   },
   heading: {
     fontFamily: 'SofiaPro-Black',
-    fontSize: wp('10%'),
+    fontSize: isAndroid ? wp(8) : wp(10),
     color: theme.colors.dark,
   },
   formContainer: {
-    height: hp('40%'),
+    height: hp(40),
     justifyContent: 'space-between',
   },
   buttonContainer: {
@@ -48,15 +49,15 @@ const styles = StyleSheet.create({
   },
   termsOfUseText1: {
     fontFamily: 'SofiaPro-Medium',
-    fontSize: wp('4%'),
+    fontSize: wp(4),
     color: theme.colors.subText,
   },
   termsOfUseText2: {
     fontFamily: 'SofiaPro-Bold',
-    fontSize: wp('4%'),
+    fontSize: wp(4),
     color: theme.colors.primary,
     textDecorationLine: 'underline',
-    marginTop: hp('1%'),
+    marginTop: hp(1),
   },
 });
 

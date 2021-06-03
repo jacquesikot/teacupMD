@@ -59,7 +59,7 @@ const Register = ({
       setLoading(false);
       Toast.show({
         type: 'error',
-        visibilityTime: 7000,
+        visibilityTime: 5000,
         autoHide: true,
         text1: 'Sign up Error',
         text2: 'Error registering user',

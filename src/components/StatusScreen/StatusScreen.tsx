@@ -27,7 +27,6 @@ const StatusScreen = ({
       </View>
       <Text style={styles.heading}>{heading}</Text>
       <Text style={styles.subtext}>{subtext}</Text>
-
       <Button
         type="primary"
         label={buttonLabel}

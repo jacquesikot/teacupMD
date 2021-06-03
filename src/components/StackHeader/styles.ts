@@ -1,12 +1,16 @@
 import { StyleSheet } from 'react-native';
-import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
+import {
+  heightPercentageToDP as hp,
+  widthPercentageToDP as wp,
+} from 'react-native-responsive-screen';
 import { theme } from '..';
+import isAndroid from '../../utils/isAndroid';
 
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: theme.constants.screenPadding,
+    marginTop: isAndroid ? hp(3) : theme.constants.screenPadding,
     marginBottom: 30,
     width: theme.constants.screenWidth,
     justifyContent: 'space-between',

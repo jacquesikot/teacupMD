@@ -5,6 +5,7 @@ import {
 } from 'react-native-responsive-screen';
 
 import { theme } from '../../components';
+import isAndroid from '../../utils/isAndroid';
 
 const styles = StyleSheet.create({
   container: {
@@ -14,16 +15,16 @@ const styles = StyleSheet.create({
   },
   cartHeading: {
     fontFamily: 'SofiaPro-Bold',
-    fontSize: wp('6%'),
+    fontSize: isAndroid ? wp(5) : wp(6),
     color: theme.colors.dark,
     width: theme.constants.screenWidth,
   },
   productContainer: {
-    height: hp('35%'),
+    height: hp(32),
   },
   totalText: {
     fontFamily: 'SofiaPro-Bold',
-    fontSize: wp('6%'),
+    fontSize: isAndroid ? wp(5) : wp(6),
     color: theme.colors.dark,
     width: theme.constants.screenWidth,
     marginTop: hp('2%'),
@@ -31,27 +32,27 @@ const styles = StyleSheet.create({
   },
   summaryContainer: {
     width: theme.constants.screenWidth,
-    padding: wp('5%'),
+    padding: isAndroid ? wp(2) : wp(5),
     marginBottom: hp('1%'),
   },
   summaryItem: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: hp('2.5%'),
+    marginBottom: isAndroid ? hp(1.5) : hp(2.5),
   },
   summaryText: {
     fontFamily: 'SofiaPro-Medium',
-    fontSize: wp('4%'),
+    fontSize: wp(4),
     color: theme.colors.grey,
   },
   summaryPrice: {
-    fontFamily: 'SofiaPro-Medium',
-    fontSize: wp('4%'),
+    fontFamily: 'SofiaPro-Bold',
+    fontSize: wp(4),
     color: theme.colors.dark,
   },
   summaryPriceFinal: {
-    fontFamily: 'SofiaPro-Medium',
-    fontSize: wp('4%'),
+    fontFamily: 'SofiaPro-Bold',
+    fontSize: wp(4),
     color: theme.colors.primary,
   },
 });

@@ -8,7 +8,7 @@
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "cover",
-      "backgroundColor": "#0065ff"
+      "backgroundColor": "#009EFF"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -24,6 +24,6 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "description": "TeaCup MD App"
+    "description": "TeaCupMD Mobile App"
   }
 }

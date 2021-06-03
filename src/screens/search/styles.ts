@@ -5,9 +5,10 @@ import {
 } from 'react-native-responsive-screen';
 
 import { theme } from '../../components';
+import isAndroid from '../../utils/isAndroid';
 
 export const PRODUCT_WIDTH = wp('43%');
-export const PRODUCT_HEIGHT = hp('25%');
+export const PRODUCT_HEIGHT = isAndroid ? hp(27) : hp(25);
 
 const styles = StyleSheet.create({
   container: {
@@ -48,21 +49,17 @@ const styles = StyleSheet.create({
   trashButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    width: wp('25%'),
-    justifyContent: 'space-between',
   },
   trashText: {
-    fontSize: wp('4%'),
+    fontSize: isAndroid ? wp(3.5) : wp(4),
     fontFamily: 'SofiaPro-Regular',
     color: theme.colors.darkGrey,
-    marginTop: hp('0.5%'),
   },
   searchHistory: {
     marginTop: 20,
     flexDirection: 'row',
     width: theme.constants.screenWidth,
     flexWrap: 'wrap',
-    height: hp(15),
   },
   historyItem: {
     height: 40,
@@ -75,20 +72,20 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   historyItemText: {
-    fontSize: wp('4%'),
+    fontSize: wp(4),
     fontFamily: 'SofiaPro-Regular',
     color: theme.colors.darkGrey,
   },
   noResultText: {
-    fontSize: wp('4%'),
+    fontSize: wp(4),
     fontFamily: 'SofiaPro-Bold',
     color: theme.colors.darkGrey,
-    marginTop: hp('0.5%'),
+    marginTop: hp(0.5),
   },
   noResultContainer: {
     width: theme.constants.screenWidth,
     alignItems: 'center',
-    marginTop: hp(45),
+    top: hp(45),
     position: 'absolute',
   },
 });

@@ -39,10 +39,10 @@ const AddressItem = ({
       </View>
       <View style={styles.iconContainer}>
         <TouchableOpacity activeOpacity={0.7} onPress={onPressDelete}>
-          <Icon name="trash" size={24} color={theme.colors.dark} />
+          <Icon name="trash" size={24} color={theme.colors.grey} />
         </TouchableOpacity>
         <TouchableOpacity activeOpacity={0.7} onPress={onPressEdit}>
-          <Icon name="edit" size={24} color={theme.colors.dark} />
+          <Icon name="edit" size={24} color={theme.colors.grey} />
         </TouchableOpacity>
       </View>
     </View>

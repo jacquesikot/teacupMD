@@ -5,11 +5,12 @@ import {
 } from 'react-native-responsive-screen';
 
 import { theme } from '../../components';
+import isAndroid from '../../utils/isAndroid';
 
 const styles = StyleSheet.create({
   tabBar: {
     height: hp(8),
-    paddingBottom: hp(2),
+    paddingBottom: hp(1),
     paddingTop: hp(1),
   },
   tabBarItem: {

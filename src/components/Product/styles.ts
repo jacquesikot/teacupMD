@@ -5,10 +5,11 @@ import {
 } from 'react-native-responsive-screen';
 
 import { theme } from '..';
+import isAndroid from '../../utils/isAndroid';
 
 export const MARGIN_RIGHT = wp('5%');
 export const WIDTH = wp(35);
-export const HEIGHT = wp(45);
+export const HEIGHT = isAndroid ? wp(47) : wp(45);
 
 const styles = StyleSheet.create({
   container: {

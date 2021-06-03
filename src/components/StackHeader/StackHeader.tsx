@@ -49,15 +49,9 @@ const StackHeader = ({
             )}
           </TouchableOpacity>
         ) : favorite ? (
-          isFavorite ? (
-            <TouchableOpacity style={{ padding: 5 }} onPress={favorite}>
-              <SaveIcon saved />
-            </TouchableOpacity>
-          ) : (
-            <TouchableOpacity style={{ padding: 5 }} onPress={favorite}>
-              <SaveIcon />
-            </TouchableOpacity>
-          )
+          <TouchableOpacity style={{ padding: 5 }} onPress={favorite}>
+            <SaveIcon saved={isFavorite} />
+          </TouchableOpacity>
         ) : (
           <View style={{ padding: 5 }} />
         )}

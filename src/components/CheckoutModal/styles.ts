@@ -3,7 +3,9 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+
 import { theme } from '..';
+import isAndroid from '../../utils/isAndroid';
 
 const styles = StyleSheet.create({
   container: {
@@ -12,8 +14,8 @@ const styles = StyleSheet.create({
   },
   modal: {
     backgroundColor: theme.colors.white,
-    height: hp('78%'),
-    width: wp('100%'),
+    height: isAndroid ? hp(83) : hp(78),
+    width: wp(100),
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
     padding: theme.constants.screenPadding / 2,
@@ -29,45 +31,45 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   cartIcon: {
-    width: hp('6%'),
-    height: hp('6%'),
+    width: hp(6),
+    height: hp(6),
     borderRadius: 15,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: theme.colors.light,
-    marginRight: wp('3%'),
+    marginRight: wp(3),
   },
   cartText: {
     fontFamily: 'SofiaPro-Medium',
-    fontSize: wp('4%'),
+    fontSize: wp(4),
     color: theme.colors.dark,
   },
   headerTextContainer: {
     justifyContent: 'space-around',
-    height: hp('7.5%'),
+    height: hp(7.5),
   },
   totalText: {
     fontFamily: 'SofiaPro-Medium',
-    fontSize: wp('4%'),
+    fontSize: wp(4),
     color: theme.colors.grey,
     alignSelf: 'flex-end',
   },
   totalAmount: {
     fontFamily: 'SofiaPro-Black',
-    fontSize: wp('8%'),
+    fontSize: wp(8),
     color: theme.colors.dark,
   },
   deliveryAddress: {
     fontFamily: 'SofiaPro-Bold',
-    fontSize: wp('5.5%'),
+    fontSize: wp(5.5),
     color: theme.colors.dark,
-    marginTop: hp('4%'),
+    marginTop: hp(4),
   },
   deliveryContainer: {
     width: theme.constants.screenWidth,
     borderWidth: 1,
-    height: hp('12%'),
-    marginTop: hp('2.5%'),
+    height: hp(12),
+    marginTop: hp(2.5),
     borderRadius: 15,
     borderColor: theme.colors.grey,
     backgroundColor: theme.colors.white,
@@ -79,19 +81,19 @@ const styles = StyleSheet.create({
   deliveryTextContainer: {},
   deliveryText1: {
     fontFamily: 'SofiaPro-Medium',
-    fontSize: wp('4%'),
+    fontSize: wp(4),
     color: theme.colors.dark,
   },
   deliveryText2: {
     fontFamily: 'SofiaPro-Medium',
-    fontSize: wp('3%'),
+    fontSize: wp(3),
     color: theme.colors.darkGrey,
-    marginTop: hp('0.9%'),
+    marginTop: hp(0.9),
   },
   icon: {
-    width: wp('7%'),
-    height: wp('7%'),
-    borderRadius: wp('3.5%'),
+    width: wp(7),
+    height: wp(7),
+    borderRadius: wp(3.5),
     borderWidth: 1,
     borderColor: theme.colors.grey,
     backgroundColor: theme.colors.white,
@@ -100,32 +102,32 @@ const styles = StyleSheet.create({
   },
   method: {
     fontFamily: 'SofiaPro-Bold',
-    fontSize: wp('6.5%'),
+    fontSize: wp(6.5),
     color: theme.colors.dark,
-    marginTop: hp('3%'),
-    marginBottom: hp('1.5%'),
+    marginTop: hp(3),
+    marginBottom: hp(1.5),
   },
   cartMethodContainer: {
-    height: hp('26%'),
+    height: hp(26),
   },
   line: {
-    width: wp('100%'),
+    width: wp(100),
     height: 2,
     backgroundColor: theme.colors.light,
-    marginBottom: hp('1.5%'),
+    marginBottom: hp(1.5),
     alignSelf: 'center',
   },
   dropdown: {
     width: theme.constants.screenWidth,
-    height: hp('20%'),
+    height: hp(20),
     backgroundColor: theme.colors.light,
     position: 'absolute',
-    top: hp('10%'),
-    marginTop: hp('2%'),
+    top: hp(10),
+    marginTop: hp(2),
     borderWidth: 1,
     borderRadius: 15,
     borderColor: theme.colors.grey,
-    padding: wp('3%'),
+    padding: wp(3),
   },
 });
 

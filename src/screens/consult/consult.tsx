@@ -23,7 +23,7 @@ import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import ComingSoon from '../../components/ComingSoon/ComingSoon';
 import categoryData from '../home/categoryData';
 
-const skeletonArray = [1, 2, 3, 4, 5, 6, 7];
+const skeletonArray = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 const Consult = () => {
   const [showModal, SetShowModal] = useState<boolean>(false);

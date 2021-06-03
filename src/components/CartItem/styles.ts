@@ -5,33 +5,34 @@ import {
 } from 'react-native-responsive-screen';
 
 import { theme } from '..';
+import isAndroid from '../../utils/isAndroid';
 
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     width: theme.constants.screenWidth,
-    height: hp('15%'),
+    height: isAndroid ? hp(13.5) : hp(15),
     borderWidth: 1,
     borderColor: theme.colors.light,
     borderRadius: wp(4),
-    marginTop: hp('2%'),
+    marginTop: hp(2),
     padding: wp(5),
     alignItems: 'center',
   },
   titleContainer: {
-    marginLeft: wp('6%'),
+    marginLeft: wp(6),
     justifyContent: 'space-around',
     height: '100%',
   },
   titleText: {
     fontFamily: 'SofiaPro-Bold',
-    fontSize: wp('4%'),
+    fontSize: wp(4),
     color: theme.colors.dark,
-    width: wp('40%'),
+    width: wp(40),
   },
   priceText: {
     fontFamily: 'SofiaPro-Bold',
-    fontSize: wp('4%'),
+    fontSize: wp(4),
     color: theme.colors.dark,
   },
   trashContainer: {
