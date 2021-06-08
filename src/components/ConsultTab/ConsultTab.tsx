@@ -20,7 +20,7 @@ const ConsultTab = ({ color, upperText, lowerText, image }: Props) => {
       <Text style={styles.upperText}>{upperText}</Text>
       <View style={{ flex: 1 }} />
       <Text style={styles.lowerText}>{lowerText}</Text>
-      <Image source={image} style={styles.image} />
+      {/* <Image source={image} style={styles.image} /> */}
     </View>
   );
 };

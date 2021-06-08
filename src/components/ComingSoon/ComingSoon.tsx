@@ -30,7 +30,6 @@ const ComingSoon = ({ show, onRequestClose }: Props) => {
         <Text style={styles.subtext}>
           Our doctors and medical professionals are getting ready to serve you.
         </Text>
-        // Check why this button doesnt work on android
         {isAndroid ? null : (
           <Button
             label="Go back"

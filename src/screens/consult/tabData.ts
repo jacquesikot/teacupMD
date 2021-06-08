@@ -12,7 +12,7 @@ const tabData = [
   {
     id: 2,
     title: 'Customer Service',
-    subText: 'Need help with the app',
+    subText: 'If you need help with anything on the app',
     img: require('../../../assets/images/consult1.png'),
     color: 'green',
     onPress: () => Linking.openURL('tel:+260975356162'),

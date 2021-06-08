@@ -77,9 +77,7 @@ const Register = ({
       >
         {({ errors, touched, handleChange, handleBlur, handleSubmit }) => (
           <>
-            <KeyboardAvoidingView
-              behavior={Platform.OS == 'ios' ? 'position' : 'height'}
-            >
+            <KeyboardAvoidingView behavior="position">
               <TouchableOpacity
                 activeOpacity={0.8}
                 onPress={() => navigation.goBack()}

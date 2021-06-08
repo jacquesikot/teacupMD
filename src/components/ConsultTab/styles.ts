@@ -18,9 +18,8 @@ const styles = StyleSheet.create({
     fontFamily: 'SofiaPro-Bold',
     fontSize: wp(3.5),
     color: theme.colors.dark,
-    width: '65%',
+    width: '90%',
     lineHeight: isAndroid ? 15 : 23,
-    marginBottom: hp(1),
   },
   lowerText: {
     fontFamily: 'SofiaPro-Regular',

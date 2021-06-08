@@ -124,8 +124,9 @@ const styles = StyleSheet.create({
   },
   authText: {
     fontFamily: 'SofiaPro-Medium',
-    fontSize: wp('4%'),
+    fontSize: wp('3%'),
     color: theme.colors.darkGrey,
+    textAlign: 'center',
   },
 });
 
