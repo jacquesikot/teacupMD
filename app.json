@@ -24,6 +24,9 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "description": "TeaCupMD Mobile App"
+    "description": "TeaCupMD Mobile App",
+    "android": {
+      "package": "com.teacup.teacupmdiosapp"
+    }
   }
 }
