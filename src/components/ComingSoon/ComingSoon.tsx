@@ -35,7 +35,7 @@ const ComingSoon = ({ show, onRequestClose }: Props) => {
             label="Go back"
             type="primary"
             width={BUTTON_WIDTH}
-            onPress={() => alert('pressed')}
+            onPress={() => onRequestClose()}
           />
         )}
       </View>
