@@ -35,9 +35,15 @@ const Search = ({
   const [noResult, setNoResult] = useState<boolean>(false);
   const [focus, setFocus] = useState<boolean>(false);
 
+  const [products, setproducts] = useState<any[]>([]);
+
   const { user, manageCart } = useAppContext();
 
-  const { data: products } = useQuery('products', productsApi.getProducts);
+  const loadProducts = async () => {
+    const result = await productsApi.getProducts();
+    setproducts(result);
+  };
+
   const { data: recentSearch, refetch: refetchRecentSearch } = useQuery(
     'recentSearch',
     async () => await searchApi.getRecentSearch(user.id ? user.id : ''),
@@ -144,6 +150,8 @@ const Search = ({
     Keyboard.addListener('keyboardWillShow', keyboardWillShow);
     Keyboard.addListener('keyboardWillHide', keyboardWillHide);
 
+    void loadProducts();
+
     return () => {
       Keyboard.removeListener('keyboardWillShow', keyboardWillShow);
       Keyboard.removeListener('keyboardWillHide', keyboardWillHide);
@@ -230,17 +238,21 @@ const Search = ({
                   <Product
                     bgColor="light"
                     label={item.title}
-                    image={item.images[0]}
+                    image={
+                      item.images
+                        ? item.images[0]
+                        : 'https://via.placeholder.com/100x65.png/f4f5f7?text=No+Image'
+                    }
                     price={item.price}
+                    sale={item.sale_price ? item.sale_price : ''}
                     cart={() => addToCart(item)}
-                    qty={item.qty}
-                    main_content={item.main_content}
+                    qty={item.quantity}
+                    main_content={item.main_content ? item.main_content : ''}
                     details={() =>
                       navigation.navigate('ProductDetail', { product: item })
                     }
                     width={PRODUCT_WIDTH}
                     height={PRODUCT_HEIGHT}
-                    sale={item.sale_price}
                   />
                 )}
               />

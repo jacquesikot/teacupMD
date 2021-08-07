@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import {
   View,
   Text,
@@ -6,6 +6,8 @@ import {
   FlatList,
   Image,
   Animated,
+  Linking,
+  RefreshControl,
 } from 'react-native';
 import { Feather as Icon } from '@expo/vector-icons';
 import { StackScreenProps } from '@react-navigation/stack';
@@ -28,16 +30,13 @@ import useHome from './useHome';
 import { useAppContext } from '../../context/context';
 import ComingSoon from '../../components/ComingSoon/ComingSoon';
 import categoryData from './categoryData';
+import isAndroid from '../../utils/isAndroid';
+
+const PRODUCT_WIDTH = wp(41);
+const PRODUCT_HEIGHT = isAndroid ? hp(27) : hp(25);
 
 const Home = ({ navigation }: StackScreenProps<HomeNavParamList, 'Home'>) => {
-  const {
-    products,
-    departments,
-    loading,
-    displayName,
-    showModal,
-    setShowModal,
-  } = useHome();
+  const { products, loading, showModal, setShowModal } = useHome();
 
   const { manageCart, isProductInCart } = useAppContext();
 
@@ -70,6 +69,10 @@ const Home = ({ navigation }: StackScreenProps<HomeNavParamList, 'Home'>) => {
   const skeletonArray = [1, 2, 3, 4, 5, 6, 7, 8];
 
   const HEADER_HEIGHT = hp('8%') + theme.constants.screenPadding;
+
+  const WHATSAPP_MESSAGE = encodeURI(
+    'Hello Teacup, I would like to send a prescription now'
+  );
 
   const scrollY = new Animated.Value(0);
   const diffClamp = Animated.diffClamp(scrollY, 0, HEADER_HEIGHT);
@@ -119,6 +122,20 @@ const Home = ({ navigation }: StackScreenProps<HomeNavParamList, 'Home'>) => {
           source={require('../../../assets/images/infoBanner.png')}
           style={styles.image}
         />
+
+        <TouchableOpacity
+          onPress={() =>
+            Linking.openURL(
+              `https://wa.me/+260763596241?text=${WHATSAPP_MESSAGE}`
+            )
+          }
+          activeOpacity={0.8}
+          style={styles.add}
+        >
+          <Icon name="plus-circle" size={24} color={theme.colors.primary} />
+          <Text style={styles.addText}>Add prescription</Text>
+        </TouchableOpacity>
+
         <View style={styles.departmentContainer}>
           <Text style={styles.department}>Departments</Text>
           <TouchableOpacity
@@ -135,6 +152,7 @@ const Home = ({ navigation }: StackScreenProps<HomeNavParamList, 'Home'>) => {
             <Icon name="chevron-right" color={theme.colors.grey} />
           </TouchableOpacity>
         </View>
+
         <View style={styles.departmentSlider}>
           {loading ? (
             <SkeletonPlaceholder backgroundColor={theme.colors.light}>
@@ -178,6 +196,7 @@ const Home = ({ navigation }: StackScreenProps<HomeNavParamList, 'Home'>) => {
             />
           )}
         </View>
+
         {loading && <View style={{ height: hp(3) }} />}
         <View style={styles.departmentContainer}>
           <Text style={styles.department}>Pharmacy</Text>
@@ -221,12 +240,18 @@ const Home = ({ navigation }: StackScreenProps<HomeNavParamList, 'Home'>) => {
                 <Product
                   bgColor="light"
                   label={item.title}
-                  image={item.images[0]}
+                  image={
+                    item.images
+                      ? item.images[0]
+                      : 'https://via.placeholder.com/100x65.png/f4f5f7?text=No+Image'
+                  }
                   price={item.price}
-                  sale={item.sale_price}
+                  sale={item.sale_price ? item.sale_price : ''}
                   cart={() => addToCart(item)}
-                  qty={item.qty}
-                  main_content={item.main_content}
+                  qty={item.quantity}
+                  width={PRODUCT_WIDTH}
+                  height={PRODUCT_HEIGHT}
+                  main_content={item.main_content ? item.main_content : ''}
                   details={() =>
                     navigation.navigate('ProductDetail', { product: item })
                   }
@@ -235,7 +260,7 @@ const Home = ({ navigation }: StackScreenProps<HomeNavParamList, 'Home'>) => {
             />
           )}
         </View>
-        <View style={styles.departmentContainer}>
+        {/* <View style={styles.departmentContainer}>
           <Text style={styles.department}>Recenty Viewed</Text>
         </View>
         <View style={[styles.productSlider, { marginBottom: 30 }]}>
@@ -270,12 +295,16 @@ const Home = ({ navigation }: StackScreenProps<HomeNavParamList, 'Home'>) => {
                 <Product
                   bgColor="light"
                   label={item.title}
-                  image={item.images[0]}
+                  image={
+                    item.images
+                      ? item.images[0]
+                      : 'https://via.placeholder.com/100x65.png/f4f5f7?text=No+Image'
+                  }
                   price={item.price}
-                  sale={item.sale_price}
+                  sale={item.sale_price ? item.sale_price : ''}
                   cart={() => addToCart(item)}
-                  qty={item.qty}
-                  main_content={item.main_content}
+                  qty={item.quantity}
+                  main_content={item.main_content ? item.main_content : ''}
                   details={() =>
                     navigation.navigate('ProductDetail', { product: item })
                   }
@@ -283,7 +312,7 @@ const Home = ({ navigation }: StackScreenProps<HomeNavParamList, 'Home'>) => {
               )}
             />
           )}
-        </View>
+        </View> */}
         <View style={styles.tipContainer}>
           <Text style={styles.tipHeading}>TODAY'S HEALTH TIP</Text>
           <Text style={styles.tipText}>

@@ -24,6 +24,7 @@ import { useAppContext } from '../../context/context';
 import productsApi from '../../firebase/products';
 import { addFavorite } from '../../redux/actions';
 import { Product as ProductProps } from '../../types/product';
+import { heightPercentageToDP } from 'react-native-responsive-screen';
 
 const ProductDetail = ({
   navigation,
@@ -143,7 +144,19 @@ const ProductDetail = ({
             favorite={() => handleFavorites()}
             isFavorite={isFavorite}
           />
-          <ProductImgSlider images={product.images} />
+          <ProductImgSlider
+            images={
+              product.images
+                ? product.images
+                : [
+                    `https://via.placeholder.com/${
+                      theme.constants.screenWidth
+                    }x${
+                      heightPercentageToDP(100) * 0.4
+                    }.png/f4f5f7?text=No+Image`,
+                  ]
+            }
+          />
         </View>
         <View style={styles.bottomContainer}>
           <View style={styles.dash} />
@@ -151,20 +164,21 @@ const ProductDetail = ({
           <View style={styles.priceContainer}>
             <View style={styles.priceItems}>
               <Text style={styles.priceText}>{'ZK ' + product.price}</Text>
-              {product.sale_price !== '' && (
-                <>
-                  <Text style={styles.salePrice}>
-                    {'ZK ' + product.sale_price}
-                  </Text>
-                  <Text style={styles.discount}>
-                    {(
-                      ((Number(product.price) - Number(product.sale_price)) /
-                        Number(product.price)) *
-                      100
-                    ).toFixed(0) + '% Off'}
-                  </Text>
-                </>
-              )}
+              {product.sale_price ||
+                (product.sale_price !== '' && (
+                  <>
+                    <Text style={styles.salePrice}>
+                      {'ZK ' + product.sale_price}
+                    </Text>
+                    <Text style={styles.discount}>
+                      {(
+                        ((Number(product.price) - Number(product.sale_price)) /
+                          Number(product.price)) *
+                        100
+                      ).toFixed(0) + '% Off'}
+                    </Text>
+                  </>
+                ))}
             </View>
             <View style={{ flex: 1 }} />
             <View style={styles.counterContainer}>
@@ -192,7 +206,7 @@ const ProductDetail = ({
           <View style={styles.detailsContainer}>
             <Text style={styles.detailsHeader}>Details</Text>
             <View style={{ flex: 1 }} />
-            <TouchableOpacity
+            {/* <TouchableOpacity
               style={{ flexDirection: 'row', alignItems: 'center' }}
             >
               <Text style={styles.more}>More</Text>
@@ -201,18 +215,22 @@ const ProductDetail = ({
                 color={theme.colors.darkGrey}
                 size={18}
               />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
           <Text style={styles.detailsText} numberOfLines={3}>
-            {product.details}
+            {product.details
+              ? product.details
+              : 'No Details available at the moment'}
           </Text>
           <View style={styles.line} />
           <Text style={styles.nutritionText}>How to use</Text>
           <Text numberOfLines={4} style={styles.nutritionContent}>
-            {product.nutrition_details}
+            {product.nutrition_details
+              ? product.nutrition_details
+              : 'No Details available at the moment'}
           </Text>
           <View style={styles.line} />
-          <Text style={styles.relatedProduct}>Related Products</Text>
+          {/* <Text style={styles.relatedProduct}>Related Products</Text>
           <View style={{ marginBottom: 30 }}>
             <FlatList
               data={products}
@@ -221,13 +239,17 @@ const ProductDetail = ({
               keyExtractor={(item) => item.id.toString()}
               renderItem={({ item }) => (
                 <Product
-                  bgColor="white"
+                  bgColor="light"
                   label={item.title}
-                  image={item.images[0]}
+                  image={
+                    item.images
+                      ? item.images[0]
+                      : 'https://via.placeholder.com/100x65.png/f4f5f7?text=No+Image'
+                  }
                   price={item.price}
-                  sale={item.sale_price}
-                  qty={item.qty}
-                  main_content={item.main_content}
+                  sale={item.sale_price ? item.sale_price : ''}
+                  qty={item.quantity}
+                  main_content={item.main_content ? item.main_content : ''}
                   cart={() => alert('added to cart')}
                   details={() =>
                     navigation.push('ProductDetail', { product: item })
@@ -235,7 +257,7 @@ const ProductDetail = ({
                 />
               )}
             />
-          </View>
+          </View> */}
           <Button
             type="primary"
             label="Add to Cart"

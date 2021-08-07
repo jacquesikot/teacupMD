@@ -63,9 +63,13 @@ const Pharmacy = ({
     setType(item.name);
     const productsArr: any = [];
     products.map((p) => {
-      p.category.map((c: any) => {
-        if (c === item.name) productsArr.push(p);
-      });
+      if (
+        p.category
+          .toLowerCase()
+          .includes(item.name.toString().toLowerCase().trim())
+      ) {
+        productsArr.push(p);
+      }
     });
     return setSearchProducts(productsArr);
   };
@@ -176,17 +180,21 @@ const Pharmacy = ({
                   <Product
                     bgColor="white"
                     label={item.title}
-                    image={item.images[0]}
+                    image={
+                      item.images
+                        ? item.images[0]
+                        : 'https://via.placeholder.com/100x65.png/fff?text=No+Image'
+                    }
                     price={item.price}
-                    qty={item.qty}
-                    main_content={item.main_content}
+                    sale={item.sale_price ? item.sale_price : ''}
+                    qty={item.quantity}
+                    main_content={item.main_content ? item.main_content : ''}
                     cart={() => addToCart(item)}
                     details={() =>
                       navigation.navigate('ProductDetail', { product: item })
                     }
                     width={PRODUCT_WIDTH}
                     height={PRODUCT_HEIGHT}
-                    sale={item.sale_price}
                   />
                 )}
               />

@@ -8,5 +8,5 @@ export interface Product {
   qty: string;
   main_content: string;
   images: string[];
-  category: string[];
+  category: string;
 }

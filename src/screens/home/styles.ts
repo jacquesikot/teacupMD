@@ -87,6 +87,24 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: hp('7%'),
   },
+  add: {
+    width: theme.constants.screenWidth,
+    height: 75,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 20,
+    borderWidth: 1,
+    borderRadius: 25,
+    borderColor: theme.colors.lightBlue,
+    borderStyle: 'dashed',
+  },
+  addText: {
+    fontFamily: 'SofiaPro-Regular',
+    fontSize: wp('4%'),
+    color: theme.colors.subText,
+    textAlign: 'center',
+    marginTop: 5,
+  },
 });
 
 export default styles;

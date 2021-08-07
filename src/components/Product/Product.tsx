@@ -57,14 +57,18 @@ const Product = ({
     >
       <TouchableOpacity activeOpacity={0.8} onPress={details}>
         <Image
-          {...{ uri: image }}
+          {...{
+            uri: image
+              ? image
+              : `https://via.placeholder.com/100x65.png/F4F5F7?text=No+Image`,
+          }}
           tint="light"
           transitionDuration={300}
           style={{ width: 100, height: 65 }}
         />
       </TouchableOpacity>
-      <Text style={styles.label} numberOfLines={1}>
-        {`${label} (${qty})`}
+      <Text style={styles.label} numberOfLines={2}>
+        {`${label}`}
       </Text>
 
       <Text style={styles.main_content} numberOfLines={1}>

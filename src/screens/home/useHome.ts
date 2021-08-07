@@ -16,7 +16,7 @@ const useHome = () => {
     try {
       setLoading(true);
       const departments = await departmentApi.getDepartments();
-      const products = await productsApi.getProducts();
+      const products = await productsApi.getProducts(5);
       const user = await authApi.getUserDetails();
       setDepartments(departments);
       setProducts(products);
@@ -40,6 +40,7 @@ const useHome = () => {
     displayName,
     showModal,
     setShowModal,
+    loadData,
   };
 };
 

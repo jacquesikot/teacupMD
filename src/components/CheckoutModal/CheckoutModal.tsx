@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, FlatList, Alert } from 'react-native';
 import Modal from 'react-native-modal';
 import { Feather as Icon } from '@expo/vector-icons';
@@ -14,23 +14,24 @@ import ordersApi from '../../firebase/orders';
 import flutterwave from '../../utils/flutterwave';
 import { useAppContext } from '../../context/context';
 import Toast from 'react-native-toast-message';
+import Picker from '../Picker';
 
 interface Props {
   show: boolean;
   onRequestClose: any;
   cartTotal: string;
-  userAddress: any;
   onFinish: any;
   handleAddress: any;
+  addresses: any[];
 }
 
 const CheckoutModal = ({
   show,
   onRequestClose,
   cartTotal,
-  userAddress,
   onFinish,
   handleAddress,
+  addresses,
 }: Props) => {
   const options = [
     {
@@ -47,18 +48,28 @@ const CheckoutModal = ({
     },
   ];
 
+  const { user, cart } = useAppContext();
+
   const [selected, setSelected] = useState<any>(options[0]);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const { user, cart } = useAppContext();
+  const [visible, setVisible] = useState<boolean>(false);
+  const [value, setValue] = useState<string>('');
+
+  const data = addresses.map((a) => {
+    return {
+      label: a.address,
+      value: `${a.name}, ${a.address}, ${a.city}, ${a.state}, ${a.phone_number}`,
+    };
+  });
 
   const orderProducts = cart.map((p) => {
-    return p.id;
+    return p.title;
   });
 
   const handleCheckout = async () => {
     if (!user.id) return Alert.alert('', 'Please login to place order');
-    if (!userAddress)
+    if (addresses.length < 1)
       return Alert.alert('', 'No Address Found, please add address');
     setLoading(true);
     try {
@@ -68,7 +79,7 @@ const CheckoutModal = ({
           redirect_url: Constants.linkingUri,
           name: user.displayName ? user.displayName : '',
           email: user.email ? user.email : '',
-          phone_number: userAddress.phone_number,
+          phone_number: '',
           consumer_id: user.id,
         };
         const link = await flutterwave.getPaymentLink(data);
@@ -87,6 +98,10 @@ const CheckoutModal = ({
             user_id: user.id,
             hasPaid: true,
             payment_method: 'card',
+            address: value,
+            name: user.displayName ? user.displayName : '',
+            email: user.email ? user.email : '',
+            delivered: false,
           });
           setLoading(false);
         } else {
@@ -101,6 +116,10 @@ const CheckoutModal = ({
           user_id: user.id,
           hasPaid: false,
           payment_method: 'cash',
+          address: value,
+          name: user.displayName ? user.displayName : '',
+          email: user.email ? user.email : '',
+          delivered: false,
         });
         setLoading(false);
       }
@@ -123,7 +142,8 @@ const CheckoutModal = ({
         isVisible={show}
         onBackdropPress={onRequestClose}
         style={styles.container}
-        useNativeDriver={true}
+        useNativeDriver
+        useNativeDriverForBackdrop
       >
         <View style={styles.modal}>
           <View style={styles.topView}>
@@ -142,25 +162,25 @@ const CheckoutModal = ({
           <TouchableOpacity
             activeOpacity={0.8}
             onPress={() => {
-              if (!userAddress) {
+              if (addresses.length < 1) {
                 handleAddress();
+              } else {
+                setVisible(true);
               }
-              return;
             }}
             style={styles.deliveryContainer}
           >
-            {userAddress ? (
+            {addresses.length > 0 ? (
               <>
                 <View style={styles.deliveryTextContainer}>
-                  <Text style={styles.deliveryText1} numberOfLines={1}>
-                    Home Address
-                  </Text>
-                  <Text style={styles.deliveryText2} numberOfLines={1}>
-                    {userAddress && userAddress.phone_number}
-                  </Text>
-                  <Text style={styles.deliveryText2} numberOfLines={1}>
-                    {userAddress && userAddress.address}
-                  </Text>
+                  <Picker
+                    visible={visible}
+                    setVisible={setVisible}
+                    value={value}
+                    setValue={setValue}
+                    data={data}
+                    defaultValue="Select Address"
+                  />
                 </View>
               </>
             ) : (
@@ -170,12 +190,17 @@ const CheckoutModal = ({
             )}
             <View style={styles.icon}>
               <Icon
-                name={userAddress ? 'check' : 'plus'}
+                name={addresses.length < 1 ? 'plus' : 'chevron-down'}
                 size={14}
                 color={theme.colors.primary}
               />
             </View>
           </TouchableOpacity>
+          {addresses.length > 0 && (
+            <TouchableOpacity style={styles.addNew} onPress={handleAddress}>
+              <Text style={styles.newText}>Add new address?</Text>
+            </TouchableOpacity>
+          )}
           <Text style={styles.method}>Method</Text>
           <View style={styles.cartMethodContainer}>
             <FlatList
@@ -199,7 +224,6 @@ const CheckoutModal = ({
               )}
             />
           </View>
-          <View style={{ flex: 1 }} />
 
           <View style={styles.line} />
           <Button

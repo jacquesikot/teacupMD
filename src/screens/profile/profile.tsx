@@ -23,6 +23,7 @@ import authFunc from '../../firebase/auth';
 import { useAppContext } from '../../context/context';
 import { StackScreenProps } from '@react-navigation/stack';
 import { ProfileNavParamList } from '../../types/navigationTypes';
+import { heightPercentageToDP } from 'react-native-responsive-screen';
 
 const Profile = ({
   navigation,
@@ -113,7 +114,7 @@ const Profile = ({
             </Text>
           </View>
         )}
-        <View style={styles.accountBottom}>
+        {/* <View style={styles.accountBottom}>
           <View style={styles.accountBottomItem}>
             <Text style={styles.accountBottomText1}>
               {orderCount && user.id ? orderCount : '0'}
@@ -130,7 +131,10 @@ const Profile = ({
             </Text>
             <Text style={styles.accountBottomText2}>Saved</Text>
           </View>
-        </View>
+        </View> */}
+
+        <View style={{ height: heightPercentageToDP(5) }} />
+
         <View style={styles.others}>
           <View style={styles.othersContainer}>
             <TouchableOpacity

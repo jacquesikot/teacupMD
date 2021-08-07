@@ -32,13 +32,13 @@ const listenForFavorites = async (user_id: string) => {
 };
 
 interface FavoriteData {
-  category: string[];
-  details: string;
-  images: string[];
-  nutrition_details: string;
+  category: string;
+  details?: string;
+  images?: string[];
+  nutrition_details?: string;
   price: string;
   product_id: string;
-  sale_price: string;
+  sale_price?: string;
   title: string;
   user_id: string;
 }

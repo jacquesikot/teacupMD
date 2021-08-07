@@ -3,19 +3,27 @@ import firebase from '../firebase';
 const db = firebase();
 
 interface OrderProps {
-  products: string[];
+  products: any[];
   total: string;
   user_id: string;
   hasPaid: boolean;
   payment_method: 'card' | 'cash';
+  address: string;
+  name: string;
+  email: string;
+  delivered: boolean;
 }
 
 const newOrder = async ({
   products,
   total,
   user_id,
+  name,
+  email,
   hasPaid,
   payment_method,
+  address,
+  delivered,
 }: OrderProps) => {
   await db.collection('orders').add({
     created_at: new Date().toISOString(),
@@ -24,6 +32,10 @@ const newOrder = async ({
     user_id,
     hasPaid,
     payment_method,
+    address,
+    name,
+    email,
+    delivered,
   });
 };
 

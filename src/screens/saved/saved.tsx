@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { StackScreenProps } from '@react-navigation/stack';
 import { View, SafeAreaView, FlatList } from 'react-native';
 import StackHeader from '../../components/StackHeader/StackHeader';
 import { CommonActions } from '@react-navigation/routers';
 import Toast from 'react-native-toast-message';
 import * as Haptics from 'expo-haptics';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { ProfileNavParamList } from '../../types/navigationTypes';
 import styles, { PRODUCT_WIDTH, PRODUCT_HEIGHT, MARGIN_RIGHT } from './styles';
@@ -13,11 +13,14 @@ import Product from '../../components/Product/Product';
 import StatusScreen from '../../components/StatusScreen/StatusScreen';
 import { removeFavorite } from '../../redux/actions';
 import { Product as ProductProps } from '../../types/product';
+import favoritesApi from '../../firebase/userFavorite';
+import { useAppContext } from '../../context/context';
+import ActivityIndicator from '../../components/ActivityIndicator/ActivityIndicator';
 
 const Saved = ({
   navigation,
 }: StackScreenProps<ProfileNavParamList, 'Saved'>) => {
-  const { favorites } = useSelector((state: any) => state.productReducer);
+  // const { favorites } = useSelector((state: any) => state.productReducer);
   const dispatch = useDispatch();
   const removeFromFavorites = (favorite: any) =>
     dispatch(removeFavorite(favorite));
@@ -50,8 +53,25 @@ const Saved = ({
     }
   };
 
+  const { user } = useAppContext();
+
+  const [favorites, setFavorites] = useState<any[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const loadFavorites = async () => {
+    setLoading(true);
+    const result = await favoritesApi.getUserFavorites(user.id || '');
+    setFavorites(result);
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    void loadFavorites();
+  }, []);
+
   return (
     <SafeAreaView style={styles.container}>
+      <ActivityIndicator visible={loading} opacity={1} />
       <StackHeader
         label="Saved Products"
         back={() => navigation.goBack()}
@@ -69,16 +89,16 @@ const Saved = ({
               <Product
                 bgColor="light"
                 label={item.title}
-                image={item.images[0]}
+                image={item.images && item.images[0]}
                 price={item.price}
-                qty={item.qty}
-                main_content={item.main_content}
+                sale={item.sale_price ? item.sale_price : ''}
+                qty={item.quantity}
+                main_content={item.main_content ? item.main_content : ''}
                 details={() =>
                   navigation.navigate('ProductDetail', { product: item })
                 }
                 width={PRODUCT_WIDTH}
                 height={PRODUCT_HEIGHT}
-                sale={item.sale_price}
                 saved={() => deleteFavorite(item)}
                 marginRight={MARGIN_RIGHT}
               />

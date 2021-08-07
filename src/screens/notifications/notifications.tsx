@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, SafeAreaView, FlatList, TouchableOpacity } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
 import * as Animatable from 'react-native-animatable';
@@ -9,11 +9,21 @@ import { HomeNavParamList } from '../../types/navigationTypes';
 import NotificationItem from '../../components/NotificationItem/NotificationItem';
 import notifications from './notificationData';
 import StatusScreen from '../../components/StatusScreen/StatusScreen';
+import Picker from '../../components/Picker';
 
 const Notifications = ({
   navigation,
 }: StackScreenProps<HomeNavParamList, 'Notifications'>) => {
   const notif = false;
+
+  const [visible, setVisible] = useState<boolean>(false);
+
+  const [value, setValue] = useState<string>('');
+
+  const data = [
+    { label: 'lab1', value: 'val1' },
+    { label: 'lab2', value: 'val2' },
+  ];
 
   return (
     <SafeAreaView style={styles.container}>

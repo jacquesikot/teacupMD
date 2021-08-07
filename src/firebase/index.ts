@@ -20,5 +20,7 @@ export default () => {
 
   const db = firebase.firestore();
 
+  const timestamp = firebase.firestore.FieldValue.serverTimestamp();
+
   return db;
 };

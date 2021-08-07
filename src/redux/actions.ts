@@ -9,13 +9,12 @@ export const addFavorite =
     const favoriteData = {
       product_id: product.id,
       category: product.category,
-      details: product.details,
-      images: product.images,
-      nutrition_details: product.nutrition_details,
+      details: product.details || '',
+      images: product.images || [],
+      nutrition_details: product.nutrition_details || '',
       price: product.price,
-      qty: product.qty,
-      main_content: product.main_content,
-      sale_price: product.sale_price ? product.sale_price : '0',
+      main_content: product.main_content || '',
+      sale_price: product.sale_price ? product.sale_price : '',
       title: product.title,
       user_id,
     };

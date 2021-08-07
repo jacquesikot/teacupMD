@@ -38,7 +38,9 @@ const CartItem = ({ image, title, price, product }: Props) => {
   return (
     <View style={styles.container}>
       <Image
-        {...{ uri: image }}
+        {...{
+          uri: image,
+        }}
         tint="light"
         transitionDuration={300}
         style={{ width: wp(18), height: wp(16) }}

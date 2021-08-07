@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
     marginBottom: hp(1.5),
   },
   cartMethodContainer: {
-    height: hp(26),
+    height: hp(23),
   },
   line: {
     width: wp(100),
@@ -128,6 +128,16 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     borderColor: theme.colors.grey,
     padding: wp(3),
+  },
+  addNew: {
+    alignItems: 'flex-end',
+  },
+  newText: {
+    fontFamily: 'SofiaPro-Regular',
+    fontSize: wp(3.5),
+    color: theme.colors.dark,
+    marginTop: hp(1.5),
+    paddingRight: 5,
   },
 });
 

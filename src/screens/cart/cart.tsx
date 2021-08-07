@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { StackScreenProps } from '@react-navigation/stack';
 import { View, Text, SafeAreaView, FlatList, Alert } from 'react-native';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 
 import StackHeader from '../../components/StackHeader/StackHeader';
 import Button from '../../components/Button/Button';
@@ -41,7 +45,8 @@ const Cart = ({ navigation }: StackScreenProps<HomeNavParamList>) => {
       {cart.length > 0 ? (
         <>
           <Text style={styles.cartHeading}>
-            {cart.length.toString()} Items in cart
+            {cart.length.toString()}{' '}
+            {`Item${cart.length > 1 ? 's' : ''} in cart`}
           </Text>
           <View style={styles.productContainer}>
             <FlatList
@@ -50,7 +55,13 @@ const Cart = ({ navigation }: StackScreenProps<HomeNavParamList>) => {
               keyExtractor={(item: any) => item.id.toString()}
               renderItem={({ item }: any) => (
                 <CartItem
-                  image={item.images[0]}
+                  image={
+                    item.images
+                      ? item.images[0]
+                      : `https://via.placeholder.com/${wp(18)}x${wp(
+                          16
+                        )}.png/f4f5f7?text=No+Image`
+                  }
                   title={item.title}
                   price={item.sale_price ? item.sale_price : item.price}
                   product={item}
@@ -86,7 +97,7 @@ const Cart = ({ navigation }: StackScreenProps<HomeNavParamList>) => {
             show={showModal}
             onRequestClose={() => setShowModal(false)}
             cartTotal={(cartTotal + delivery).toString()}
-            userAddress={address[0]}
+            addresses={address}
             onFinish={(status: string) => {
               if (status === 'success') {
                 navigation.navigate('OrderStatus', { status: status });
