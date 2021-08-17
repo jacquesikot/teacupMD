@@ -10,7 +10,7 @@ export const addFavorite =
       product_id: product.id,
       category: product.category,
       details: product.details || '',
-      images: product.images || [],
+      image: product.image || '',
       nutrition_details: product.nutrition_details || '',
       price: product.price,
       main_content: product.main_content || '',

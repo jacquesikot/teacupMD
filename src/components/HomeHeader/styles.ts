@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
     paddingBottom: hp(3),
     height: hp('12%'),
     paddingTop: hp(3),
-    backgroundColor: theme.colors.white,
+    backgroundColor: theme.colors.light,
     paddingLeft: theme.constants.screenPadding / 2,
     paddingRight: theme.constants.screenPadding / 2,
     borderBottomWidth: 1,

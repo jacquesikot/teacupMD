@@ -60,20 +60,20 @@ const Product = ({
           {...{
             uri: image
               ? image
-              : `https://via.placeholder.com/100x65.png/F4F5F7?text=No+Image`,
+              : `https://via.placeholder.com/100x65.png/fff?text=No+Image`,
           }}
           tint="light"
           transitionDuration={300}
-          style={{ width: 100, height: 65 }}
+          style={{ width: 120, height: 125 }}
         />
       </TouchableOpacity>
       <Text style={styles.label} numberOfLines={2}>
         {`${label}`}
       </Text>
 
-      <Text style={styles.main_content} numberOfLines={1}>
+      {/* <Text style={styles.main_content} numberOfLines={1}>
         {main_content}
-      </Text>
+      </Text> */}
 
       <View
         style={{

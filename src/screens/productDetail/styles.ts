@@ -13,13 +13,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   topContainer: {
-    backgroundColor: theme.colors.light,
+    backgroundColor: theme.colors.white,
     width: '100%',
     alignItems: 'center',
-    height: hp('50%'),
+    height: hp('55%'),
   },
   bottomContainer: {
-    backgroundColor: theme.colors.white,
+    backgroundColor: theme.colors.light,
     borderTopLeftRadius: wp(8),
     borderTopRightRadius: wp(8),
     height: '100%',

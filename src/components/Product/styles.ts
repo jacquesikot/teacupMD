@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
   priceContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: hp('1.5%'),
+    // marginTop: hp('1%'),
   },
   priceText: {
     fontFamily: 'SofiaPro-Bold',
@@ -48,9 +48,9 @@ const styles = StyleSheet.create({
     fontSize: wp('3%'),
   },
   cart: {
-    width: wp('8%'),
-    height: wp('8%'),
-    borderRadius: wp('4%'),
+    width: wp('7%'),
+    height: wp('7%'),
+    borderRadius: wp('3.5%'),
     backgroundColor: theme.colors.lightBlue,
     justifyContent: 'center',
     alignItems: 'center',

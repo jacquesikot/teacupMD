@@ -75,7 +75,7 @@ const Saved = ({
       <StackHeader
         label="Saved Products"
         back={() => navigation.goBack()}
-        color="white"
+        color="light"
       />
       {favorites.length !== 0 ? (
         <View style={styles.productGrid}>
@@ -87,9 +87,9 @@ const Saved = ({
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
               <Product
-                bgColor="light"
+                bgColor="white"
                 label={item.title}
-                image={item.images && item.images[0]}
+                image={item.image && item.image}
                 price={item.price}
                 sale={item.sale_price ? item.sale_price : ''}
                 qty={item.quantity}

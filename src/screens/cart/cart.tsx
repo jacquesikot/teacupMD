@@ -34,7 +34,6 @@ const Cart = ({ navigation }: StackScreenProps<HomeNavParamList>) => {
   useEffect(() => {
     loadData();
   }, []);
-
   return (
     <SafeAreaView style={styles.container}>
       <StackHeader
@@ -56,11 +55,11 @@ const Cart = ({ navigation }: StackScreenProps<HomeNavParamList>) => {
               renderItem={({ item }: any) => (
                 <CartItem
                   image={
-                    item.images
-                      ? item.images[0]
+                    item.image
+                      ? item.image
                       : `https://via.placeholder.com/${wp(18)}x${wp(
                           16
-                        )}.png/f4f5f7?text=No+Image`
+                        )}.png/fff?text=No+Image`
                   }
                   title={item.title}
                   price={item.sale_price ? item.sale_price : item.price}

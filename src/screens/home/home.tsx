@@ -133,7 +133,7 @@ const Home = ({ navigation }: StackScreenProps<HomeNavParamList, 'Home'>) => {
           style={styles.add}
         >
           <Icon name="plus-circle" size={24} color={theme.colors.primary} />
-          <Text style={styles.addText}>Add prescription</Text>
+          <Text style={styles.addText}>Upload prescription</Text>
         </TouchableOpacity>
 
         <View style={styles.departmentContainer}>
@@ -155,7 +155,7 @@ const Home = ({ navigation }: StackScreenProps<HomeNavParamList, 'Home'>) => {
 
         <View style={styles.departmentSlider}>
           {loading ? (
-            <SkeletonPlaceholder backgroundColor={theme.colors.light}>
+            <SkeletonPlaceholder backgroundColor={theme.colors.white}>
               <View
                 style={{
                   flexDirection: 'row',
@@ -187,7 +187,7 @@ const Home = ({ navigation }: StackScreenProps<HomeNavParamList, 'Home'>) => {
                   onPress={() => setShowModal(true)}
                 >
                   <CategoryItem
-                    bgColor="light"
+                    bgColor="white"
                     label={item.name}
                     svg={item.svg}
                   />
@@ -210,7 +210,7 @@ const Home = ({ navigation }: StackScreenProps<HomeNavParamList, 'Home'>) => {
         </View>
         <View style={styles.productSlider}>
           {loading ? (
-            <SkeletonPlaceholder backgroundColor={theme.colors.light}>
+            <SkeletonPlaceholder backgroundColor={theme.colors.white}>
               <View
                 style={{
                   flexDirection: 'row',
@@ -238,12 +238,12 @@ const Home = ({ navigation }: StackScreenProps<HomeNavParamList, 'Home'>) => {
               keyExtractor={(item) => item.id.toString()}
               renderItem={({ item }) => (
                 <Product
-                  bgColor="light"
+                  bgColor="white"
                   label={item.title}
                   image={
-                    item.images
-                      ? item.images[0]
-                      : 'https://via.placeholder.com/100x65.png/f4f5f7?text=No+Image'
+                    item.image
+                      ? item.image
+                      : 'https://via.placeholder.com/100x65.png/fff?text=No+Image'
                   }
                   price={item.price}
                   sale={item.sale_price ? item.sale_price : ''}

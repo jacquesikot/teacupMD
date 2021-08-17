@@ -196,7 +196,7 @@ const Profile = ({
             >
               <View style={styles.othersItem}>
                 <CustomerServiceIcon />
-                <Text style={styles.othersText}>Customer Service</Text>
+                <Text style={styles.othersText}>Call Customer Service</Text>
                 <View style={{ flex: 1 }} />
                 <Icon
                   name="chevron-right"

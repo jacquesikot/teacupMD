@@ -13,7 +13,7 @@ export const PRODUCT_HEIGHT = isAndroid ? hp(27) : hp(25);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: theme.colors.white,
+    backgroundColor: theme.colors.light,
     alignItems: 'center',
   },
   textInput: {
@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     width: theme.constants.screenWidth,
     height: 50,
     borderRadius: 15,
-    backgroundColor: theme.colors.light,
+    backgroundColor: theme.colors.white,
     flexDirection: 'row',
     alignItems: 'center',
     paddingLeft: 20,
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
   },
   historyItem: {
     height: 40,
-    backgroundColor: theme.colors.light,
+    backgroundColor: theme.colors.white,
     borderRadius: 15,
     justifyContent: 'center',
     alignSelf: 'flex-start',

@@ -236,12 +236,12 @@ const Search = ({
                 keyExtractor={(item) => item.id.toString()}
                 renderItem={({ item }) => (
                   <Product
-                    bgColor="light"
+                    bgColor="white"
                     label={item.title}
                     image={
-                      item.images
-                        ? item.images[0]
-                        : 'https://via.placeholder.com/100x65.png/f4f5f7?text=No+Image'
+                      item.image
+                        ? item.image
+                        : 'https://via.placeholder.com/100x65.png/fff?text=No+Image'
                     }
                     price={item.price}
                     sale={item.sale_price ? item.sale_price : ''}

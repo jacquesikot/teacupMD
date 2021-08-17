@@ -181,8 +181,8 @@ const Pharmacy = ({
                     bgColor="white"
                     label={item.title}
                     image={
-                      item.images
-                        ? item.images[0]
+                      item.image
+                        ? item.image
                         : 'https://via.placeholder.com/100x65.png/fff?text=No+Image'
                     }
                     price={item.price}

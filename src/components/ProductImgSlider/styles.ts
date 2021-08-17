@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: theme.constants.screenWidth,
-    height: height * 0.3,
+    height: height * 0.4,
     alignSelf: 'flex-start',
   },
 });

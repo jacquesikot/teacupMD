@@ -34,7 +34,7 @@ const listenForFavorites = async (user_id: string) => {
 interface FavoriteData {
   category: string;
   details?: string;
-  images?: string[];
+  image?: string;
   nutrition_details?: string;
   price: string;
   product_id: string;
@@ -46,7 +46,7 @@ interface FavoriteData {
 const addToFavorites = async ({
   category,
   details,
-  images,
+  image,
   nutrition_details,
   price,
   product_id,
@@ -57,7 +57,7 @@ const addToFavorites = async ({
   const favorite = await db.collection('user_favorite').add({
     category,
     details,
-    images,
+    image,
     nutrition_details,
     price,
     product_id,

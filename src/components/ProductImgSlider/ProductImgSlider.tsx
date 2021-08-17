@@ -7,12 +7,12 @@ import { theme } from '..';
 import styles from './styles';
 
 interface Props {
-  images: any;
+  image: string;
 }
 
 const { width, height } = Dimensions.get('window');
 
-const ProductImgSlider = ({ images }: Props) => {
+const ProductImgSlider = ({ image }: Props) => {
   const scrollX = useRef(new Animated.Value(0)).current;
 
   return (
@@ -33,17 +33,14 @@ const ProductImgSlider = ({ images }: Props) => {
           alignItems: 'center',
         }}
       >
-        {images.map((i: any, index: number) => (
-          <Image
-            key={index}
-            {...{ uri: i }}
-            tint="light"
-            transitionDuration={300}
-            style={styles.image}
-          />
-        ))}
+        <Image
+          {...{ uri: image }}
+          tint="light"
+          transitionDuration={300}
+          style={styles.image}
+        />
       </Animated.ScrollView>
-      <View style={styles.pagination}>
+      {/* <View style={styles.pagination}>
         {images.map((_: any, index: any) => {
           const inputRange = [
             (index - 1) * width,
@@ -61,7 +58,7 @@ const ProductImgSlider = ({ images }: Props) => {
             <Animated.View key={index} style={{ ...styles.dot, opacity }} />
           );
         })}
-      </View>
+      </View> */}
     </View>
   );
 };

@@ -22,7 +22,7 @@ const data = [
   {
     id: 3,
     image: require('../../../assets/images/onboarding2.png'),
-    topText: 'Delivery in 30 Min',
+    topText: 'Express Delivery',
     bottomText:
       'Place your order and get your products delivered immediately, no delays',
     last: true,

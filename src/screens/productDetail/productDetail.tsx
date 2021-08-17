@@ -140,21 +140,17 @@ const ProductDetail = ({
           <StackHeader
             label="Drug Details"
             back={() => navigation.goBack()}
-            color="light"
+            color="white"
             favorite={() => handleFavorites()}
             isFavorite={isFavorite}
           />
           <ProductImgSlider
-            images={
-              product.images
-                ? product.images
-                : [
-                    `https://via.placeholder.com/${
-                      theme.constants.screenWidth
-                    }x${
-                      heightPercentageToDP(100) * 0.4
-                    }.png/f4f5f7?text=No+Image`,
-                  ]
+            image={
+              product.image
+                ? product.image
+                : `https://via.placeholder.com/${theme.constants.screenWidth}x${
+                    heightPercentageToDP(100) * 0.4
+                  }.png/fff?text=No+Image`
             }
           />
         </View>
@@ -164,7 +160,7 @@ const ProductDetail = ({
           <View style={styles.priceContainer}>
             <View style={styles.priceItems}>
               <Text style={styles.priceText}>{'ZK ' + product.price}</Text>
-              {product.sale_price ||
+              {/* {product.sale_price ||
                 (product.sale_price !== '' && (
                   <>
                     <Text style={styles.salePrice}>
@@ -178,7 +174,7 @@ const ProductDetail = ({
                       ).toFixed(0) + '% Off'}
                     </Text>
                   </>
-                ))}
+                ))} */}
             </View>
             <View style={{ flex: 1 }} />
             <View style={styles.counterContainer}>

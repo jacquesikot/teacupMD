@@ -7,6 +7,6 @@ export interface Product {
   sale_price?: string;
   qty: string;
   main_content: string;
-  images: string[];
+  image: string;
   category: string;
 }

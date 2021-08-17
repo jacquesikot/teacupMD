@@ -19,14 +19,15 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.teacup.teacupmdiosapp",
-      "buildNumber": "1.6.0"
+      "buildNumber": "1.7.0"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "description": "TeaCupMD Mobile App",
     "android": {
-      "package": "com.teacup.teacupmdiosapp"
+      "package": "com.teacup.teacupmdiosapp",
+      "versionCode": 2
     }
   }
 }
