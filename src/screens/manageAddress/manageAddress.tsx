@@ -98,8 +98,6 @@ const ManageAddress = ({
                   <AddressItem
                     name={item.name}
                     address={item.address}
-                    city={item.city}
-                    state={item.state}
                     phone={item.phone_number}
                     onPressEdit={() =>
                       navigation.navigate('EditAddress', { address: item })

@@ -47,12 +47,9 @@ const EditAddress = ({
   interface AddressProps {
     address: string;
     address2?: string;
-    city: string;
     name: string;
     phone_number: string;
-    state: string;
     user_id?: string;
-    zipcode: string;
   }
 
   const handleSubmit = async (values: AddressProps, handleReset: any) => {
@@ -61,21 +58,15 @@ const EditAddress = ({
 
       await addressApi.addUserAddress({
         address: values.address.trim() + values.address2?.trim(),
-        city: values.city,
         name: values.name.trim(),
         phone_number: values.phone_number.trim(),
-        state: values.state.trim(),
-        zipcode: values.zipcode.trim(),
-        user_id: user.id.trim(),
+        user_id: user.id ? user.id.trim() : 'could not get user id - Error',
       });
       handleReset({
         values: {
           address: '',
-          city: '',
           name: '',
           phone_number: '',
-          state: '',
-          zipcode: '',
         },
       });
       navigation.navigate('Profile');
@@ -120,11 +111,8 @@ const EditAddress = ({
             initialValues={{
               address: '',
               address2: '',
-              city: '',
               name: '',
               phone_number: '',
-              state: '',
-              zipcode: '',
             }}
             validationSchema={addressSchema}
             onSubmit={handleSubmit}
@@ -184,6 +172,7 @@ const EditAddress = ({
                   keyboardType="default"
                   textContentType="streetAddressLine1"
                   autoCapitalize="words"
+                  autoCorrect={false}
                   returnKeyType="next"
                   touched={touched.address}
                   error={errors.address}
@@ -197,53 +186,10 @@ const EditAddress = ({
                   keyboardType="default"
                   textContentType="streetAddressLine2"
                   autoCapitalize="words"
+                  autoCorrect={false}
                   returnKeyType="next"
                   touched={touched.address2}
                   error={errors.address2}
-                />
-
-                <Text style={styles.inputTitle}>City</Text>
-                <TextInput
-                  placeholder={
-                    routeParams?.address ? routeParams.address.city : 'City'
-                  }
-                  onChangeText={handleChange('city')}
-                  onBlur={handleBlur('city')}
-                  keyboardType="default"
-                  textContentType="addressCity"
-                  returnKeyType="next"
-                  touched={touched.city}
-                  error={errors.city}
-                />
-
-                <Text style={styles.inputTitle}>State</Text>
-                <TextInput
-                  placeholder={
-                    routeParams?.address ? routeParams.address.state : 'State'
-                  }
-                  onChangeText={handleChange('state')}
-                  onBlur={handleBlur('state')}
-                  keyboardType="default"
-                  textContentType="addressState"
-                  returnKeyType="next"
-                  touched={touched.state}
-                  error={errors.state}
-                />
-
-                <Text style={styles.inputTitle}>Zip Code</Text>
-                <TextInput
-                  placeholder={
-                    routeParams?.address
-                      ? routeParams.address.zipcode
-                      : 'Zip Code'
-                  }
-                  onChangeText={handleChange('zipcode')}
-                  onBlur={handleBlur('zipcode')}
-                  keyboardType="default"
-                  textContentType="postalCode"
-                  returnKeyType="next"
-                  touched={touched.zipcode}
-                  error={errors.zipcode}
                 />
 
                 <View style={styles.buttonContainer}>

@@ -44,6 +44,12 @@ const styles = StyleSheet.create({
     fontSize: wp('7%'),
     lineHeight: 35,
   },
+  prescription: {
+    fontFamily: 'SofiaPro-Regular',
+    color: theme.colors.red,
+    fontSize: wp('3%'),
+    marginTop: 7,
+  },
   priceContainer: {
     flexDirection: 'row',
     width: theme.constants.screenWidth,

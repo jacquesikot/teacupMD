@@ -8,8 +8,6 @@ import { theme } from '..';
 interface Props {
   name: string;
   address: string;
-  city: string;
-  state: string;
   phone: string;
   onPressDelete: any;
   onPressEdit: any;
@@ -18,8 +16,6 @@ interface Props {
 const AddressItem = ({
   name,
   address,
-  city,
-  state,
   phone,
   onPressDelete,
   onPressEdit,
@@ -31,7 +27,7 @@ const AddressItem = ({
           {name}
         </Text>
         <Text numberOfLines={2} style={styles.address}>
-          {address + ', ' + city + ', ' + state}
+          {address}
         </Text>
         <Text numberOfLines={1} style={styles.phone}>
           {phone}

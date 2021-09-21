@@ -22,6 +22,7 @@ const styles = StyleSheet.create({
     fontFamily: 'SofiaPro-Regular',
     fontSize: wp(3.8),
     marginTop: wp(4),
+    height: hp(2),
   },
   iconContainer: {
     width: wp(6),

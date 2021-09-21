@@ -21,7 +21,7 @@ const getPaymentLink = async ({
 }: PaymentProps) => {
   const options = {
     headers: {
-      Authorization: `Bearer ${config.testSecretKey}`,
+      Authorization: `Bearer ${config.secretKey}`,
     },
   };
 
@@ -41,6 +41,7 @@ const getPaymentLink = async ({
       name,
     },
   };
+
   const result = await axios.post(config.paymentLinkEndpoint, data, options);
 
   return result.data.data.link;

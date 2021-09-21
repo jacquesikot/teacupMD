@@ -59,7 +59,7 @@ const CheckoutModal = ({
   const data = addresses.map((a) => {
     return {
       label: a.address,
-      value: `${a.name}, ${a.address}, ${a.city}, ${a.state}, ${a.phone_number}`,
+      value: `${a.name}, ${a.address}, ${a.phone_number}`,
     };
   });
 
@@ -178,7 +178,13 @@ const CheckoutModal = ({
                     setVisible={setVisible}
                     value={value}
                     setValue={setValue}
-                    data={data}
+                    data={[
+                      {
+                        label: '',
+                        value: '',
+                      },
+                      ...data,
+                    ]}
                     defaultValue="Select Address"
                   />
                 </View>

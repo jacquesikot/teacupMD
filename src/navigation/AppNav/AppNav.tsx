@@ -65,6 +65,7 @@ const AppNav = () => {
             tabBarIcon: ({ color }) => {
               return <HomeIcon color={color} />;
             },
+            unmountOnBlur: true,
           }}
           listeners={() => ({
             tabPress: (e) => {

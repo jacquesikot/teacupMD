@@ -8,9 +8,9 @@ import isAndroid from '../../utils/isAndroid';
 
 const IMG_FORM_FACTOR = 2.68;
 export const WIDTH = isAndroid ? wp(27) : wp(25);
-export const HEIGHT = isAndroid ? hp(23) : hp(21);
+export const HEIGHT = hp(21);
 export const PRODUCT_WIDTH = wp(43);
-export const PRODUCT_HEIGHT = isAndroid ? hp(27) : hp(25);
+export const PRODUCT_HEIGHT = hp(30);
 
 const styles = StyleSheet.create({
   container: {

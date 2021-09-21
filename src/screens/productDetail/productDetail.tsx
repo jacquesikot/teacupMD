@@ -18,7 +18,6 @@ import { HomeNavParamList } from '../../types/navigationTypes';
 import ProductImgSlider from '../../components/ProductImgSlider/ProductImgSlider';
 import styles from './styles';
 import { theme } from '../../components';
-import Product from '../../components/Product/Product';
 import Button from '../../components/Button/Button';
 import { useAppContext } from '../../context/context';
 import productsApi from '../../firebase/products';
@@ -157,6 +156,11 @@ const ProductDetail = ({
         <View style={styles.bottomContainer}>
           <View style={styles.dash} />
           <Text style={styles.title}>{product.title}</Text>
+          {product.prescriptionRequired === 'YES' && (
+            <Text style={styles.prescription}>
+              Item requires a valid prescription
+            </Text>
+          )}
           <View style={styles.priceContainer}>
             <View style={styles.priceItems}>
               <Text style={styles.priceText}>{'ZK ' + product.price}</Text>
@@ -195,8 +199,8 @@ const ProductDetail = ({
             <Icon name="clock" size={15} color={theme.colors.primary} />
             <Text style={styles.deliveryTime}>25-30 min</Text>
             <View style={styles.deliveryBanner}>
-              <Icon name="home" size={15} color={theme.colors.primary} />
-              <Text style={styles.deliveryText}>Home Delivery</Text>
+              <Icon name="box" size={15} color={theme.colors.primary} />
+              <Text style={styles.deliveryText}>{product.category}</Text>
             </View>
           </View>
           <View style={styles.detailsContainer}>

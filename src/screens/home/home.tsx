@@ -33,7 +33,7 @@ import categoryData from './categoryData';
 import isAndroid from '../../utils/isAndroid';
 
 const PRODUCT_WIDTH = wp(41);
-const PRODUCT_HEIGHT = isAndroid ? hp(27) : hp(25);
+const PRODUCT_HEIGHT = 230;
 
 const Home = ({ navigation }: StackScreenProps<HomeNavParamList, 'Home'>) => {
   const { products, loading, showModal, setShowModal } = useHome();

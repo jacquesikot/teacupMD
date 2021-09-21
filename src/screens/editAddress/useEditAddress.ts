@@ -23,11 +23,8 @@ const useEditAddress = () => {
   const addressSchema = yup.object().shape({
     address: yup.string().required(),
     address2: yup.string(),
-    city: yup.string().required(),
     name: yup.string().required(),
     phone_number: yup.number().required(),
-    state: yup.string().required(),
-    zipcode: yup.string(),
   });
 
   return {

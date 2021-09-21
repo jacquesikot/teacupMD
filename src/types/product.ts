@@ -9,4 +9,6 @@ export interface Product {
   main_content: string;
   image: string;
   category: string;
+  prescriptionRequired: string;
+  appCategory: string;
 }

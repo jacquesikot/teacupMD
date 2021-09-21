@@ -136,7 +136,7 @@ const Pharmacy = ({
                     <CategoryItem
                       bgColor="white"
                       label={item.name}
-                      image={item.imgUrl}
+                      image="https://firebasestorage.googleapis.com/v0/b/epharma-mobile-apps.appspot.com/o/product.png?alt=media&token=bb589dcb-274f-42c0-93e9-f1a7d682b698"
                       width={WIDTH}
                       height={HEIGHT}
                       icon
