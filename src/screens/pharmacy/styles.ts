@@ -7,8 +7,8 @@ import { theme } from '../../components';
 import isAndroid from '../../utils/isAndroid';
 
 const IMG_FORM_FACTOR = 2.68;
-export const WIDTH = isAndroid ? wp(27) : wp(25);
-export const HEIGHT = hp(21);
+export const WIDTH = wp(35);
+export const HEIGHT = hp(23);
 export const PRODUCT_WIDTH = wp(43);
 export const PRODUCT_HEIGHT = hp(30);
 
@@ -37,6 +37,11 @@ const styles = StyleSheet.create({
   },
   productGrid: {
     width: theme.constants.screenWidth,
+  },
+  noProductText: {
+    fontFamily: 'SofiaPro-Medium',
+    fontSize: wp('4'),
+    color: theme.colors.dark,
   },
 });
 

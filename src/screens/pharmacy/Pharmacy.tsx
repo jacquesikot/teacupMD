@@ -13,6 +13,7 @@ import StackHeader from '../../components/StackHeader/StackHeader';
 import { HomeNavParamList } from '../../types/navigationTypes';
 import * as Haptics from 'expo-haptics';
 import Toast from 'react-native-toast-message';
+import { useQuery } from 'react-query';
 
 import styles, { WIDTH, HEIGHT, PRODUCT_WIDTH, PRODUCT_HEIGHT } from './styles';
 import CategoryItem from '../../components/CategoryItem/CategoryItem';
@@ -20,30 +21,29 @@ import Product from '../../components/Product/Product';
 import { useAppContext } from '../../context/context';
 import productsApi from '../../firebase/products';
 import categoriesApi from '../../firebase/categories';
-import ActivityIndicator from '../../components/ActivityIndicator/ActivityIndicator';
 import { theme } from '../../components';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
+import queryKeys from '../../constants/queryKeys';
 
 const Pharmacy = ({
   navigation,
 }: StackScreenProps<HomeNavParamList, 'Pharmacy'>) => {
   const { manageCart } = useAppContext();
 
-  const [products, setProducts] = useState<any[]>([]);
+  const { data: products, isLoading: productsLoading } = useQuery(
+    queryKeys.AllProducts,
+    () => productsApi.getProducts()
+  );
+  const { data: categories, isLoading: categoriesLoading } = useQuery(
+    queryKeys.AllCategories,
+    () => categoriesApi.getCategories()
+  );
+
   const [searchProducts, setSearchProducts] = useState<any[]>([]);
-  const [categories, setCategories] = useState<any[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [type, setType] = useState<string>('');
+  const [type, setType] = useState<string>('All Products');
 
   const loadData = async () => {
-    setLoading(true);
-    const products = await productsApi.getProducts();
-    const categories = await categoriesApi.getCategories();
-    setProducts(products);
     setSearchProducts(products);
-    setCategories(categories);
-    setType(categories[0].name);
-    setLoading(false);
   };
 
   const addToCart = (product: any) => {
@@ -62,9 +62,10 @@ const Pharmacy = ({
   const handleCategoryChange = (item: any) => {
     setType(item.name);
     const productsArr: any = [];
-    products.map((p) => {
+    // if (type === 'All Products') return setSearchProducts(products);
+    products.map((p: any) => {
       if (
-        p.category
+        p.appCategory
           .toLowerCase()
           .includes(item.name.toString().toLowerCase().trim())
       ) {
@@ -101,7 +102,7 @@ const Pharmacy = ({
             style={styles.image}
           />
           <View style={styles.sliderContainer}>
-            {loading ? (
+            {productsLoading && categoriesLoading ? (
               <SkeletonPlaceholder backgroundColor={theme.colors.white}>
                 <View
                   style={{
@@ -131,7 +132,9 @@ const Pharmacy = ({
                 renderItem={({ item }: any) => (
                   <TouchableOpacity
                     activeOpacity={0.9}
-                    onPress={() => handleCategoryChange(item)}
+                    onPress={() => {
+                      handleCategoryChange(item);
+                    }}
                   >
                     <CategoryItem
                       bgColor="white"
@@ -149,7 +152,7 @@ const Pharmacy = ({
           </View>
           <Text style={styles.heading}>{type}</Text>
           <View style={styles.productGrid}>
-            {loading ? (
+            {productsLoading && categoriesLoading ? (
               <SkeletonPlaceholder backgroundColor={theme.colors.white}>
                 <View
                   style={{
@@ -176,6 +179,13 @@ const Pharmacy = ({
                 numColumns={2}
                 showsHorizontalScrollIndicator={false}
                 keyExtractor={(item) => item.id.toString()}
+                ListEmptyComponent={() => (
+                  <View>
+                    <Text style={styles.noProductText}>
+                      No Products in this category yet
+                    </Text>
+                  </View>
+                )}
                 renderItem={({ item }) => (
                   <Product
                     bgColor="white"

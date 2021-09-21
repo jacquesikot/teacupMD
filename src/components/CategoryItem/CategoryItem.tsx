@@ -67,7 +67,7 @@ const CategoryItem = ({
         />
       )}
       <View style={{ flex: 1 }} />
-      <Text numberOfLines={1} style={[styles.label, { color: labelColor }]}>
+      <Text numberOfLines={2} style={[styles.label, { color: labelColor }]}>
         {label}
       </Text>
       {icon && (

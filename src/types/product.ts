@@ -11,4 +11,9 @@ export interface Product {
   category: string;
   prescriptionRequired: string;
   appCategory: string;
+  uses: string;
+  interactions: string;
+  overdose: string;
+  precautions: string;
+  sideEffects: string;
 }

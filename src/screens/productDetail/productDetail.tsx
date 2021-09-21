@@ -34,6 +34,12 @@ const ProductDetail = ({
   const [products, setProducts] = useState<any[]>([]);
   const [isFavorite, setIsFavorite] = useState<boolean>(false);
 
+  const [precautions, setPrecautions] = useState<boolean>(false);
+  const [uses, setUses] = useState<boolean>(false);
+  const [overdose, setOverdose] = useState<boolean>(false);
+  const [sideEffect, setSideEffect] = useState<boolean>(false);
+  const [interactions, setInteractions] = useState<boolean>(false);
+
   // Redux
   const { favorites } = useSelector((state: any) => state.productReducer);
   const dispatch = useDispatch();
@@ -157,9 +163,7 @@ const ProductDetail = ({
           <View style={styles.dash} />
           <Text style={styles.title}>{product.title}</Text>
           {product.prescriptionRequired === 'YES' && (
-            <Text style={styles.prescription}>
-              Item requires a valid prescription
-            </Text>
+            <Text style={styles.prescription}>Prescription Required</Text>
           )}
           <View style={styles.priceContainer}>
             <View style={styles.priceItems}>
@@ -196,40 +200,88 @@ const ProductDetail = ({
             </View>
           </View>
           <View style={styles.extraContainer}>
-            <Icon name="clock" size={15} color={theme.colors.primary} />
-            <Text style={styles.deliveryTime}>25-30 min</Text>
+            {/* <Icon name="clock" size={15} color={theme.colors.primary} />
+            <Text style={styles.deliveryTime}>25-30 min</Text> */}
             <View style={styles.deliveryBanner}>
               <Icon name="box" size={15} color={theme.colors.primary} />
               <Text style={styles.deliveryText}>{product.category}</Text>
             </View>
           </View>
+
           <View style={styles.detailsContainer}>
-            <Text style={styles.detailsHeader}>Details</Text>
+            <Text style={styles.detailsHeader}>Precautions</Text>
             <View style={{ flex: 1 }} />
-            {/* <TouchableOpacity
-              style={{ flexDirection: 'row', alignItems: 'center' }}
-            >
-              <Text style={styles.more}>More</Text>
-              <Icon
-                name="chevron-right"
-                color={theme.colors.darkGrey}
-                size={18}
-              />
-            </TouchableOpacity> */}
+            <TouchableOpacity onPress={() => setPrecautions(!precautions)}>
+              <Text style={styles.show}>{precautions ? 'hide' : 'show'}</Text>
+            </TouchableOpacity>
           </View>
-          <Text style={styles.detailsText} numberOfLines={3}>
-            {product.details
-              ? product.details
-              : 'No Details available at the moment'}
-          </Text>
-          <View style={styles.line} />
-          <Text style={styles.nutritionText}>How to use</Text>
-          <Text numberOfLines={4} style={styles.nutritionContent}>
-            {product.nutrition_details
-              ? product.nutrition_details
-              : 'No Details available at the moment'}
-          </Text>
-          <View style={styles.line} />
+          {precautions && (
+            <Text style={styles.detailsText}>
+              {product.precautions !== ''
+                ? product.precautions
+                : 'No Details available at the moment'}
+            </Text>
+          )}
+
+          <View style={styles.detailsContainer}>
+            <Text style={styles.detailsHeader}>How to use</Text>
+            <View style={{ flex: 1 }} />
+            <TouchableOpacity onPress={() => setUses(!uses)}>
+              <Text style={styles.show}>{uses ? 'hide' : 'show'}</Text>
+            </TouchableOpacity>
+          </View>
+          {uses && (
+            <Text style={styles.detailsText}>
+              {product.uses !== ''
+                ? product.uses
+                : 'No Details available at the moment'}
+            </Text>
+          )}
+
+          <View style={styles.detailsContainer}>
+            <Text style={styles.detailsHeader}>Interactions</Text>
+            <View style={{ flex: 1 }} />
+            <TouchableOpacity onPress={() => setInteractions(!interactions)}>
+              <Text style={styles.show}>{interactions ? 'hide' : 'show'}</Text>
+            </TouchableOpacity>
+          </View>
+          {interactions && (
+            <Text style={styles.detailsText}>
+              {product.interactions !== ''
+                ? product.interactions
+                : 'No Details available at the moment'}
+            </Text>
+          )}
+
+          <View style={styles.detailsContainer}>
+            <Text style={styles.detailsHeader}>Overdose</Text>
+            <View style={{ flex: 1 }} />
+            <TouchableOpacity onPress={() => setOverdose(!overdose)}>
+              <Text style={styles.show}>{overdose ? 'hide' : 'show'}</Text>
+            </TouchableOpacity>
+          </View>
+          {overdose && (
+            <Text style={styles.detailsText}>
+              {product.overdose !== ''
+                ? product.overdose
+                : 'No Details available at the moment'}
+            </Text>
+          )}
+
+          <View style={styles.detailsContainer}>
+            <Text style={styles.detailsHeader}>Side Effects</Text>
+            <View style={{ flex: 1 }} />
+            <TouchableOpacity onPress={() => setSideEffect(!sideEffect)}>
+              <Text style={styles.show}>{sideEffect ? 'hide' : 'show'}</Text>
+            </TouchableOpacity>
+          </View>
+          {sideEffect && (
+            <Text style={styles.detailsText}>
+              {product.sideEffects !== ''
+                ? product.sideEffects
+                : 'No Details available at the moment'}
+            </Text>
+          )}
           {/* <Text style={styles.relatedProduct}>Related Products</Text>
           <View style={{ marginBottom: 30 }}>
             <FlatList
@@ -258,6 +310,7 @@ const ProductDetail = ({
               )}
             />
           </View> */}
+          <View style={{ marginTop: 30 }} />
           <Button
             type="primary"
             label="Add to Cart"

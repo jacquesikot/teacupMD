@@ -21,6 +21,7 @@ interface Props {
   sale: string;
   saved?: any;
   marginRight?: number;
+  prescription?: string;
 }
 
 const Product = ({
@@ -37,6 +38,7 @@ const Product = ({
   sale,
   saved,
   marginRight,
+  prescription,
 }: Props) => {
   const widthValue = width ? width : WIDTH;
   const heightValue = height ? height : HEIGHT;
@@ -67,9 +69,19 @@ const Product = ({
           style={{ width: 120, height: 125 }}
         />
       </TouchableOpacity>
-      <Text style={styles.label} numberOfLines={2}>
+      {/* 
+      <View style={styles.qty}>
+        <Text style={styles.qtyText}>{qty}</Text>
+      </View> */}
+
+      <Text style={styles.label} numberOfLines={1}>
         {`${label}`}
       </Text>
+      {prescription === 'YES' ? (
+        <Text style={styles.prescription}>Prescription</Text>
+      ) : (
+        <Text style={styles.prescription}></Text>
+      )}
 
       {/* <Text style={styles.main_content} numberOfLines={1}>
         {main_content}

@@ -238,6 +238,7 @@ const Home = ({ navigation }: StackScreenProps<HomeNavParamList, 'Home'>) => {
               keyExtractor={(item) => item.id.toString()}
               renderItem={({ item }) => (
                 <Product
+                  prescription={item.prescriptionRequired}
                   bgColor="white"
                   label={item.title}
                   image={

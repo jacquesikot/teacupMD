@@ -136,10 +136,10 @@ const styles = StyleSheet.create({
   line: {
     width: theme.constants.screenWidth,
     height: hp('0.2%'),
-    backgroundColor: theme.colors.light,
+    backgroundColor: theme.colors.grey,
     borderRadius: 2,
-    marginTop: hp('3%'),
-    marginBottom: hp('3%'),
+    marginTop: hp('1%'),
+    marginBottom: hp('1%'),
   },
   nutritionText: {
     fontFamily: 'SofiaPro-Bold',
@@ -174,6 +174,12 @@ const styles = StyleSheet.create({
     fontFamily: 'SofiaPro-Medium',
     color: theme.colors.red,
     fontSize: wp('3.7%'),
+    marginLeft: wp('1%'),
+  },
+  show: {
+    fontFamily: 'SofiaPro-Medium',
+    color: theme.colors.primary,
+    fontSize: wp('4.5%'),
     marginLeft: wp('1%'),
   },
 });

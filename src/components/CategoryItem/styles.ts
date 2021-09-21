@@ -7,7 +7,7 @@ import {
 import { theme } from '..';
 
 export const WIDTH = wp(26);
-export const HEIGHT = hp(16);
+export const HEIGHT = hp(18);
 
 const styles = StyleSheet.create({
   container: {
@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     fontFamily: 'SofiaPro-Regular',
     fontSize: wp(3.8),
     marginTop: wp(4),
-    height: hp(2),
+    height: hp(4),
   },
   iconContainer: {
     width: wp(6),
