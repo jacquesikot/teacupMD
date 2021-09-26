@@ -136,7 +136,7 @@ const Home = ({ navigation }: StackScreenProps<HomeNavParamList, 'Home'>) => {
           <Text style={styles.addText}>Upload prescription</Text>
         </TouchableOpacity>
 
-        <View style={styles.departmentContainer}>
+        {/* <View style={styles.departmentContainer}>
           <Text style={styles.department}>Departments</Text>
           <TouchableOpacity
             style={styles.moreContainer}
@@ -151,9 +151,9 @@ const Home = ({ navigation }: StackScreenProps<HomeNavParamList, 'Home'>) => {
             <Text style={styles.more}>More</Text>
             <Icon name="chevron-right" color={theme.colors.grey} />
           </TouchableOpacity>
-        </View>
+        </View> */}
 
-        <View style={styles.departmentSlider}>
+        {/* <View style={styles.departmentSlider}>
           {loading ? (
             <SkeletonPlaceholder backgroundColor={theme.colors.white}>
               <View
@@ -195,7 +195,7 @@ const Home = ({ navigation }: StackScreenProps<HomeNavParamList, 'Home'>) => {
               )}
             />
           )}
-        </View>
+        </View> */}
 
         {loading && <View style={{ height: hp(3) }} />}
         <View style={styles.departmentContainer}>
