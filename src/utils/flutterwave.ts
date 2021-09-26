@@ -30,7 +30,7 @@ const getPaymentLink = async ({
     amount,
     currency: 'ZMW',
     redirect_url,
-    payment_options: 'card, mobilemoneyzambia',
+    payment_options: 'card',
     meta: {
       consumer_id,
       consumer_mac: 'random string',
