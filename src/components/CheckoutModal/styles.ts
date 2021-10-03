@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
     padding: theme.constants.screenPadding / 2,
-    paddingTop: theme.constants.screenPadding - 10,
+    paddingTop: theme.constants.screenPadding,
     paddingBottom: 20,
   },
   topView: {
@@ -138,6 +138,17 @@ const styles = StyleSheet.create({
     color: theme.colors.dark,
     marginTop: hp(1.5),
     paddingRight: 5,
+  },
+  close: {
+    position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 25,
+    height: 25,
+    borderRadius: 12.5,
+    backgroundColor: theme.colors.light,
+    left: 20,
+    top: 10,
   },
 });
 

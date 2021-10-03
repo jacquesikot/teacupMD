@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { StackScreenProps } from '@react-navigation/stack';
 import {
   View,
@@ -14,6 +14,7 @@ import { HomeNavParamList } from '../../types/navigationTypes';
 import * as Haptics from 'expo-haptics';
 import Toast from 'react-native-toast-message';
 import { useQuery } from 'react-query';
+import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
 
 import styles, { WIDTH, HEIGHT, PRODUCT_WIDTH, PRODUCT_HEIGHT } from './styles';
 import CategoryItem from '../../components/CategoryItem/CategoryItem';
@@ -24,20 +25,26 @@ import categoriesApi from '../../firebase/categories';
 import { theme } from '../../components';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import queryKeys from '../../constants/queryKeys';
+import Button from '../../components/Button/Button';
 
 const Pharmacy = ({
   navigation,
 }: StackScreenProps<HomeNavParamList, 'Pharmacy'>) => {
   const { manageCart } = useAppContext();
 
-  const { data: products, isLoading: productsLoading } = useQuery(
-    queryKeys.AllProducts,
-    () => productsApi.getProducts()
-  );
-  const { data: categories, isLoading: categoriesLoading } = useQuery(
-    queryKeys.AllCategories,
-    () => categoriesApi.getCategories()
-  );
+  const scrollRef = useRef<any>();
+
+  const {
+    data: products,
+    isLoading: productsLoading,
+    isError: productsError,
+  } = useQuery(queryKeys.AllProducts, () => productsApi.getProducts());
+  const {
+    data: categories,
+    isLoading: categoriesLoading,
+    isError: categoriesError,
+    refetch: refetchProducts,
+  } = useQuery(queryKeys.AllCategories, () => categoriesApi.getCategories());
 
   const [searchProducts, setSearchProducts] = useState<any[]>([]);
   const [type, setType] = useState<string>('All Products');
@@ -80,6 +87,34 @@ const Pharmacy = ({
   useEffect(() => {
     loadData();
   }, []);
+
+  if (productsError || categoriesError) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <Text
+          style={{
+            fontFamily: 'SofiaPro-Bold',
+            fontSize: wp('4%'),
+            color: theme.colors.dark,
+            marginBottom: 15,
+          }}
+        >
+          Error Loading data
+        </Text>
+        <Button
+          type="primary"
+          onPress={() => refetchProducts()}
+          label="Try Again"
+        />
+      </View>
+    );
+  }
 
   return (
     <>
@@ -129,11 +164,16 @@ const Pharmacy = ({
                 horizontal
                 showsHorizontalScrollIndicator={false}
                 keyExtractor={(item: any) => item.id.toString()}
-                renderItem={({ item }: any) => (
+                ref={scrollRef}
+                renderItem={({ item, index }: any) => (
                   <TouchableOpacity
                     activeOpacity={0.9}
                     onPress={() => {
                       handleCategoryChange(item);
+                      scrollRef.current.scrollToIndex({
+                        animated: true,
+                        index: index,
+                      });
                     }}
                   >
                     <CategoryItem
@@ -197,7 +237,7 @@ const Pharmacy = ({
                     }
                     price={item.price}
                     sale={item.sale_price ? item.sale_price : ''}
-                    qty={item.quantity}
+                    qty={item.qty}
                     main_content={item.main_content ? item.main_content : ''}
                     cart={() => addToCart(item)}
                     details={() =>

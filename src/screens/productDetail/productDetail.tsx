@@ -48,6 +48,8 @@ const ProductDetail = ({
 
   const { manageCart, user } = useAppContext();
 
+  const { product } = route.params;
+
   const reduce = () => {
     if (count === 1) return;
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -56,10 +58,9 @@ const ProductDetail = ({
 
   const add = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    if (count === Number(product.qty)) return;
     setCount(count + 1);
   };
-
-  const { product } = route.params;
 
   const handlecart = () => {
     manageCart('ADD_TO_CART', product, count);

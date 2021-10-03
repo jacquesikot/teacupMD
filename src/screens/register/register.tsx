@@ -61,8 +61,8 @@ const Register = ({
         type: 'error',
         visibilityTime: 5000,
         autoHide: true,
-        text1: 'Sign up Error',
-        text2: 'Error registering user',
+        text1: 'Signup Error',
+        text2: error ? (error.toString() as any) : '',
       });
     }
   };

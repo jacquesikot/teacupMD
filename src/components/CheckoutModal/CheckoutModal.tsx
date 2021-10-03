@@ -125,7 +125,6 @@ const CheckoutModal = ({
       }
     } catch (error) {
       setLoading(false);
-      console.log(error);
       Toast.show({
         type: 'success',
         visibilityTime: 3000,
@@ -158,6 +157,9 @@ const CheckoutModal = ({
               <Text style={styles.totalAmount}>ZK {cartTotal}</Text>
             </View>
           </View>
+          <TouchableOpacity style={styles.close} onPress={onRequestClose}>
+            <Icon name="x" color={theme.colors.red} size={18} />
+          </TouchableOpacity>
           <Text style={styles.deliveryAddress}>Delivery Address</Text>
           <TouchableOpacity
             activeOpacity={0.8}

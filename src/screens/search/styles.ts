@@ -8,7 +8,7 @@ import { theme } from '../../components';
 import isAndroid from '../../utils/isAndroid';
 
 export const PRODUCT_WIDTH = wp('43%');
-export const PRODUCT_HEIGHT = hp(30);
+export const PRODUCT_HEIGHT = 230;
 
 const styles = StyleSheet.create({
   container: {

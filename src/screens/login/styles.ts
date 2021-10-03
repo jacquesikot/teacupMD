@@ -46,7 +46,6 @@ const styles = StyleSheet.create({
   registerContainer: {
     flexDirection: 'row',
     paddingBottom: hp('3%'),
-    paddingTop: hp('3%'),
     justifyContent: 'center',
   },
   registerTest1: {
@@ -60,7 +59,7 @@ const styles = StyleSheet.create({
     color: theme.colors.primary,
   },
   buttonContainer: {
-    marginTop: hp('22%'),
+    marginBottom: hp(3),
   },
 });
 

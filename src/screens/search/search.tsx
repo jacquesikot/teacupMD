@@ -1,29 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import {
-  View,
-  Text,
-  SafeAreaView,
-  TextInput,
-  FlatList,
-  ScrollView,
-  TouchableOpacity,
-  Keyboard,
-} from 'react-native';
+import { View, Text, SafeAreaView, TextInput, FlatList } from 'react-native';
 import Toast from 'react-native-toast-message';
 import * as Haptics from 'expo-haptics';
 import { useQuery } from 'react-query';
+import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
 
 import { SearchIcon, Trash } from '../../svg/searchIcons';
-import searchApi from '../../firebase/userSearch';
 import { useAppContext } from '../../context/context';
 import styles, { PRODUCT_HEIGHT, PRODUCT_WIDTH } from './styles';
 import productsApi from '../../firebase/products';
-import Product from '../../components/Product/Product';
 import { StackScreenProps } from '@react-navigation/stack';
 import { SearchNavParamList } from '../../types/navigationTypes';
-import ActivityIndicator from '../../components/ActivityIndicator/ActivityIndicator';
 import { theme } from '../../components';
-import { heightPercentageToDP } from 'react-native-responsive-screen';
+import queryKeys from '../../constants/queryKeys';
+import { Product as ProductType } from '../../types/product';
+import Product from '../../components/Product/Product';
+import ActivityIndicator from '../../components/ActivityIndicator/ActivityIndicator';
+import Button from '../../components/Button/Button';
 
 const Search = ({
   navigation,
@@ -35,22 +28,33 @@ const Search = ({
   const [noResult, setNoResult] = useState<boolean>(false);
   const [focus, setFocus] = useState<boolean>(false);
 
-  const [products, setproducts] = useState<any[]>([]);
+  // const [products, setproducts] = useState<any[]>([]);
 
   const { user, manageCart } = useAppContext();
 
-  const loadProducts = async () => {
-    const result = await productsApi.getProducts();
-    setproducts(result);
-  };
+  // const loadProducts = async () => {
+  //   const result = await productsApi.getProducts();
+  //   setproducts(result);
+  // };
 
-  const { data: recentSearch, refetch: refetchRecentSearch } = useQuery(
-    'recentSearch',
-    async () => await searchApi.getRecentSearch(user.id ? user.id : ''),
-    {
-      enabled: !!user.id,
-    }
-  );
+  const {
+    data: products,
+    refetch: refetchProducts,
+    isLoading,
+    isError,
+  } = useQuery(queryKeys.AllProducts, () => productsApi.getProducts());
+
+  // const { data: recentSearch, refetch: refetchRecentSearch } = useQuery(
+  //   'recentSearch',
+  //   async () => await searchApi.getRecentSearch(user.id ? user.id : ''),
+  //   {
+  //     enabled: !!user.id,
+  //   }
+  // );
+
+  useEffect(() => {
+    setSearchResult(products);
+  }, []);
 
   const addToCart = (product: any) => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -65,127 +69,120 @@ const Search = ({
     });
   };
 
-  const saveRecentSearch = async (e: string) => {
-    if (e === '') {
-      return;
-    } else if (e.length < 2) {
-      return;
-    } else {
-      const check = await searchApi.checkSearch(user.id ? user.id : '', e);
-      if (check) {
-        return;
-      } else {
-        await searchApi.addRecentSearch({
-          user_id: user.id ? user.id : '',
-          search_text: e,
-          created_at: new Date().toISOString(),
-        });
-        refetchRecentSearch();
-      }
-    }
-  };
+  if (isError) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <Text
+          style={{
+            fontFamily: 'SofiaPro-Bold',
+            fontSize: wp('4%'),
+            color: theme.colors.dark,
+            marginBottom: 15,
+          }}
+        >
+          Error Loading data
+        </Text>
+        <Button
+          type="primary"
+          onPress={() => refetchProducts()}
+          label="Try Again"
+        />
+      </View>
+    );
+  }
+
+  // const saveRecentSearch = async (e: string) => {
+  //   if (e === '') {
+  //     return;
+  //   } else if (e.length < 2) {
+  //     return;
+  //   } else {
+  //     const check = await searchApi.checkSearch(user.id ? user.id : '', e);
+  //     if (check) {
+  //       return;
+  //     } else {
+  //       await searchApi.addRecentSearch({
+  //         user_id: user.id ? user.id : '',
+  //         search_text: e,
+  //         created_at: new Date().toISOString(),
+  //       });
+  //       // refetchRecentSearch();
+  //     }
+  //   }
+  // };
 
   const handleSearch = async (e: any) => {
-    try {
-      setLoading(true);
-      const arr: any = [];
-      products.map((p: any) => {
-        if (
-          p.title
-            .toLowerCase()
-            .includes(e.nativeEvent.text.toString().toLowerCase().trim())
-        )
-          arr.push(p);
-      });
-      saveRecentSearch(e.nativeEvent.text.toString().toLowerCase().trim());
-      if (arr.length < 1) {
-        setNoResult(true);
-        setShowProduct(false);
-      }
-      setSearchResult(arr);
-      setShowProduct(true);
-      setLoading(false);
-    } catch (error) {
-      setLoading(false);
-      Toast.show({
-        type: 'error',
-        visibilityTime: 7000,
-        autoHide: true,
-        text1: 'Search Error',
-        text2: 'Error executing search',
-      });
-    }
-  };
-
-  const keyboardWillShow = () => {
     setShowHistory(false);
-    setNoResult(false);
-    setShowProduct(false);
-  };
-  const keyboardWillHide = () => {};
+    if (e.length < 1) setShowHistory(true);
+    const arr: any[] = [];
+    const productToSearch = products || [];
+    productToSearch.map((p: ProductType) => {
+      if (p.title.toLowerCase().includes(e.toLowerCase().trim())) arr.push(p);
+    });
 
-  const clearHistory = async () => {
-    try {
-      await searchApi.clearUserSearch(user.id ? user.id : '');
-      refetchRecentSearch();
-      Toast.show({
-        type: 'success',
-        visibilityTime: 2000,
-        autoHide: true,
-        text1: 'Recent Search',
-        text2: 'Search history cleared',
-      });
-    } catch (error) {
-      Toast.show({
-        type: 'error',
-        visibilityTime: 2000,
-        autoHide: true,
-        text1: 'Recent Search',
-        text2: 'Search history could not be cleared',
-      });
-    }
+    setSearchResult(arr);
+    if (searchResult.length < 1) setNoResult(true);
   };
 
-  useEffect(() => {
-    Keyboard.addListener('keyboardWillShow', keyboardWillShow);
-    Keyboard.addListener('keyboardWillHide', keyboardWillHide);
+  // const clearHistory = async () => {
+  //   try {
+  //     await searchApi.clearUserSearch(user.id ? user.id : '');
+  //     // refetchRecentSearch();
+  //     Toast.show({
+  //       type: 'success',
+  //       visibilityTime: 2000,
+  //       autoHide: true,
+  //       text1: 'Recent Search',
+  //       text2: 'Search history cleared',
+  //     });
+  //   } catch (error) {
+  //     Toast.show({
+  //       type: 'error',
+  //       visibilityTime: 2000,
+  //       autoHide: true,
+  //       text1: 'Recent Search',
+  //       text2: 'Search history could not be cleared',
+  //     });
+  //   }
+  // };
 
-    void loadProducts();
-
-    return () => {
-      Keyboard.removeListener('keyboardWillShow', keyboardWillShow);
-      Keyboard.removeListener('keyboardWillHide', keyboardWillHide);
-    };
-  }, []);
+  // if (isLoading) {
+  //   return (
+  //     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+  //       <ActivityIndicator color={theme.colors.primary} />
+  //     </View>
+  //   );
+  // }
 
   return (
     <>
-      <ActivityIndicator visible={loading} opacity={1} />
+      <ActivityIndicator visible={isLoading} opacity={1} />
       <SafeAreaView style={styles.container}>
-        <ScrollView
-          bounces={false}
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ flex: 1 }}
-        >
-          <View style={styles.textInput}>
-            <SearchIcon />
-            <TextInput
-              placeholder="Enter keywords to search"
-              style={styles.placeholder}
-              keyboardType="default"
-              returnKeyType="search"
-              autoCompleteType="off"
-              autoCapitalize="none"
-              onSubmitEditing={handleSearch}
-              // onFocus={() => setFocus(true)}
-            />
-            {/* {focus && (
+        <View style={styles.textInput}>
+          <SearchIcon />
+          <TextInput
+            placeholder="Enter keywords to search"
+            style={styles.placeholder}
+            keyboardType="default"
+            returnKeyType="search"
+            autoCompleteType="off"
+            autoCapitalize="none"
+            onChangeText={handleSearch}
+            // onFocus={() => setFocus(true)}
+          />
+          {/* {focus && (
             <TouchableOpacity onPress={() => setFocus(false)}>
               <Text>cancel</Text>
             </TouchableOpacity>
           )} */}
-          </View>
-          <>
+        </View>
+        {/* <>
             <View style={styles.historyContainer}>
               <Text style={styles.historyText}>History</Text>
               <TouchableOpacity
@@ -220,52 +217,50 @@ const Search = ({
                   </TouchableOpacity>
                 ))}
             </View>
-          </>
+          </> */}
 
-          {showProduct && (
-            <View
-              style={{
-                width: theme.constants.screenWidth,
-                height: '100%',
-              }}
-            >
-              <FlatList
-                data={searchResult}
-                numColumns={2}
-                showsHorizontalScrollIndicator={false}
-                keyExtractor={(item) => item.id.toString()}
-                renderItem={({ item }) => (
-                  <Product
-                    bgColor="white"
-                    label={item.title}
-                    image={
-                      item.image
-                        ? item.image
-                        : 'https://via.placeholder.com/100x65.png/fff?text=No+Image'
-                    }
-                    price={item.price}
-                    sale={item.sale_price ? item.sale_price : ''}
-                    cart={() => addToCart(item)}
-                    qty={item.quantity}
-                    main_content={item.main_content ? item.main_content : ''}
-                    details={() =>
-                      navigation.navigate('ProductDetail', { product: item })
-                    }
-                    width={PRODUCT_WIDTH}
-                    height={PRODUCT_HEIGHT}
-                  />
-                )}
+        <View
+          style={{
+            width: theme.constants.screenWidth,
+            height: '100%',
+          }}
+        >
+          <FlatList
+            data={searchResult}
+            numColumns={2}
+            showsHorizontalScrollIndicator={false}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={({ item }) => (
+              <Product
+                bgColor="white"
+                label={item.title}
+                image={
+                  item.image
+                    ? item.image
+                    : 'https://via.placeholder.com/100x65.png/fff?text=No+Image'
+                }
+                price={item.price}
+                sale={item.sale_price ? item.sale_price : ''}
+                cart={() => addToCart(item)}
+                qty={item.quantity}
+                main_content={item.main_content ? item.main_content : ''}
+                details={() =>
+                  navigation.navigate('ProductDetail', { product: item })
+                }
+                width={PRODUCT_WIDTH}
+                height={PRODUCT_HEIGHT}
               />
-            </View>
-          )}
-          {noResult && searchResult.length < 1 && (
-            <View style={styles.noResultContainer}>
-              <Text style={styles.noResultText}>
-                Oppss... No product found matching your search
-              </Text>
-            </View>
-          )}
-        </ScrollView>
+            )}
+          />
+        </View>
+
+        {noResult && searchResult.length < 1 && (
+          <View style={styles.noResultContainer}>
+            <Text style={styles.noResultText}>
+              Oppss... No product found matching your search
+            </Text>
+          </View>
+        )}
       </SafeAreaView>
     </>
   );

@@ -28,7 +28,8 @@ interface Props {
   value: string;
   setValue: (state: string) => void;
   data: any[];
-  defaultValue: string;
+  defaultValue?: string;
+  noTitle?: boolean;
 }
 
 const Picker: FC<Props> = ({
@@ -38,17 +39,20 @@ const Picker: FC<Props> = ({
   setValue,
   data,
   defaultValue,
+  noTitle,
 }) => {
   return (
     <>
-      <TouchableOpacity
-        style={styles.container}
-        onPress={() => setVisible(!visible)}
-      >
-        <Text numberOfLines={2} style={styles.defaultValue}>
-          {value !== '' ? value : defaultValue}
-        </Text>
-      </TouchableOpacity>
+      {!noTitle && (
+        <TouchableOpacity
+          style={styles.container}
+          onPress={() => setVisible(!visible)}
+        >
+          <Text numberOfLines={2} style={styles.defaultValue}>
+            {value !== '' ? value : defaultValue}
+          </Text>
+        </TouchableOpacity>
+      )}
 
       <Modal
         animationType="slide"

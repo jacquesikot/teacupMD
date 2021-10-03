@@ -30,7 +30,7 @@ const Consult = () => {
 
   const { isError, data, isLoading } = useQuery(
     'departments',
-    departmentsApi.getDepartments
+    () => departmentsApi.getDepartments
   );
 
   return (
@@ -81,7 +81,7 @@ const Consult = () => {
                     width: WIDTH,
                     height: HEIGHT,
                     borderRadius: wp(4),
-                    marginRight: wp(2.6),
+                    marginRight: wp(2),
                     marginBottom: wp(4),
                   }}
                 />

@@ -49,7 +49,7 @@ const Login = ({ navigation }: StackScreenProps<AuthParamList, 'Login'>) => {
         visibilityTime: 2000,
         autoHide: true,
         text1: 'Login Error',
-        text2: 'Error logging in',
+        text2: error.toString(),
       });
     }
   };
@@ -112,6 +112,9 @@ const Login = ({ navigation }: StackScreenProps<AuthParamList, 'Login'>) => {
                 >
                   <Text style={styles.forgotPassword}>Forgot password?</Text>
                 </TouchableOpacity>
+
+                <View style={{ flex: 1 }} />
+
                 <View style={styles.buttonContainer}>
                   <Button
                     label="Login"
@@ -120,16 +123,21 @@ const Login = ({ navigation }: StackScreenProps<AuthParamList, 'Login'>) => {
                     width={theme.constants.screenWidth}
                   />
                 </View>
+
+                <View style={styles.registerContainer}>
+                  <Text style={styles.registerTest1}>
+                    Don't have an account?
+                  </Text>
+                  <TouchableOpacity
+                    onPress={() => navigation.navigate('Register')}
+                  >
+                    <Text style={styles.registerTest2}> Register Now</Text>
+                  </TouchableOpacity>
+                </View>
               </>
             );
           }}
         </Formik>
-        <View style={styles.registerContainer}>
-          <Text style={styles.registerTest1}>Don't have an account?</Text>
-          <TouchableOpacity onPress={() => navigation.navigate('Register')}>
-            <Text style={styles.registerTest2}> Register Now</Text>
-          </TouchableOpacity>
-        </View>
       </SafeAreaView>
     </ScrollView>
   );

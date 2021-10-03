@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { StackScreenProps } from '@react-navigation/stack';
-import { View, Text, SafeAreaView, FlatList, Alert } from 'react-native';
+import {
+  View,
+  Text,
+  SafeAreaView,
+  FlatList,
+  Alert,
+  TouchableOpacity,
+} from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -16,13 +23,16 @@ import { theme } from '../../components';
 import { useAppContext } from '../../context/context';
 import StatusScreen from '../../components/StatusScreen/StatusScreen';
 import addressApi from '../../firebase/address';
+import Picker from '../../components/Picker';
+import deliveryData from './deliveryData';
+import LocationSelectModal from '../../components/LocationSelectModal';
 
 const Cart = ({ navigation }: StackScreenProps<HomeNavParamList>) => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const { cart, cartTotal, user, manageCart } = useAppContext();
   const [address, setAddress] = useState<any[]>([]);
-
-  const delivery = 25;
+  const [delivery, setDelivery] = useState<string>('');
+  const [deliveryVisible, setDeliveryVisible] = useState<boolean>(false);
 
   const loadData = async () => {
     const address = await addressApi.getUserAddress({
@@ -75,27 +85,44 @@ const Cart = ({ navigation }: StackScreenProps<HomeNavParamList>) => {
               <Text style={styles.summaryPrice}>ZK {cartTotal.toString()}</Text>
             </View>
             <View style={styles.summaryItem}>
-              <Text style={styles.summaryText}>Delivery</Text>
-              <Text style={styles.summaryPrice}>ZK {delivery}</Text>
+              <Text style={styles.summaryText}>
+                Delivery - Press to select --{'>'}
+              </Text>
+              {delivery !== '' ? (
+                <TouchableOpacity onPress={() => setDeliveryVisible(true)}>
+                  <Text style={styles.summaryPrice}>ZK {delivery}</Text>
+                </TouchableOpacity>
+              ) : (
+                <TouchableOpacity onPress={() => setDeliveryVisible(true)}>
+                  <Text style={styles.summaryPrice}>Select Area</Text>
+                </TouchableOpacity>
+              )}
             </View>
             <View style={{ height: 20 }} />
             <View style={styles.summaryItem}>
               <Text style={styles.summaryText}>Summary</Text>
               <Text style={styles.summaryPriceFinal}>
-                ZK {(cartTotal + delivery).toString()}
+                ZK {(cartTotal + Number(delivery)).toString()}
               </Text>
             </View>
           </View>
           <Button
             label="Checkout"
             type="primary"
-            onPress={() => setShowModal(true)}
+            onPress={() => {
+              if (delivery === '')
+                return Alert.alert(
+                  '',
+                  'Please select delivery area to continue'
+                );
+              setShowModal(true);
+            }}
             width={theme.constants.screenWidth}
           />
           <CheckoutModal
             show={showModal}
             onRequestClose={() => setShowModal(false)}
-            cartTotal={(cartTotal + delivery).toString()}
+            cartTotal={(cartTotal + Number(delivery)).toString()}
             addresses={address}
             onFinish={(status: string) => {
               if (status === 'success') {
@@ -128,6 +155,12 @@ const Cart = ({ navigation }: StackScreenProps<HomeNavParamList>) => {
           />
         </View>
       )}
+
+      <LocationSelectModal
+        show={deliveryVisible}
+        onRequestClose={() => setDeliveryVisible(false)}
+        setValue={setDelivery}
+      />
     </SafeAreaView>
   );
 };

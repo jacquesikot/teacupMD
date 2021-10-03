@@ -4,13 +4,12 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import { theme } from '../../components';
-import isAndroid from '../../utils/isAndroid';
 
 const IMG_FORM_FACTOR = 2.68;
 export const WIDTH = wp(35);
 export const HEIGHT = hp(23);
 export const PRODUCT_WIDTH = wp(43);
-export const PRODUCT_HEIGHT = hp(30);
+export const PRODUCT_HEIGHT = 230;
 
 const styles = StyleSheet.create({
   container: {
@@ -37,6 +36,7 @@ const styles = StyleSheet.create({
   },
   productGrid: {
     width: theme.constants.screenWidth,
+    paddingBottom: 100,
   },
   noProductText: {
     fontFamily: 'SofiaPro-Medium',

@@ -6,6 +6,7 @@ const getProducts = async (limit?: number) => {
   const data: any = [];
   const querySnapshot = await db
     .collection('products')
+    .where('qty', '>=', '1')
     .limit(limit ? limit : 3000)
     .get();
   querySnapshot.forEach((doc) => {

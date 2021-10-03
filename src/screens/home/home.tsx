@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React from 'react';
 import {
   View,
   Text,
@@ -7,11 +7,9 @@ import {
   Image,
   Animated,
   Linking,
-  RefreshControl,
 } from 'react-native';
 import { Feather as Icon } from '@expo/vector-icons';
 import { StackScreenProps } from '@react-navigation/stack';
-import { CommonActions } from '@react-navigation/routers';
 import * as Haptics from 'expo-haptics';
 import Toast from 'react-native-toast-message';
 import {
@@ -23,20 +21,17 @@ import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import styles from './styles';
 import HomeHeader from '../../components/HomeHeader/HomeHeader';
 import { theme } from '../../components';
-import CategoryItem from '../../components/CategoryItem/CategoryItem';
 import Product from '../../components/Product/Product';
 import { HomeNavParamList } from '../../types/navigationTypes';
 import useHome from './useHome';
 import { useAppContext } from '../../context/context';
-import ComingSoon from '../../components/ComingSoon/ComingSoon';
-import categoryData from './categoryData';
-import isAndroid from '../../utils/isAndroid';
+import Button from '../../components/Button/Button';
 
 const PRODUCT_WIDTH = wp(41);
 const PRODUCT_HEIGHT = 230;
 
 const Home = ({ navigation }: StackScreenProps<HomeNavParamList, 'Home'>) => {
-  const { products, loading, showModal, setShowModal } = useHome();
+  const { products, loading, error, refetchProducts } = useHome();
 
   const { manageCart, isProductInCart } = useAppContext();
 
@@ -64,7 +59,7 @@ const Home = ({ navigation }: StackScreenProps<HomeNavParamList, 'Home'>) => {
     }
   };
 
-  const closeComingSoonModal = () => setShowModal(false);
+  // const closeComingSoonModal = () => setShowModal(false);
 
   const skeletonArray = [1, 2, 3, 4, 5, 6, 7, 8];
 
@@ -80,6 +75,34 @@ const Home = ({ navigation }: StackScreenProps<HomeNavParamList, 'Home'>) => {
     inputRange: [0, HEADER_HEIGHT],
     outputRange: [0, -HEADER_HEIGHT],
   });
+
+  if (error) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <Text
+          style={{
+            fontFamily: 'SofiaPro-Bold',
+            fontSize: wp('4%'),
+            color: theme.colors.dark,
+            marginBottom: 15,
+          }}
+        >
+          Error Loading data
+        </Text>
+        <Button
+          type="primary"
+          onPress={() => refetchProducts()}
+          label="Try Again"
+        />
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
@@ -232,7 +255,7 @@ const Home = ({ navigation }: StackScreenProps<HomeNavParamList, 'Home'>) => {
             </SkeletonPlaceholder>
           ) : (
             <FlatList
-              data={products}
+              data={products.slice(0, 10)}
               horizontal
               showsHorizontalScrollIndicator={false}
               keyExtractor={(item) => item.id.toString()}
@@ -249,7 +272,7 @@ const Home = ({ navigation }: StackScreenProps<HomeNavParamList, 'Home'>) => {
                   price={item.price}
                   sale={item.sale_price ? item.sale_price : ''}
                   cart={() => addToCart(item)}
-                  qty={item.quantity}
+                  qty={item.qty}
                   width={PRODUCT_WIDTH}
                   height={PRODUCT_HEIGHT}
                   main_content={item.main_content ? item.main_content : ''}
@@ -324,7 +347,7 @@ const Home = ({ navigation }: StackScreenProps<HomeNavParamList, 'Home'>) => {
           <Text style={styles.tipLogo}>TeaCup MD</Text>
         </View>
       </Animated.ScrollView>
-      <ComingSoon show={showModal} onRequestClose={closeComingSoonModal} />
+      {/* <ComingSoon show={showModal} onRequestClose={closeComingSoonModal} /> */}
     </View>
   );
 };
